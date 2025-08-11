@@ -1,0 +1,78 @@
+hira-jewellery/
+│
+├── app/                          # App directory (Next.js 13+)
+│   ├── layout.tsx               # Root layout
+│   ├── page.tsx                 # Homepage
+│   └── components/             # Reusable UI components
+│       ├── Header.tsx
+│       ├── HeroBanner.tsx
+│       ├── FeaturedSection.tsx
+│       ├── RakhiBanner.tsx
+│       ├── ProductSlider.tsx
+│       ├── InstagramGrid.tsx
+│       ├── SummerCollection.tsx
+│       ├── CustomizationSteps.tsx
+│       ├── BlogSection.tsx
+│       └── menuData.ts         # Dropdown menu structure
+│
+├── public/                     # Public assets (images, fonts, etc.)
+│   ├── images/
+│   │   ├── logo.png
+│   │   ├── rakhi-left.jpg
+│   │   ├── necklace-promo.jpg
+│   │   ├── earring-promo.jpg
+│   │   └── ...
+│   └── favicon.ico
+│
+├── styles/                    # Global styles (optional if using Tailwind only)
+│   └── globals.css
+│
+├── .gitignore
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── tsconfig.json
+
+
+
+hira-jewellery/
+│
+├── app/                          # App directory (Next.js 13+)
+│   ├── layout.tsx               # Root layout
+│   ├── page.tsx                 # Homepage
+│   └── components/             # Reusable UI components
+│       ├── Header.tsx
+│       ├── HeroBanner.tsx
+│       ├── FeaturedSection.tsx
+│       ├── RakhiBanner.tsx
+│       ├── ProductSlider.tsx
+│       ├── InstagramGrid.tsx
+│       ├── SummerCollection.tsx
+│       ├── CustomizationSteps.tsx
+│       ├── BlogSection.tsx
+│       ├── RakshaBandhan2025.tsx    # ✅ NEW: Raksha Bandhan 2025 section
+│       └── menuData.ts         # Dropdown menu structure
+│
+├── public/                     # Public assets (images, fonts, etc.)
+│   ├── images/
+│   │   ├── logo.png
+│   │   ├── rakhi-left.jpg
+│   │   ├── necklace-promo.jpg
+│   │   ├── earring-promo.jpg
+│   │   ├── rakhi-preview-1.jpg     # ✅ Suggested new preview images
+│   │   ├── rakhi-preview-2.jpg
+│   │   ├── rakhi-preview-3.jpg
+│   │   ├── rakhi-preview-4.jpg
+│   │   └── ...
+│   └── favicon.ico
+│
+├── styles/
+│   └── globals.css
+│
+├── .gitignore
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── tsconfig.json

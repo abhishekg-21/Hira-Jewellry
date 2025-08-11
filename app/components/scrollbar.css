@@ -1,0 +1,28 @@
+/* 🔥 Custom slim horizontal scrollbar style */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: black #e5e5e5;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border-radius: 9999px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 9999px;
+  border: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
