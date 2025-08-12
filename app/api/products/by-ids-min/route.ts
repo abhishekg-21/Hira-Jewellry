@@ -1,47 +1,61 @@
 // app/api/products/by-ids-min/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { z } from "zod";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-const BodySchema = z.object({ ids: z.array(z.string().min(1)).min(1) });
+type Out = {
+  id: string;           // product_id
+  slug: string | null;
+  title: string | null; // from name
+  price: number | null; // rupees (price_cents / 100)
+  image: string | null; // from image_url
+};
 
 export async function POST(req: Request) {
-  let body: unknown;
   try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
+    const body = await req.json().catch(() => null);
+    const ids = Array.isArray((body as any)?.ids) ? ((body as any).ids as string[]) : [];
 
-  const parsed = BodySchema.safeParse(body);
-  if (!parsed.success) {
-    return NextResponse.json({ error: "Validation failed", issues: parsed.error.flatten() }, { status: 400 });
-  }
+    if (ids.length === 0) {
+      return NextResponse.json({}, { headers: { "Cache-Control": "no-store" } });
+    }
+    if (ids.length > 100) {
+      return NextResponse.json({ error: "Max 100 ids per request" }, { status: 400 });
+    }
 
-  try {
-    // IMPORTANT: use your actual field names
+    // IMPORTANT: Model name must match your schema.prisma model (Product vs Products)
     const rows = await prisma.product.findMany({
-      where: { product_id: { in: parsed.data.ids } },   // was id -> product_id
+      where: { productId: { in: ids } },
       select: {
-        product_id: true,
-        name: true,
-        price_cents: true,
+        productId: true,
+        slug: true,
+        title: true,
+        priceCents: true,
+        imageUrl: true,
       },
     });
 
-    // Map DB -> frontend shape
-    const map: Record<string, { id: string; title: string; price: number }> = {};
+    const map: Record<string, Out> = {};
     for (const r of rows) {
-      map[r.product_id] = {
-        id: r.product_id,
-        title: r.name,
-        price: Math.round(r.price_cents / 100),
+      map[r.productId] = {
+        id: r.productId,
+        slug: r.slug ?? null,
+        title: r.title ?? null,
+        price: typeof r.priceCents === "number" ? r.priceCents / 100 : null,
+        image: r.imageUrl ?? null,
       };
     }
-    return NextResponse.json(map);
-  } catch (e) {
-    return NextResponse.json({ error: "Query failed", detail: String(e) }, { status: 500 });
+
+    return NextResponse.json(map, { headers: { "Cache-Control": "no-store" } });
+  } catch (e: any) {
+    // Log full error to the server console
+    console.error("by-ids-min error:", e);
+    // Return a readable error to the client
+    return NextResponse.json(
+      { error: e?.message ?? "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

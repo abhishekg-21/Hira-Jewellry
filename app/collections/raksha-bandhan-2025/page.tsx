@@ -69,7 +69,7 @@ export default function CollectionRakshaBandhan2025() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="hidden md:inline">BEST SELLING</span>
+            <span className="hidden md:inline">
             <select
               value={sort}
               onChange={(e)=>{ setSort(e.target.value as any); setPage(1); }}
@@ -79,6 +79,7 @@ export default function CollectionRakshaBandhan2025() {
               <option value="price-asc">Price, low to high</option>
               <option value="price-desc">Price, high to low</option>
             </select>
+            </span>
           </div>
         </div>
 

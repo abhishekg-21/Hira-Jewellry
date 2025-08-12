@@ -1,19 +1,24 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // your Neon pooled URL
+  url      = env("DATABASE_URL")
 }
 
-model Products {
-  id          String   @id @default(cuid())           @map("id")            // only if you have a real id column
-  productId   String   @unique                        @map("product_id")
-  title       String                                 @map("name")
-  priceCents  Int                                    @map("price_cents")
-  imageUrl    String?                                @map("image_url")
-  imageKey    String?                                @map("image_key")
-  qtyInStock  Int      @default(0)                    @map("qty_in_stock")
-  productType String?                                 @map("product_type")
-  createdAt   DateTime @default(now())                @map("created_at")
-  updatedAt   DateTime @updatedAt                     @map("updated_at")
+generator client {
+  provider = "prisma-client-js"
+}
 
-  @@map("products") // or "products" — set to your actual table name
+model Product {
+  id          String   @id @default(cuid()) @map("id")
+  productId   String   @unique @map("product_id")
+  slug        String   @unique @map("slug")
+  title       String   @map("name")
+  priceCents  Int      @map("price_cents")
+  imageUrl    String?  @map("image_url")
+  imageKey    String?  @map("image_key")
+  qtyInStock  Int      @default(0) @map("qty_in_stock")
+  productType String?  @map("product_type")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("products") // <— your actual table in Postgres is plural
 }

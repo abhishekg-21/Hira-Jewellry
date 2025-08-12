@@ -11,19 +11,39 @@ async function main() {
   await prisma.product.createMany({
     data: [
       {
-        productId: "RK-0001",
-        name: "Silver Krishna Trishul Rakhi",
+        productId: "prod_1",
+        slug: "silver-krishna-trishul-rakhi",
+        title: "Silver Krishna Trishul Rakhi",
         priceCents: 225000,
-        imageUrl: "https://cdn.shopify.com/…/rk-0001.jpg",
+        imageUrl: "https://cdn.shopify.com/s/files/.../rk-0001.jpg",
         imageKey: "products/rk-0001.webp",
         qtyInStock: 30,
         productType: "Rakhi",
       },
-      // add more…
+      {
+        productId: "prod_2",
+        slug: "silver-hanuman-rakhi",
+        title: "Silver Hanuman Rakhi",
+        priceCents: 265000,
+        imageUrl: "https://cdn.shopify.com/s/files/.../rk-0002.jpg",
+        imageKey: "products/rk-0002.webp",
+        qtyInStock: 25,
+        productType: "Rakhi",
+      },
+      {
+        productId: "prod_3",
+        slug: "silver-shakti-gada-rakhi",
+        title: "Silver Shakti Gada Rakhi",
+        priceCents: 365000,
+        imageUrl: "https://cdn.shopify.com/s/files/.../rk-0003.jpg",
+        imageKey: "products/rk-0003.webp",
+        qtyInStock: 20,
+        productType: "Rakhi",
+      },
     ],
   });
 
-  console.log("Seeded products.");
+  console.log("✅ Seeded products.");
 }
 
 main()
