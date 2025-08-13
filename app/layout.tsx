@@ -3,9 +3,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// import your site chrome
+// site chrome
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+// 🛒 cart
+import { CartProvider } from "./context/CartContext";
+import CartDrawer from "./components/CartDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,19 +34,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fefaf2]`}>
-        {/* Page shell */}
-        <div className="min-h-screen flex flex-col">
-          {/* Global header on every route */}
-          <Header />
+        <CartProvider>
+          {/* Page shell */}
+          <div className="min-h-screen flex flex-col">
+            {/* Global header on every route */}
+            <Header />
 
-          {/* Route content */}
-          <main className="flex-1">
-            {children}
-          </main>
+            {/* Route content */}
+            <main className="flex-1">
+              {children}
+            </main>
 
-          {/* Global footer on every route */}
-          <Footer />
-        </div>
+            {/* Global footer on every route */}
+            <Footer />
+          </div>
+
+          {/* Drawer lives at root so it overlays everything */}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

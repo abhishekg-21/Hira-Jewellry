@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import ProductGallery from "@/app/components/ProductGallery";
+import PurchaseBox from "./PurchaseBox";
 
 export const runtime = "nodejs";
 
@@ -104,14 +105,14 @@ export default async function ProductPage({
 
             {/* Accordions (unchanged from your last version) */}
             <div
-              className="mt-9 max-w-[520px] mx-auto divide-y divide-black/10 border-y border-black/10"
+              className="mt-9 max-w-[520px] mx-auto divide-y divide-black border-y border-black"
               id="shipping"
             >
               <details className="group">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Description</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black/70">
+                <p className="pb-3 text-sm text-black0">
                   Handcrafted Rakhi in 92.5 sterling silver with fine detailing.
                 </p>
               </details>
@@ -120,7 +121,7 @@ export default async function ProductPage({
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Shipping</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black/70">
+                <p className="pb-3 text-sm text-black">
                   <div>We offer free shipping within India</div>
                   <br />
                   <div>We have both standard and express shipping option</div>
@@ -133,14 +134,14 @@ export default async function ProductPage({
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Payment Options</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black/70">We offer both cash on delivery and prepaid option (credit cards,debit cads/netbanking).</p>
+                <p className="pb-3 text-sm text-black">We offer both cash on delivery and prepaid option (credit cards,debit cads/netbanking).</p>
               </details>
 
               <details className="group">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">More Information</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black/70">
+                <p className="pb-3 text-sm text-black">
                   <div>Imported by</div>
                   <div>Hira jewellery</div>
                   <br />

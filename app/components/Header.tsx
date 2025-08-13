@@ -1,21 +1,20 @@
 "use client";
 
-import { Menu, X, User, Search } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { menuData } from "./menuData";
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
-
+import { useState } from 'react';
+import CartToggle from "@/app/components/CartToggle";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  
 
   const navLinks = [
     "SHOP ALL",
-    "NECKLACE˅",
+    "NECKLACE",
     "ANKLET",
     "EARRING",
     "RING",
@@ -29,7 +28,7 @@ const Header = () => {
   return (
     <>
       {/* Top Strip */}
-      <div className="w-full bg-black text-white text-xs text-[15px] py-2 px-30 flex justify-between items-center ">
+      <div className="w-full bg-black text-white text-xs text-[15px] py-1.5 px-32 flex justify-between items-center ">
         <span>5% Off on Prepaid Orders</span>
         <select className="bg-black text-white border-none focus:outline-none text-xs text-[14px]">
           <option>ENGLISH</option>
@@ -41,35 +40,51 @@ const Header = () => {
       <div className="sticky top-0 z-50 bg-[#fefcf8]">
         {/* Main Header */}
         <header className="bg-[#fdf9f4]">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-20 py-2 min-h-[80px]">
-            {/* Left Nav (Desktop) */}
+          <div className="max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px]">
+            {/* Left Nav (Desktop) — text menus with a single trailing chevron */}
             <div className="hidden lg:flex justify-start text-[13px] font-normal tracking-wide whitespace-nowrap overflow-x-auto">
-             <nav className="flex gap-4 text-[14px] font-normal tracking-wide">
+              <nav className="flex items-center gap-4 text-[14px] font-normal tracking-wide">
                 {menuData.map((item) => (
                   <div key={item.label} className="group relative">
                     <button
                       onClick={() => toggleDropdown(item.label)}
-                      className="hover:underline underline-offset-4 transition flex items-center gap-1 py-5 "
+                      className="hover:underline underline-offset-4 transition flex items-center gap-1 py-3"
                     >
                       {item.label}
-                        <Image
-                          src="/images/arrow_no_bg.png"
-                          alt="Dropdown Arrow"
-                          width={8}
-                          height={8}
-                          className="ml-[4px] object-contain"
-                        />
+                      <Image
+                        src="/images/arrow_no_bg.png"
+                        alt=""
+                        width={8}
+                        height={8}
+                        className="ml-[4px] object-contain"
+                        aria-hidden
+                      />
                     </button>
                   </div>
                 ))}
+
+                {/* ▼ single dropdown arrow AFTER all menus (purely visual / clickable if you want) */}
+                <button
+                  className="ml-1 inline-flex items-center justify-center w-6 h-6 cursor-pointer hover:opacity-80"
+                  aria-label="More"
+                  // if you want this to open something, hook up toggleDropdown('ALL') etc.
+                >
+                  <Image
+                    src="/images/arrow_no_bg.png"
+                    alt="Dropdown"
+                    width={10}
+                    height={10}
+                    className="object-contain"
+                  />
+                </button>
               </nav>
             </div>
 
             {/* Logo Image */}
             <div className="flex justify-center">
-              <Link href="/" className="relative w-[140px] h-[40px]">
+              <Link href="/" className="relative w-[140px] h-[37px]">
                 <Image
-                  src="/images/HIRA.png" 
+                  src="/images/HIRA.png"
                   alt="Hira Logo"
                   fill
                   className="object-contain"
@@ -79,37 +94,39 @@ const Header = () => {
 
             {/* Right Icons (Desktop) */}
             <div className="hidden lg:flex justify-end gap-1 items-center text-black">
-  {/* User Icon */}
-  <Link href="/account" className="relative w-8 h-8">
-    <Image
-      src="/images/User icon.png" // Replace with correct filename in /public/images
-      alt="User"
-      fill
-      className="object-contain"
-    />
-  </Link>
+              {/* User Icon */}
+              <Link href="/account" className="relative w-8 h-8">
+                <Image
+                  src="/images/User icon.png"
+                  alt="User"
+                  fill
+                  className="object-contain"
+                />
+              </Link>
 
-  {/* Search Icon */}
-  <Link href="/search" className="relative w-8 h-8">
-    <Image
-      src="/images/Search icon.png" // Replace with correct filename in /public/images
-      alt="Search"
-      fill
-      className="object-contain"
-    />
-  </Link>
+              {/* Search Icon */}
+              <Link href="/search" className="relative w-8 h-8">
+                <Image
+                  src="/images/Search icon.png"
+                  alt="Search"
+                  fill
+                  className="object-contain"
+                />
+              </Link>
 
-  {/* Cart Icon */}
-  <Link href="/cart" className="relative w-10 h-10">
-    <Image
-      src="/images/ChatGPT Image Aug 8, 2025, 11_35_04 AM.png" // Replace with correct filename in /public/images
-      alt="Cart"
-      fill
-      className="object-contain"
-    />
-  </Link>
-</div>
-
+              {/* Cart Icon (image that opens the drawer) */}
+              <CartToggle>
+                <span className="relative block w-10 h-10 cursor-pointer">
+                  <Image
+                    src="/images/ChatGPT Image Aug 8, 2025, 11_35_04 AM.png"
+                    alt="Cart"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </span>
+              </CartToggle>
+            </div>
 
             {/* Mobile Menu Button */}
             <button className="lg:hidden" onClick={toggleMenu}>
@@ -124,49 +141,49 @@ const Header = () => {
             {menuData.map((item) => {
               if (item.label === activeDropdown && item.columns) {
                 return (
-                      <div key={item.label} className="flex gap-10 w-full min-h-[450px]">
-                        {/* Column Links */}
-                        <div className="flex gap-1 flex-grow">
-                          {item.columns.map((col, index) => (
-                            <div key={index} className="w-[320px]">
-                              <h4 className=" text-[14px] mb-4 tracking-wide uppercase">
-                                {col.heading}
-                              </h4>
-                              <ul className="space-y-1">
-                                {col.links.map((link, idx) => (
-                                  <li key={`${link.label}-${idx}`}>
-                                    <Link href={link.link} className="text-[14px] mb-3 hover:underline">
-                                      {link.label}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
+                  <div key={item.label} className="flex gap-10 w-full min-h-[450px]">
+                    {/* Column Links */}
+                    <div className="flex gap-1 flex-grow">
+                      {item.columns.map((col, index) => (
+                        <div key={index} className="w-[320px]">
+                          <h4 className=" text-[14px] mb-4 tracking-wide uppercase">
+                            {col.heading}
+                          </h4>
+                          <ul className="space-y-1">
+                            {col.links.map((link, idx) => (
+                              <li key={`${link.label}-${idx}`}>
+                                <Link href={link.link} className="text-[14px] mb-3 hover:underline">
+                                  {link.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
+                      ))}
+                    </div>
 
-                        {/* Promo Images */}
-                        <div className="flex px-[60px] gap-4">
-                          {item.promos?.map((promo, i) => (
-                            <div key={promo.label || i} className="w-[285px] text-left">
-                              <Link href={promo.link}>
-                                <div className="relative h-[440px] w-[285px]">
-                                  <Image
-                                    src={promo.image}
-                                    alt={promo.label}
-                                    fill
-                                    className="object-cover"
-                                  />
-                                </div>
-                                <span className="block text-[14px] underline font-normal leading-tight mt-2">
-                                  {promo.label}
-                                </span>
-                              </Link>
+                    {/* Promo Images */}
+                    <div className="flex px=[60px] gap-4">
+                      {item.promos?.map((promo, i) => (
+                        <div key={promo.label || i} className="w-[285px] text-left">
+                          <Link href={promo.link}>
+                            <div className="relative h-[440px] w-[285px]">
+                              <Image
+                                src={promo.image}
+                                alt={promo.label}
+                                fill
+                                className="object-cover"
+                              />
                             </div>
-                          ))}
+                            <span className="block text-[14px] underline font-normal leading-tight mt-2">
+                              {promo.label}
+                            </span>
+                          </Link>
                         </div>
-                      </div>
-                    );
+                      ))}
+                    </div>
+                  </div>
+                );
               }
               return null;
             })}
