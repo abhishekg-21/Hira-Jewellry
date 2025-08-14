@@ -98,14 +98,14 @@ export default function CartPage() {
                   <div key={l.id} className="py-2">
                     <div className="flex items-start gap-6">
                       <div className="w-[120px] h-[120px] rounded-sm overflow-hidden bg-[#f7f2e8] shrink-0">
-  <Image
-    src={l.image}
-    alt={l.title}
-    width={120}
-    height={120}
-    className="w-full h-full object-contain"
-  />
-</div>
+                            <Image
+                                src={l.image}
+                                alt={l.title}
+                                width={120}
+                                height={120}
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="text-lg text-black">{l.title}</div>

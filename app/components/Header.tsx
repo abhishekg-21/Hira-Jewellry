@@ -63,20 +63,7 @@ const Header = () => {
                   </div>
                 ))}
 
-                {/* ▼ single dropdown arrow AFTER all menus (purely visual / clickable if you want) */}
-                <button
-                  className="ml-1 inline-flex items-center justify-center w-6 h-6 cursor-pointer hover:opacity-80"
-                  aria-label="More"
-                  // if you want this to open something, hook up toggleDropdown('ALL') etc.
-                >
-                  <Image
-                    src="/images/arrow_no_bg.png"
-                    alt="Dropdown"
-                    width={10}
-                    height={10}
-                    className="object-contain"
-                  />
-                </button>
+                
               </nav>
             </div>
 
