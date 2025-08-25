@@ -1,0 +1,109 @@
+You’ve hit **P3005** because Prisma sees an existing schema but your `_prisma_migrations` table has no history yet. Fix it by **baselining** your current DB schema (no data loss), or by **resetting** (drops data).
+
+Below are two clear paths—pick one.
+
+---
+
+## Option 1 — Fastest (drops data in `public`)
+
+If this is a dev DB and you can wipe it:
+
+```bash
+npx prisma migrate reset
+# then
+npx prisma migrate dev --name init
+```
+
+You’re done.
+
+---
+
+## Option 2 — Keep data (Baseline the existing DB)
+
+This tells Prisma “treat the current DB as already migrated”.
+
+### A) Make sure CLI uses the direct host
+
+In `prisma/schema.prisma`:
+
+```prisma
+datasource db {
+  provider           = "postgresql"
+  url                = env("DATABASE_URL")   // pooled
+  directUrl          = env("DIRECT_URL")     // direct (no -pooler)
+  shadowDatabaseUrl  = env("DIRECT_URL")     // direct
+}
+```
+
+In `.env`:
+
+```ini
+DATABASE_URL="postgresql://...-pooler....neon.tech/neondb?sslmode=require&pgbouncer=true&connection_limit=1"
+DIRECT_URL="postgresql://...WITHOUT-POOLER....neon.tech/neondb?sslmode=require"
+```
+
+### B) (Recommended) Archive your existing migrations (so they don’t interfere)
+
+Move them out of the way (keep a backup):
+
+* Windows:
+
+  ```cmd
+  ren prisma\migrations migrations_backup_%RANDOM%
+  mkdir prisma\migrations
+  ```
+
+### C) Create a **baseline** migration from the live DB
+
+* **PowerShell**:
+
+  ```powershell
+  mkdir prisma\migrations\0000_baseline
+  npx prisma migrate diff --from-empty --to-url "$env:DIRECT_URL" --script > prisma/migrations/0000_baseline/migration.sql
+  ```
+* **CMD** (paste your full DIRECT\_URL):
+
+  ```cmd
+  mkdir prisma\migrations\0000_baseline
+  npx prisma migrate diff --from-empty --to-url "postgresql://USER:PASSWORD@ep-square-waterfall-a1zlyh22.ap-southeast-1.aws.neon.tech/neondb?sslmode=require" --script > prisma\migrations\0000_baseline\migration.sql
+  ```
+
+### D) Mark that baseline as **applied**
+
+```bash
+npx prisma migrate resolve --applied 0000_baseline
+```
+
+### E) Deploy (now Prisma has history)
+
+```bash
+npx prisma migrate deploy
+npx prisma generate
+```
+
+> From here on, whenever you change your Prisma schema, just run:
+>
+> ```bash
+> npx prisma migrate dev --name some_change
+> ```
+>
+> and then `npx prisma migrate deploy` in environments where you deploy.
+
+---
+
+### Notes specific to your case
+
+* Your current DB already includes `products` with the new columns (`shop_by_material`, `shop_by_price`) and other fixes. Baseline will capture exactly that state—no further SQL will run.
+* If you prefer to **keep** your old 4 migration folders instead of archiving them, you can manually **mark them applied** in order:
+
+  ```bash
+  npx prisma migrate resolve --applied <first_migration_folder_name>
+  npx prisma migrate resolve --applied <second_migration_folder_name>
+  ... (repeat for all 4)
+  ```
+
+  Then run `npx prisma migrate deploy`. Only do this if those migrations truly match the current DB; otherwise they can conflict later.
+
+If you hit any error on a specific step, paste the exact message and I’ll give you the one-liner to fix it.
+
+npx prisma generate

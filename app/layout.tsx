@@ -1,55 +1,33 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// site chrome
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
-// 🛒 cart
+import BrandStrip from "./components/BrandStrip";
+import SiteChrome from "./components/SiteChrome";   // ← new wrapper
 import { CartProvider } from "./context/CartContext";
 import CartDrawer from "./components/CartDrawer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Hira Jewellery",
   description: "Fine jewellery by Hira",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fefaf2]`}>
         <CartProvider>
-          {/* Page shell */}
           <div className="min-h-screen flex flex-col">
-            {/* Global header on every route */}
-            <Header />
+            {/* keep the brand strip everywhere */}
+            <BrandStrip />
 
-            {/* Route content */}
-            <main className="flex-1">
-              {children}
-            </main>
-
-            {/* Global footer on every route */}
-            <Footer />
+            {/* decides whether to show global header/footer */}
+            <SiteChrome>{children}</SiteChrome>
           </div>
 
-          {/* Drawer lives at root so it overlays everything */}
           <CartDrawer />
         </CartProvider>
       </body>

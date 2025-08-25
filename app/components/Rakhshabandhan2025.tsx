@@ -12,9 +12,9 @@ type Card = CardBase & Partial<DbFields>;
 
 // FE images only
 const PRODUCTS_FE: CardBase[] = [
-  { id: "prod_1", image: "/images/bye.png" },
-  { id: "prod_2", image: "/images/bye.png" },
-  { id: "prod_3", image: "/images/bye.png" },
+  { id: "EARRING-001", image: "/images/bye.png" },
+  { id: "EARRING-0002", image: "/images/bye.png" },
+  { id: "EARRING-0003", image: "/images/bye.png" },
   { id: "prod_4", image: "/images/bye.png" },
   { id: "prod_5", image: "/images/bye.png" },
   { id: "prod_6", image: "/images/bye.png" },

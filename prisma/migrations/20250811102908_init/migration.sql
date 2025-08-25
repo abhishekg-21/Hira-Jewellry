@@ -22,6 +22,10 @@ ALTER COLUMN "updated_at" SET DATA TYPE TIMESTAMP(3),
 ALTER COLUMN "product_type" DROP NOT NULL,
 ALTER COLUMN "product_type" DROP DEFAULT,
 ALTER COLUMN "product_type" SET DATA TYPE TEXT;
+ALTER TABLE "public"."products"
+  ADD COLUMN "shop_by_material" TEXT,
+  ADD COLUMN "shop_by_price"    TEXT;
+
 
 -- RenameIndex
 ALTER INDEX "public"."products_product_id_idx" RENAME TO "products_product_id_key";

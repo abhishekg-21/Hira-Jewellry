@@ -1,24 +1,29 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")          // pooled: use this in your app
+  directUrl = env("DIRECT_URL")   // direct: use this for migrate/introspect
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-model Product {
-  id          String   @id @default(cuid()) @map("id")
-  productId   String   @unique @map("product_id")
-  slug        String   @unique @map("slug")
-  title       String   @map("name")
-  priceCents  Int      @map("price_cents")
-  imageUrl    String?  @map("image_url")
-  imageKey    String?  @map("image_key")
-  qtyInStock  Int      @default(0) @map("qty_in_stock")
-  productType String?  @map("product_type")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
 
-  @@map("products") // <— your actual table in Postgres is plural
+model Product {
+  id             String   @id @default(cuid()) @map("id")
+  productId      String   @unique @map("product_id")
+  slug           String   @unique @map("slug")
+  title          String   @map("name")
+  priceCents     Int      @map("price_cents")
+  imageUrl       String?  @map("image_url")
+  imageKey       String?  @map("image_key")
+  qtyInStock     Int      @default(0) @map("qty_in_stock")
+  productType    String?  @map("product_type")
+  shopByMaterial String?  @map("shop_by_material") // new column
+  shopByPrice    String?  @map("shop_by_price")    // new column
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("products") // underlying table name in Postgres
 }
+
