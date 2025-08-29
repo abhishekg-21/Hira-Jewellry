@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { menuData } from "./menuData";
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CartToggle from "@/app/components/CartToggle";
 
 const Header = () => {
@@ -25,19 +25,41 @@ const Header = () => {
     setActiveDropdown(prev => (prev === label ? null : label));
   };
 
+  // --- Fixed wrapper + auto spacer ---
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const [headerH, setHeaderH] = useState(0);
+
+  useEffect(() => {
+    const el = fixedRef.current;
+    if (!el) return;
+
+    const setH = () => setHeaderH(el.offsetHeight);
+    setH(); // initial
+
+    // keep spacer in sync on resize and on any layout changes
+    const ro = new ResizeObserver(() => setH());
+    ro.observe(el);
+    window.addEventListener("resize", setH);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", setH);
+    };
+  }, [activeDropdown, menuOpen]);
+
   return (
     <>
-      {/* Top Strip */}
-      <div className="w-full bg-black text-white text-xs text-[15px] py-1.5 px-32 flex justify-between items-center ">
-        <span>5% Off on Prepaid Orders</span>
-        <select className="bg-black text-white border-none focus:outline-none text-xs text-[14px]">
-          <option>ENGLISH</option>
-          <option>HINDI</option>
-        </select>
-      </div>
+      {/* ===== FIXED WRAPPER (pins whole header at current position) ===== */}
+      <div ref={fixedRef} className="fixed inset-x-0 top-0 z-50 bg-[#fefcf8]">
+        {/* Top Strip */}
+        <div className="w-full bg-black text-white text-xs text-[15px] py-1.5 px-32 flex justify-between items-center ">
+          <span>5% Off on Prepaid Orders</span>
+          <select className="bg-black text-white border-none focus:outline-none text-xs text-[14px]">
+            <option>ENGLISH</option>
+            <option>HINDI</option>
+          </select>
+        </div>
 
-      {/* Sticky Wrapper (Header + Dropdowns) */}
-      <div className="sticky top-0 z-50 bg-[#fefcf8]">
         {/* Main Header */}
         <header className="bg-[#fdf9f4]">
           <div className="max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px]">
@@ -62,8 +84,6 @@ const Header = () => {
                     </button>
                   </div>
                 ))}
-
-                
               </nav>
             </div>
 
@@ -122,7 +142,7 @@ const Header = () => {
           </div>
         </header>
 
-        {/* Dropdown outside header but inside sticky */}
+        {/* Dropdown outside header but inside fixed wrapper (so it stays attached) */}
         {activeDropdown && (
           <div className="w-full py-8 px-30 z-40 flex min-h-[550px] gap-10 bg-[#fefcf8] ">
             {menuData.map((item) => {
@@ -178,7 +198,10 @@ const Header = () => {
         )}
       </div>
 
-      {/* Mobile Slide Drawer */}
+      {/* Auto spacer so page content starts below the fixed header (and expands when dropdown opens) */}
+      <div aria-hidden style={{ height: headerH }} />
+
+      {/* Mobile Slide Drawer (unchanged) */}
       <div
         className={`lg:hidden fixed top-0 right-0 h-full w-64 bg-white shadow-lg transition-transform z-40 p-6 space-y-6 transform ${
           menuOpen ? "translate-x-0" : "translate-x-full"
