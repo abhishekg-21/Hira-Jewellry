@@ -141,7 +141,7 @@ export default function DiamondsMega({
 
         {/* Col 2 */}
         <div>
-          <div className="text-[17px] font-semibold ">Design Your Own Jewelry</div>
+          <div className="text-[17px] font-semibold" ><Link href="/brands/endless/diamonds/design-your-own">Design Your Own Jewelry</Link></div>
           <ul className="space-y-1 mb-4">
             {["Ring", "Earrings", "Pendant"].map((l) => (
               <li key={l}><Link href="#" className="text-[14px] hover:underline underline-offset-4">{l}</Link></li>

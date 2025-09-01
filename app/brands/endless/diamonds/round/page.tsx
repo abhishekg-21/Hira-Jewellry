@@ -3,7 +3,7 @@ import StepsBar from "./_components/StepsBar";
 import FiltersBar from "./_components/FiltersBar";
 import ScatterPlot from "./_components/ScatterPlot";
 import ProductGrid from "./_components/ProductGrid";
-import DiamondFinder from "./_components/DiamondFinder";
+// import DiamondFinder from "./_components/DiamondFinder";
 // import SkeletonGrid from "./_components/SkeletonGrid";
 // import FAQSection from "./_components/FAQSection";
 // import ExploreMore from "./_components/ExploreMore";
@@ -36,7 +36,7 @@ export default async function Page() {
           <StepsBar />
         </div>
 
-        <DiamondFinder />
+        {/* <DiamondFinder /> */}
 
         {/* Filter pills / controls */}
         <section className="mt-6 sm:mt-8">

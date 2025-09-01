@@ -1,6 +1,8 @@
 // app/diamonds/round/_components/StepsBar.tsx
 "use client";
 
+import Link from "next/link";
+
 type Step = { n: 1 | 2 | 3; label: string };
 
 type IconMap = {
@@ -11,9 +13,13 @@ type IconMap = {
 
 export default function StepsBar({
   icons,
+  /** Pass the brand-aware settings URL from the server page to avoid hydration mismatches */
+  settingsHref = "/brands/endless/diamonds/engagement-ring/settings",
 }: {
   /** Override icon image paths if you want */
   icons?: Partial<IconMap>;
+  /** Absolute path for the "Choose a Setting" step */
+  settingsHref?: string;
 }) {
   const steps: Step[] = [
     { n: 1, label: "Choose a Diamond" },
@@ -35,8 +41,20 @@ export default function StepsBar({
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="rounded-full border border-[#0b1a2b] px-4 sm:px-6 py-3">
           <div className="grid grid-cols-3 divide-x divide-[#0b1a2b]">
+            {/* Step 1 (current page, not linked) */}
             <StepCell step={steps[0]} src={ICONS.diamond} alt="Diamond" />
-            <StepCell step={steps[1]} src={ICONS.ring} alt="Ring" />
+
+            {/* Step 2 (linked to settings page, underline disabled) */}
+            <Link
+              href={settingsHref}
+              className="block "
+              aria-label="Go to Choose a Setting"
+              prefetch={false}
+            >
+              <StepCell step={steps[1]} src={ICONS.ring} alt="Ring" />
+            </Link>
+
+            {/* Step 3 (not linked) */}
             <StepCell step={steps[2]} src={ICONS.ringSet} alt="Ring Set" />
           </div>
         </div>
@@ -65,13 +83,12 @@ function StepCell({
         </span>
       </div>
 
-        <img
-          src={src}
-          alt={alt}
-          className="h-10 w-14 object-contain"
-          loading="lazy"
-        />
-      
+      <img
+        src={src}
+        alt={alt}
+        className="h-10 w-14 object-contain"
+        loading="lazy"
+      />
     </div>
   );
 }
