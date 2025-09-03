@@ -171,12 +171,12 @@ export default async function ProductPage({
         </div>
 
         {/* Related (unchanged) */}
-        <section className="mt-16">
+        <section className="mt-16 pb-15">
           <h2 className="text-2xl font-medium mb-6">You may also like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {related.map((r) => (
               <Link key={r.slug} href={`/products/${r.slug}`} className="group block">
-                <div className="bg-[#fbf5ea] aspect-[4/5] relative rounded-sm">
+                <div className="bg-[#fbf5ea] aspect-[3/5] relative rounded-sm">
                   <Image
                     src={r.imageUrl || "/images/packing.png"}
                     alt={r.title}
@@ -184,8 +184,8 @@ export default async function ProductPage({
                     className="object-contain"
                     sizes="(min-width:1024px) 25vw, 50vw"
                   />
-                  <div className="absolute bottom-3 right-3 border border-black w-9 h-9 flex items-center justify-center bg-white/80">
-                    <Image src="/images/cart-icon.png" alt="" width={18} height={18} />
+                  <div className="absolute bottom-7 right-4 border border-black w-9 h-9 flex items-center justify-center">
+                    <Image src="/images/Cart icon.png" alt="" width={22} height={24} />
                   </div>
                 </div>
                 <div className="mt-3">

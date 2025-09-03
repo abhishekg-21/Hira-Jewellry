@@ -32,7 +32,7 @@ export default function Page() {
       <StepsBar />
 
       {/* centered content */}
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8">
         <HeadingSale />
         <ChipsRow />
       </div>

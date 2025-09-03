@@ -9,9 +9,9 @@ export type EngagementLinks = Record<string, string>;
 
 export const DEFAULT_ENGAGEMENT_LINKS: EngagementLinks = {
   // Builder
-  "Start With A Natural Diamond": "/diamonds/natural",
-  "Start With A Lab Grown Diamond": "/diamonds/lab-grown",
-  "Start With A Setting": "/engagement-rings/settings",
+   "Start With A Natural Diamond": "/brands/endless/diamonds/round?type=natural",
+  "Start With A Lab Grown Diamond": "/brands/endless/diamonds/round?type=lab",
+  "Start With A Setting": "/brands/endless/diamonds/engagement-ring/settings",
   "Ready To Ship Rings": "/engagement-rings/ready-to-ship",
 
   // Shapes
@@ -52,12 +52,12 @@ export const DEFAULT_ENGAGEMENT_LINKS: EngagementLinks = {
   "Top Engagement Rings": "/engagement-rings/top",
 };
 
-/* Prefix helper: safely add a base (e.g. "/brands/endless") to internal links */
+/* Prefix helper */
 function prefixHref(href: string | undefined, base = ""): string {
   if (!href) return "#";
   if (!base) return href;
-  if (href.startsWith("http") || href.startsWith("#")) return href; // external/anchor
-  if (href.startsWith(base)) return href; // already prefixed
+  if (href.startsWith("http") || href.startsWith("#")) return href;
+  if (href.startsWith(base)) return href;
   if (href.startsWith("/")) return `${base}${href}`;
   return `${base}/${href}`;
 }
@@ -77,11 +77,7 @@ function Row({
       className="flex items-center text-[14px] py-[2px] hover:underline underline-offset-4"
     >
       {iconSrc && (
-        <img
-          src={iconSrc}
-          alt={label}
-          className="w-[50px] h-[45px] object-contain"
-        />
+        <img src={iconSrc} alt={label} className="w-[50px] h-[45px] object-contain" />
       )}
       {label}
     </Link>
@@ -118,10 +114,10 @@ type Props = {
   imageSrc?: string;
   imageCtaHref?: string;
   imageCtaText?: string;
-  /** Optional: override specific links by label */
   links?: EngagementLinks;
-  /** Optional: base prefix for all internal links, e.g. "/brands/endless" */
   brandBase?: string;
+  /** NEW: make all shape rows go to one page */
+  shapesHref?: string; // e.g. "/brands/endless/diamonds/shapes"
 };
 
 export default function EngagementMega({
@@ -130,16 +126,17 @@ export default function EngagementMega({
   imageCtaHref = "#",
   imageCtaText = "View All Engagement Styles",
   links,
-  brandBase = "", // <<< set to "/brands/endless" if your pages live there
+  brandBase = "",
+  shapesHref = "/brands/endless/diamonds/round", // single landing page (override if you want)
 }: Props) {
   const { imageCtaRow } = getDropdownSize(label);
   const imgRow = imageCtaRow ?? 44;
 
-  // Merge defaults with any per-page overrides
   const mergedLinks: EngagementLinks = { ...DEFAULT_ENGAGEMENT_LINKS, ...(links || {}) };
-
-  // Helper: get href for any label, with base prefix
   const linkFor = (key: string) => prefixHref(mergedLinks[key], brandBase);
+
+  // One computed destination for all shapes (still prefixed)
+  const singleShapeHref = prefixHref(shapesHref, brandBase);
 
   return (
     <DropdownPanel label={label} className="grid grid-cols-12 gap-2">
@@ -157,16 +154,17 @@ export default function EngagementMega({
 
           <div className="text-[17px] font-semibold">Shop Diamonds By Shape</div>
           <div className="grid grid-cols-2">
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103322.923.png" label="Round" href={linkFor("Round")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102010.055.png" label="Asscher" href={linkFor("Asscher")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103616.795.png" label="Princess" href={linkFor("Princess")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102304.165.png" label="Heart" href={linkFor("Heart")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T101436.064.png" label="Cushion" href={linkFor("Cushion")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-07-26T142833.275.png" label="Radiant" href={linkFor("Radiant")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103920.087.png" label="Oval" href={linkFor("Oval")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T095621.391.png" label="Marquise" href={linkFor("Marquise")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T104905.610.png" label="Emerald" href={linkFor("Emerald")} />
-            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102946.143.png" label="Pear" href={linkFor("Pear")} />
+            {/* Every shape now points to the SAME page */}
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103322.923.png" label="Round"    href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102010.055.png" label="Asscher"  href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103616.795.png" label="Princess" href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102304.165.png" label="Heart"    href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T101436.064.png" label="Cushion"  href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-07-26T142833.275.png" label="Radiant"  href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T103920.087.png" label="Oval"     href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T095621.391.png" label="Marquise" href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T104905.610.png" label="Emerald"  href={singleShapeHref} />
+            <ShapeRow iconSrc="/images/brands/endless/DiamondsMega/Untitled design - 2025-08-29T102946.143.png" label="Pear"     href={singleShapeHref} />
           </div>
         </div>
 

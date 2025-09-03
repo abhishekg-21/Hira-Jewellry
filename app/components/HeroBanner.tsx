@@ -54,17 +54,17 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute bottom-12 left-0 text-white z-10 max-w-sm px-8">
-            <h2 className="text-3xl font-semibold leading-snug drop-shadow-md">
+            <h2 className="text-4xl font-semibold leading-snug drop-shadow-md">
               Where Tradition<br />Meets Treasure
             </h2>
-            <p className="mt-2 text-sm font-light drop-shadow-md">
+            <p className="mt-2 text-[15px] font-light drop-shadow-md">
               Gift her heirloom-worthy elegance—this Rakhi, only the finest will do.
             </p>
             <Link
               href="/collections/rakhi"
-              className="inline-block mt-4 bg-white text-black px-5 py-2 text-sm font-medium rounded shadow hover:bg-gray-100"
+              className="inline-block mt-4 bg-white text-black px-5 py-2 text-sm font-medium shadow hover:bg-gray-100"
             >
-              SHOP RAKHI GIFTS
+              SHOP LATEST COLLECTION
             </Link>
           </div>
         </div>

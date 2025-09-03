@@ -2,6 +2,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 /* Shared type */
 type ShapeId =
@@ -17,10 +18,9 @@ type ShapeId =
   | "pear";
 
 /* ======================================================================
-   DiamondFinder — now supports per-shape title/baseText/moreText
+   DiamondFinder — supports per-shape title/baseText/moreText + initial type
    ====================================================================== */
 type FinderProps = {
-  /** Fallback title if shape isn’t set or not in titleByShape */
   title?: string;
   defaultType?: "natural" | "lab";
   onChange?: (v: "natural" | "lab") => void;
@@ -56,10 +56,9 @@ export function DiamondFinder({
     (shape && (titleByShape?.[shape] ?? `${pretty(shape)} Diamond Finder`)) ||
     title;
 
-  /* Text: prefer provided maps; else sensible defaults that include shape name */
-
-  const baseText = (shape && baseTextByShape?.[shape])
-  const moreText = (shape && moreTextByShape?.[shape]) 
+  /* Text: prefer provided maps (can be undefined if not supplied) */
+  const baseText = shape ? baseTextByShape?.[shape] : undefined;
+  const moreText = shape ? moreTextByShape?.[shape] : undefined;
 
   const handleSelect = (v: "natural" | "lab") => {
     setType(v);
@@ -363,7 +362,12 @@ export function FiltersBar({
 export default function FinderWithFilters() {
   const [selectedShape, setSelectedShape] = useState<ShapeId>("round");
 
-  /* Per-shape title (edit to your exact copy) */
+  // NEW: pick initial type from the query (?type=lab | ?type=natural)
+  const searchParams = useSearchParams();
+  const qp = (searchParams?.get("type") || "").toLowerCase();
+  const initialType: "natural" | "lab" = qp === "lab" ? "lab" : "natural";
+
+  /* Per-shape title */
   const titleByShape: Partial<Record<ShapeId, string>> = {
     round: "Round Diamond Finder",
     princess: "Princess Diamond Finder",
@@ -377,7 +381,7 @@ export default function FinderWithFilters() {
     pear: "Pear Diamond Finder",
   };
 
-  /* Per-shape body texts (same as prior example; tweak freely) */
+  /* Per-shape body texts */
   const baseTextByShape: Partial<Record<ShapeId, string>> = {
     round:
       "Round is our most popular cut. For almost 100 years, diamond cutters have been using advanced theories of light behavior and precise mathematical calculations to optimize the fire",
@@ -421,6 +425,7 @@ export default function FinderWithFilters() {
   return (
     <>
       <DiamondFinder
+        defaultType={initialType} // ← seeded from ?type= query
         shape={selectedShape}
         titleByShape={titleByShape}
         baseTextByShape={baseTextByShape}

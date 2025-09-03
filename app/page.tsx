@@ -1,7 +1,7 @@
 // app/page.tsx
 import Header from "./components/Header";
 import HeroBanner from "./components/HeroBanner";
-import Rakhshabandhan2025 from "./components/Rakhshabandhan2025";
+// import Rakhshabandhan2025 from "./components/Rakhshabandhan2025";
 import SummerBannerMarquee from "./components/SummerBannerMarquee";
 import InstagramGrid from "./components/InstagramGrid";
 import SummerCollection from "./components/SummerCollection";
@@ -21,8 +21,8 @@ export default function Home() {
     <>
       
       <HeroBanner
-        videoSrc="/video/vd1.mp4"
-        imageSrc="/images/Sale Is Live (9).png"
+        videoSrc="/video/VN20250429_123637.mp4"
+        imageSrc="/images/IMG-20250505-WA0014.jpg"
         altText="Raksha Bandhan Banner"
         title="Sale Is Live"
         subtitle="Raksha Bandhan"
@@ -31,7 +31,7 @@ export default function Home() {
         textAlignment="left"
         padding="py-12"
       />
-      <Rakhshabandhan2025 />
+      {/* <Rakhshabandhan2025 /> */}
       <InstagramGrid />
       <SummerCollection />
       <SummerBannerMarquee />
