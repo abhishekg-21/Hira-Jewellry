@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import ProductGallery from "@/app/components/ProductGallery";
-import PurchaseBox from "./PurchaseBox";
 
 export const runtime = "nodejs";
 
@@ -15,10 +14,13 @@ function formatINR(paise: number) {
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string };
+  // ✅ Next 15 server pages: params is a Promise
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
+
   const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     select: {
       productId: true,
       slug: true,
@@ -52,21 +54,22 @@ export default async function ProductPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <ProductGallery images={images} alt={product.title} />
 
-          <div className="lg:sticky lg:top-24 self-start ml-45 mr-25">
+          <div className="lg:sticky lg:top-24 self-start">
             <h1 className="mt-20 text-center text-[28px] sm:text-[26px] font-medium text-black">
               {product.title}
             </h1>
 
-            <div className=" text-center text-[14px] text-black">{priceText}</div>
+            <div className="text-center text-[14px] text-black">{priceText}</div>
 
             <p className="mt-1 text-center text-sm text-black">
               Shipping calculated at{" "}
               <Link href="#shipping" className="underline underline-offset-4">
                 checkout
-              </Link>.
+              </Link>
+              .
             </p>
 
-            {/* Quantity (updated to match screenshot: minimalist row + thin divider) */}
+            {/* Quantity */}
             <div className="mt-3">
               <div className="text-center text-xs tracking-wide text-black">QUANTITY</div>
               <div className="mt-1 mx-auto max-w-[520px]">
@@ -75,24 +78,23 @@ export default async function ProductPage({
                   <span className="select-none">1</span>
                   <button className="px-2 leading-none" aria-label="Increase">+</button>
                 </div>
-                
               </div>
             </div>
 
-            {/* thin divider before buttons, as in reference */}
+            {/* divider */}
             <div className="mt-2 h-px bg-black max-w-[520px] mx-auto" />
 
-            {/* CTAs (unchanged) */}
+            {/* CTAs */}
             <div className="mt-1 max-w-[320px] mx-auto grid gap-2">
-              <button className="w-full border border-black py-2 text-sm tracking-wide hover:bg-black hover:text-white transition ">
+              <button className="w-full border border-black py-2 text-sm tracking-wide hover:bg-black hover:text-white transition">
                 ADD TO CART
               </button>
-              <button className="w-full border border-black py-2 text-sm tracking-wide hover:bg-black hover:text-white transition ">
+              <button className="w-full border border-black py-2 text-sm tracking-wide hover:bg-black hover:text-white transition">
                 BUY IT NOW
               </button>
             </div>
 
-            {/* Badges (unchanged) */}
+            {/* Badges */}
             <ul className="mt-7 max-w-[520px] mx-auto grid grid-cols-2 gap-y-2 gap-x-6 text-[11px] text-black">
               <li className="flex items-center gap-2 justify-center sm:justify-start">🪙 Fine 925 pure silver</li>
               <li className="flex items-center gap-2 justify-center sm:justify-start">↩️ 7 Days exchange & Return</li>
@@ -100,10 +102,9 @@ export default async function ProductPage({
               <li className="flex items-center gap-2 justify-center sm:justify-start">💳 Lifetime Plating</li>
               <li className="flex items-center gap-2 justify-center sm:justify-start">💳 Cash On Delivery</li>
               <li className="flex items-center gap-2 justify-center sm:justify-start">💳 Authenticity Certificate</li>
-
             </ul>
 
-            {/* Accordions (unchanged from your last version) */}
+            {/* Accordions */}
             <div
               className="mt-9 max-w-[520px] mx-auto divide-y divide-black border-y border-black"
               id="shipping"
@@ -112,7 +113,7 @@ export default async function ProductPage({
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Description</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black0">
+                <p className="pb-3 text-sm text-black">
                   Handcrafted Rakhi in 92.5 sterling silver with fine detailing.
                 </p>
               </details>
@@ -121,43 +122,43 @@ export default async function ProductPage({
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Shipping</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black">
-                  <div>We offer free shipping within India</div>
-                  <br />
-                  <div>We have both standard and express shipping option</div>
-                  <br />
-                  <div>Delivery time may vary from 8-10 days for in stock product and 15-20 days for Custom products.</div>
-                </p>
+                <div className="pb-3 text-sm text-black space-y-2">
+                  <div>We offer free shipping within India.</div>
+                  <div>We have both standard and express shipping options.</div>
+                  <div>
+                    Delivery time may vary from 8–10 days for in-stock products and 15–20 days for custom products.
+                  </div>
+                </div>
               </details>
 
               <details className="group">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">Payment Options</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black">We offer both cash on delivery and prepaid option (credit cards,debit cads/netbanking).</p>
+                <p className="pb-3 text-sm text-black">
+                  We offer both cash on delivery and prepaid options (credit cards, debit cards, net banking).
+                </p>
               </details>
 
               <details className="group">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-3">
                   <span className="font-medium">More Information</span><span>+</span>
                 </summary>
-                <p className="pb-3 text-sm text-black">
+                <div className="pb-3 text-sm text-black space-y-1">
                   <div>Imported by</div>
-                  <div>Hira jewellery</div>
-                  <br />
-                  <div>Marketed by</div>
+                  <div>Hira Jewellery</div>
+                  <div className="mt-2">Marketed by</div>
                   <div>HIRA</div>
-                  <div>Kalbadevi , zaveri bazar , mumbai 400002</div>
-                  <br />
-                  <div>Country of origin:</div>
+                  <div>Kalbadevi, Zaveri Bazar, Mumbai 400002</div>
+                  <div className="mt-2">Country of origin:</div>
                   <div>India</div>
-                </p>
+                </div>
               </details>
             </div>
 
-            {/* Bottom image (kept as you had it) */}
+            {/* Bottom image */}
             <div className="mt-6">
-              <div className="mx-auto w-full max-w-[320px] aspect-[4/4] relative">
+              <div className="mx-auto w-full max-w-[320px] aspect-[1/1] relative">
                 <Image
                   src={"/images/packing.png"}
                   alt="Box contents"
@@ -170,7 +171,7 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* Related (unchanged) */}
+        {/* Related */}
         <section className="mt-16 pb-15">
           <h2 className="text-2xl font-medium mb-6">You may also like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
