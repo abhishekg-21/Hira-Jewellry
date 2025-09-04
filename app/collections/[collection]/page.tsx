@@ -11,8 +11,7 @@ export const runtime = "nodejs";
 
 const PAGE_SIZE = 12;
 
-/* Map URL /collections/[collection] -> productType in DB
-   (includes singular + plural so links like /collections/necklaces work) */
+/* Map URL /collections/[collection] -> productType in DB */
 const typeMap: Record<string, string | null> = {
   "shop-all": null, // show everything
   necklace: "NECKLACE",
@@ -145,30 +144,34 @@ function introKey(slug: string) {
   return "shop-all";
 }
 
+// Helper: get first value if array
+function first(v: string | string[] | undefined) {
+  return Array.isArray(v) ? v[0] : v;
+}
+
 export default async function CollectionPage({
   params,
   searchParams,
 }: {
-  params: { collection: string };
-  searchParams: {
-    page?: string;
-    sort?: SortKey;
-    min?: string;
-    max?: string;
-  };
+  // ✅ Next 15 server pages receive Promises for params/searchParams
+  params: Promise<{ collection: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const productType = resolveType(params.collection);
+  const { collection } = await params;
+  const sp = await searchParams;
 
-  const page = Math.max(1, Number(searchParams.page ?? 1) || 1);
-  const sort: SortKey = (searchParams.sort as SortKey) || "best-selling";
+  const productType = resolveType(collection);
+
+  const page = Math.max(1, Number(first(sp.page) ?? 1) || 1);
+  const sort: SortKey = (first(sp.sort) as SortKey) || "best-selling";
 
   // safer numeric parsing (avoid accidentally turning 0 into undefined)
-  const nm = Number(searchParams.min);
-  const nx = Number(searchParams.max);
+  const nm = Number(first(sp.min));
+  const nx = Number(first(sp.max));
   const min = Number.isFinite(nm) ? nm : undefined;
   const max = Number.isFinite(nx) ? nx : undefined;
 
-  const where: any = {};
+  const where: Record<string, any> = {};
   if (productType) where.productType = productType;
   if (min !== undefined || max !== undefined) {
     where.priceCents = {};
@@ -194,12 +197,19 @@ export default async function CollectionPage({
 
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const title =
-    params.collection === "shop-all"
+    collection === "shop-all"
       ? "Shop All"
-      : params.collection.charAt(0).toUpperCase() + params.collection.slice(1);
+      : collection.charAt(0).toUpperCase() + collection.slice(1);
 
   // pick intro by collection; fall back to "shop-all"
-  const intro = introCopy[introKey(params.collection)];
+  const intro = introCopy[introKey(collection)];
+
+  // Flatten search params to simple {k:string} for PageLink
+  const flatSearchParams: Record<string, string | undefined> = {};
+  for (const [k, v] of Object.entries(sp)) {
+    const val = first(v);
+    if (typeof val === "string") flatSearchParams[k] = val;
+  }
 
   return (
     <main className="bg-[#fefcf8] min-h-screen text-black">
@@ -259,13 +269,13 @@ export default async function CollectionPage({
               page={page - 1}
               disabled={page <= 1}
               label="«"
-              searchParams={searchParams}
+              searchParams={flatSearchParams}
             />
             <PageLink
               page={page - 1}
               disabled={page <= 1}
               label="‹"
-              searchParams={searchParams}
+              searchParams={flatSearchParams}
             />
             <span className="mx-2 select-none">
               <strong>{page}</strong> / {pages}
@@ -274,13 +284,13 @@ export default async function CollectionPage({
               page={page + 1}
               disabled={page >= pages}
               label="›"
-              searchParams={searchParams}
+              searchParams={flatSearchParams}
             />
             <PageLink
               page={page + 1}
               disabled={page >= pages}
               label="»"
-              searchParams={searchParams}
+              searchParams={flatSearchParams}
             />
           </nav>
         )}
