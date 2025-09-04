@@ -79,13 +79,16 @@ function resolveType(slug?: string) {
 export default async function SalePage({
   searchParams,
 }: {
-  searchParams: { cat?: string };
+  // Next 15 passes searchParams as a Promise in server components
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const activeCat = (searchParams?.cat || "").toLowerCase();
+  const sp = await searchParams;
+  const activeCat = (Array.isArray(sp.cat) ? sp.cat[0] : sp.cat || "").toLowerCase();
+
   const productType = resolveType(activeCat); // null -> show everything
 
   // Build where based on selected category
-  const where: any = {};
+  const where: Record<string, unknown> = {};
   if (productType) where.productType = productType;
 
   // Count & fetch
