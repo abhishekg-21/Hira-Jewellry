@@ -21,7 +21,6 @@ type UIProduct = {
   reviews?: number;
 };
 
-// simple stars
 function Stars({ n = 4 }: { n?: number }) {
   const safe = Math.max(0, Math.min(5, n));
   return (
@@ -32,33 +31,15 @@ function Stars({ n = 4 }: { n?: number }) {
   );
 }
 
-/* Category tiles (with slug for filtering) */
 const CATS = [
-  {
-    label: "Earrings",
-    slug: "earrings",
-    icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Earrings.caaca (1).jpg",
-  },
-  {
-    label: "Necklace",
-    slug: "necklace",
-    icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Necklaces.6494f (1).jpg",
-  },
-  {
-    label: "Bracelet",
-    slug: "bracelet",
-    icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Bracelets.3b937 (1).jpg",
-  },
-  {
-    label: "Rings",
-    slug: "rings",
-    icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Rings.c4f09 (1).jpg",
-  },
+  { label: "Earrings", slug: "earrings", icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Earrings.caaca (1).jpg" },
+  { label: "Necklace", slug: "necklace", icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Necklaces.6494f (1).jpg" },
+  { label: "Bracelet", slug: "bracelet", icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Bracelets.3b937 (1).jpg" },
+  { label: "Rings", slug: "rings", icon: "/images/brands/endless/HeroSplit/SHOP JEWELRY SALE/Rings.c4f09 (1).jpg" },
 ];
 
 const FACETS = ["Metal", "Price", "Stone", "Style", "Carat", "Color", "Shape", "Delivery"];
 
-/** URL cat -> DB productType */
 const typeMap: Record<string, string | null> = {
   earring: "EARRING",
   earrings: "EARRING",
@@ -79,19 +60,16 @@ function resolveType(slug?: string) {
 export default async function SalePage({
   searchParams,
 }: {
-  // Next 15 passes searchParams as a Promise in server components
+  // ✅ Next 15: searchParams is a Promise in server components
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
   const activeCat = (Array.isArray(sp.cat) ? sp.cat[0] : sp.cat || "").toLowerCase();
+  const productType = resolveType(activeCat);
 
-  const productType = resolveType(activeCat); // null -> show everything
-
-  // Build where based on selected category
   const where: Record<string, unknown> = {};
   if (productType) where.productType = productType;
 
-  // Count & fetch
   const total = await prisma.product.count({ where });
 
   const dbProducts = await prisma.product.findMany({
@@ -120,7 +98,6 @@ export default async function SalePage({
   return (
     <main className="bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* heading */}
         <h1 className="text-center text-[20px] sm:text-[22px] tracking-wide font-semibold">
           Anniversary Sale Jewelry
         </h1>
@@ -128,50 +105,28 @@ export default async function SalePage({
           Save on sparkling styles: earrings, necklaces, bracelets & rings—limited-time offers.
         </p>
 
-        {/* category tiles (NO borders/rings) */}
         <div className="mt-6 grid grid-cols-4 max-w-[680px] mx-auto place-items-center gap-6">
           {CATS.map((c) => {
             const isActive = c.slug === activeCat;
-            const href =
-              c.slug ? `/brands/endless/sale?cat=${encodeURIComponent(c.slug)}` : `/brands/endless/sale`;
+            const href = c.slug ? `/brands/endless/sale?cat=${encodeURIComponent(c.slug)}` : `/brands/endless/sale`;
             return (
-              <Link
-                key={c.slug}
-                href={href}
-                className="group grid place-items-center gap-2 hover:opacity-90"
-                prefetch={false}
-              >
+              <Link key={c.slug} href={href} className="group grid place-items-center gap-2 hover:opacity-90" prefetch={false}>
                 <div className="relative h-[160px] w-[160px] rounded-full overflow-hidden bg-white">
-                  <Image
-                    src={c.icon}
-                    alt={c.label}
-                    fill
-                    sizes="160px"
-                    className="object-contain p-2 rounded-full"
-                  />
+                  <Image src={c.icon} alt={c.label} fill sizes="160px" className="object-contain p-2 rounded-full" />
                 </div>
-                <div className={`text-[11px] tracking-wide ${isActive ? "font-semibold" : ""}`}>
-                  {c.label}
-                </div>
+                <div className={`text-[11px] tracking-wide ${isActive ? "font-semibold" : ""}`}>{c.label}</div>
               </Link>
             );
           })}
         </div>
 
-        {/* facet chips row */}
-        <div
-          className="mt-6 flex items-center gap-2 overflow-x-auto pb-2
-                     [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
+        <div className="mt-6 flex items-center gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {FACETS.map((f) => (
             <button key={f} className="px-3 py-1.5 text-[11px] rounded-full bg-white hover:bg-neutral-50">
               {f} ▾
             </button>
           ))}
-
-          <span className="ml-auto text-[11px] text-neutral-600 whitespace-nowrap">
-            SHOWING {total} RESULTS
-          </span>
+          <span className="ml-auto text-[11px] text-neutral-600 whitespace-nowrap">SHOWING {total} RESULTS</span>
           <select className="text-[11px] bg-transparent underline underline-offset-4">
             <option>BEST SELLING</option>
             <option>PRICE, LOW TO HIGH</option>
@@ -180,28 +135,16 @@ export default async function SalePage({
           </select>
         </div>
 
-        {/* product grid — consistent card, image on top, details directly below */}
         {PRODUCTS.length > 0 ? (
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
             {PRODUCTS.map((p) => (
               <Link key={p.id} href={p.href} className="group block" prefetch={false}>
-                {/* image card (no border) */}
                 <div className="relative w-full aspect-[4/5] bg-white overflow-hidden rounded-sm">
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    fill
-                    sizes="(min-width:1024px) 25vw, 50vw"
-                    className="object-contain"
-                  />
+                  <Image src={p.img} alt={p.title} fill sizes="(min-width:1024px) 25vw, 50vw" className="object-contain" />
                   {p.badge && (
-                    <span className="absolute left-2 top-2 text-[10px] px-2 py-[2px] rounded bg-black text-white">
-                      {p.badge}
-                    </span>
+                    <span className="absolute left-2 top-2 text-[10px] px-2 py-[2px] rounded bg-black text-white">{p.badge}</span>
                   )}
                 </div>
-
-                {/* details directly under the image */}
                 <div className="mt-2 space-y-1">
                   <div className="text-[12px] leading-5 line-clamp-2">{p.title}</div>
                   <div className="text-[12px] font-semibold">{p.price}</div>
