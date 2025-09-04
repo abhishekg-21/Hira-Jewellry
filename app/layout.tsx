@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CartProvider>
           <div className="min-h-screen flex flex-col">
             {/* keep the brand strip everywhere */}
-            <BrandStrip />
+            {/* <BrandStrip /> */}
 
             {/* decides whether to show global header/footer */}
             <SiteChrome>{children}</SiteChrome>

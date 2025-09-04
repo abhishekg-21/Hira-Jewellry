@@ -1,13 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export type CartLine = {
-  id: string;              // unique line id
-  productId: string;       // your product id/slug
+  id: string;           // unique line id
+  productId: string;    // internal product id (db id or handle)
+  slug: string;         // <-- NEW: required for PDP deep-link (/products/[slug])
   title: string;
   image: string;
-  priceCents: number;      // store as paise/cents
+  priceCents: number;   // store as paise/cents
   quantity: number;
   variant?: string | null;
 };
@@ -33,8 +34,10 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "hj_cart_v1";
 
+/** LocalStorage helper (unchanged) */
 function useLocalStorage<T>(key: string, initial: T) {
   const [state, setState] = useState<T>(initial);
+
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(key);
@@ -42,16 +45,36 @@ function useLocalStorage<T>(key: string, initial: T) {
     } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   useEffect(() => {
     try {
       window.localStorage.setItem(key, JSON.stringify(state));
     } catch {}
   }, [key, state]);
+
   return [state, setState] as const;
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [{ lines, isOpen }, setCart] = useLocalStorage<CartState>(STORAGE_KEY, { lines: [], isOpen: false });
+  const [{ lines, isOpen }, setCart] = useLocalStorage<CartState>(STORAGE_KEY, {
+    lines: [],
+    isOpen: false,
+  });
+
+  /** 🔧 One-time upgrade: backfill slug for older carts (if missing) */
+  useEffect(() => {
+    // If any line is missing `slug`, set slug = productId (best-effort fallback)
+    if (lines.some((l: any) => !("slug" in l) || !l.slug)) {
+      setCart((c) => ({
+        ...c,
+        lines: c.lines.map((l: any) => ({
+          ...l,
+          slug: l.slug ?? l.productId, // fallback so links work immediately
+        })) as CartLine[],
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setCart]);
 
   const api = useMemo<CartContextValue>(() => {
     const open = () => setCart((c) => ({ ...c, isOpen: true }));
@@ -60,7 +83,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const add: CartContextValue["add"] = (line) =>
       setCart((c) => {
-        const existing = c.lines.find((l) => l.productId === line.productId && l.variant === line.variant);
+        // Merge by productId + variant (your previous behavior)
+        const existing = c.lines.find(
+          (l) => l.productId === line.productId && l.variant === line.variant
+        );
         if (existing) {
           return {
             ...c,
@@ -71,7 +97,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           };
         }
         const id = crypto.randomUUID();
-        return { ...c, lines: [...c.lines, { ...line, id, quantity: line.quantity ?? 1 }], isOpen: true };
+        return {
+          ...c,
+          lines: [
+            ...c.lines,
+            {
+              ...line,
+              id,
+              quantity: line.quantity ?? 1,
+              // safety: ensure slug is always present on new lines
+              slug: (line as any).slug ?? (line as any).productId,
+            } as CartLine,
+          ],
+          isOpen: true,
+        };
       });
 
     const remove = (lineId: string) =>

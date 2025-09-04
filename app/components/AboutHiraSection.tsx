@@ -22,7 +22,7 @@ export default function AboutStickyImages({
   title,
   body,
   ctaLabel = "ABOUT US",
-  ctaHref = "/about",
+  ctaHref = "/components/about",
   img1,
   img2,
   alt1 = "Craft process",
