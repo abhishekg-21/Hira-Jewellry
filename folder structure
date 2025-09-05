@@ -76,3 +76,25 @@ hira-jewellery/
 ├── postcss.config.js
 ├── tailwind.config.js
 └── tsconfig.json
+
+
+git add .
+git commit -m "c"
+git push
+
+# 1) Make sure you're on main
+git checkout main
+
+# 2) Fetch the remote branches/tags
+git fetch origin
+
+# 3) Rebase your local commits on top of what's on GitHub
+git pull --rebase origin main
+
+# (If you see conflicts, fix files → `git add <file>` → continue)
+# Repeat until rebase finishes:
+#   git rebase --continue
+
+# 4) Now your history lines up; push succeeds
+git push origin main
+
