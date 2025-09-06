@@ -40,10 +40,10 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
   }, []);
 
   return (
-    <section >
+    <section className={customClass}>
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-stretch gap-0">
         {/* Video Side */}
-        <div className="relative w-full h-[500px] lg:h-[650px] overflow-hidden">
+        <div className="relative w-full h-[380px] sm:h-[450px] lg:h-[650px] overflow-hidden">
           <video
             ref={videoRef}
             src={videoSrc}
@@ -53,16 +53,16 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute bottom-12 left-0 text-white z-10 max-w-sm px-8">
-            <h2 className="text-4xl font-semibold leading-snug drop-shadow-md">
+          <div className="absolute bottom-6 sm:bottom-10 left-0 text-white z-10 max-w-xs sm:max-w-sm px-4 sm:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-snug drop-shadow-md">
               Where Tradition<br />Meets Treasure
             </h2>
-            <p className="mt-2 text-[15px] font-light drop-shadow-md">
+            <p className="mt-2 text-sm sm:text-[15px] font-light drop-shadow-md">
               Gift her heirloom-worthy elegance—this Rakhi, only the finest will do.
             </p>
             <Link
               href="/collections/rakhi"
-              className="inline-block mt-4 bg-white text-black px-5 py-2 text-sm font-medium shadow hover:bg-gray-100"
+              className="inline-block mt-4 bg-white text-black px-4 sm:px-5 py-2 text-xs sm:text-sm font-medium shadow hover:bg-gray-100"
             >
               SHOP LATEST COLLECTION
             </Link>
@@ -70,22 +70,20 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
         </div>
 
         {/* Image Side */}
-        <div className="relative w-full h-[500px] lg:h-[650px]">
+        <div className="relative w-full h-[380px] sm:h-[450px] lg:h-[650px]">
           <Image
             src={imageSrc}
             alt={altText}
             fill
             className="object-cover"
           />
-          <div className="absolute bottom-5 left-80 z-10">
-            <div className="">
-              <Link
-  href={ctaUrl}
-  className="mt-3 inline-block border border-black text-black px-6.5 py-2.5 text-xs hover:bg-gray hover:text-black transition"
->
-  {ctaText || "SHOP NOW"}
-</Link>
-            </div>
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 sm:left-3/4 transform -translate-x-1/2 sm:translate-x-0 z-10">
+            <Link
+              href={ctaUrl}
+              className="mt-3 inline-block border border-black text-black px-4 sm:px-6 py-2 text-xs sm:text-sm hover:bg-gray hover:text-black transition"
+            >
+              {ctaText || "SHOP NOW"}
+            </Link>
           </div>
         </div>
       </div>
