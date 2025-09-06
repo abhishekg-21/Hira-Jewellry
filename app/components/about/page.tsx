@@ -7,15 +7,17 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="bg-[#fbf7f0]">
+    <main className="bg-[#fbf7f0] text-black">
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-8 pt-14">
         <header className="max-w-3xl mx-auto text-center">
           <p className="text-xs tracking-[0.2em] uppercase text-neutral-600">
             About Hira Jewellery
           </p>
-          <h1 className="mt-2 text-3xl sm:text-[34px] font-semibold tracking-tight text-black">
-            A Story of Unparalleled<br />Craftsmanship
+          <h1 className="mt-2 text-3xl sm:text-[34px] font-semibold tracking-tight">
+            A Story of Unparalleled
+            <br />
+            Craftsmanship
           </h1>
           <p className="mt-4 text-[15px] leading-7 text-neutral-700">
             We are manufacturers of fine Gold and Silver jewelry. With the experience of 35+ years we offer
@@ -71,7 +73,7 @@ export default function AboutPage() {
           {/* Left image (black & white workshop) */}
           <div className="relative min-h-[360px]">
             <Image
-              src="/images/about/karigar_bw.jpg"  // <-- replace with your left image path
+              src="/images/about/karigar_bw.jpg"
               alt="Crafting jewellery"
               fill
               className="object-cover"
@@ -81,20 +83,18 @@ export default function AboutPage() {
 
           {/* Right beige block */}
           <div className="bg-[#f3e5d6] px-6 sm:px-10 py-10">
-            <h2 className="text-4xl md:text-5xl font-medium text-black text-center">
-              Our Backbone
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-medium text-center">Our Backbone</h2>
 
             <p className="mt-6 text-[17px] leading-8 text-black/80 text-center">
               As we all know that best jewellery karigars are mostly from Calcutta. History has it that Bengali
               karigars from the region are amongst the most preferred labors in manufacturing of gold and
-              diamond jewelry. follow the same ancient tradition for more than 35+ years of making gold and
-              diamond jewelry from our skilled Bengali karigars who specialist in curating imagination into
-              reality . we want our clients to feel the same pride when wearing the pieces from our store that
+              diamond jewelry. We follow the same ancient tradition for more than 35+ years of making gold and
+              diamond jewelry from our skilled Bengali karigars who specialize in curating imagination into
+              reality. We want our clients to feel the same pride when wearing the pieces from our store that
               we do in making your jewelry.
             </p>
 
-            {/* Comparison table (exact look) */}
+            {/* Comparison table */}
             <div className="mt-10">
               <table className="w-full border-2 border-black text-center">
                 <thead>
@@ -102,26 +102,22 @@ export default function AboutPage() {
                     <th className="w-1/2 py-5 md:py-6 text-4xl md:text-5xl font-medium border-r-2 border-black">
                       Hira
                     </th>
-                    <th className="w-1/2 py-5 md:py-6 text-4xl md:text-5xl font-medium">
-                      Others
-                    </th>
+                    <th className="w-1/2 py-5 md:py-6 text-4xl md:text-5xl font-medium">Others</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    {/* Hira column */}
                     <td className="align-top border-r-2 border-black">
                       <div className="px-6 md:px-10 py-8 md:py-10 space-y-8 text-[16px] md:text-[17px] text-black/85">
-                        <div>Manufacturer -&gt; consumer</div>
-                        <div>50 – 100% off on making charges</div>
+                        <div>Manufacturer → consumer</div>
+                        <div>50–100% off on making charges</div>
                         <div>Customisable jewellery</div>
                         <div>No extra charges</div>
                       </div>
                     </td>
-                    {/* Others column */}
                     <td className="align-top">
                       <div className="px-6 md:px-10 py-8 md:py-10 space-y-8 text-[16px] md:text-[17px] text-black/85">
-                        <div>Manufacturer-&gt; wholesaler-&gt;retailer-&gt; consumer</div>
+                        <div>Manufacturer → wholesaler → retailer → consumer</div>
                         <div>Expensive making charges</div>
                         <div>Cannot be customised</div>
                         <div>Extra retail price and taxes</div>
