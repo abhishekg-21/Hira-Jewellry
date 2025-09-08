@@ -59,7 +59,7 @@ const Header = () => {
 
         {/* Main Header */}
         <header className="bg-[#fdf9f4]">
-          <div className={`max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px]`}>
+          <div className={`w-full grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px]`}>
             {/* Mobile Menu Button */}
             <button className="lg:hidden" onClick={toggleMenu}>
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
