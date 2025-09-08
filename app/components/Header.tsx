@@ -62,7 +62,7 @@ const Header = () => {
 
         {/* Main Header */}
         <header className="bg-[#fdf9f4]">
-          <div className={`max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px] ${menuOpen ? 'hidden' : ''}`}>
+          <div className={`w-full mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px] ${menuOpen ? 'hidden' : ''}`}>
             {/* Left Nav (Desktop) — text menus with a single trailing chevron */}
             <div className="hidden lg:flex justify-start text-[13px] font-normal tracking-wide whitespace-nowrap overflow-x-auto">
               <nav className="flex items-center gap-4 text-[14px] font-normal tracking-wide">
