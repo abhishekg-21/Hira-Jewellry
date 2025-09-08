@@ -4,17 +4,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import VideoModal from "./VideoModal";
-import QuickViewDrawer from "./QuickViewDrawer"; // ⬅️ new
+import QuickViewDrawer from "./QuickViewDrawer";
 
 interface InstaPost {
   video: string;
   title: string;
-  link: string;              // e.g. "/products/monogram"
+  link: string;
   topText: string;
-  image: string;             // small avatar on the card
-  poster?: string;       // ⬅️ slideshow images for quick view
-  priceCents: number;        // ⬅️ paise for quick view
-  options?: { name: string; values: string[] }[]; // ⬅️ optional product options
+  image: string;
+  poster?: string;
+  priceCents: number;
+  options?: { name: string; values: string[] }[];
 }
 
 const basePosts: InstaPost[] = [
@@ -28,7 +28,8 @@ const basePosts: InstaPost[] = [
     priceCents: 185000,
     options: [{ name: "Color", values: ["White Gold", "Yellow Gold"] }],
   },
-  {
+  // ... keep your other posts unchanged ...
+    {
     video: "/video/Hira_Vermile/hiravermeil_1743431593_3600487344122160290_49035025956.mp4",
     title: "Cresent Moon Bracelet",
     link: "/products/marquise",
@@ -87,16 +88,16 @@ const basePosts: InstaPost[] = [
 ];
 
 const InstagramGrid = () => {
-  // Infinite scroll state
-  const [items, setItems] = useState<InstaPost[]>(() => [...basePosts, ...basePosts]);
+  const [items, setItems] = useState<InstaPost[]>(() => [
+    ...basePosts,
+    ...basePosts,
+  ]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  // Video modal state
   const [selectedVideo, setSelectedVideo] = useState<InstaPost | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Quick view drawer state
   const [quickOpen, setQuickOpen] = useState(false);
   const [quickProduct, setQuickProduct] = useState<{
     title: string;
@@ -106,7 +107,6 @@ const InstagramGrid = () => {
     options?: { name: string; values: string[] }[];
   } | null>(null);
 
-  // Open video modal
   const handleVideoClick = (post: InstaPost) => {
     setSelectedVideo(post);
     setIsModalOpen(true);
@@ -116,20 +116,18 @@ const InstagramGrid = () => {
     setSelectedVideo(null);
   };
 
-  // Open quick view (from cart icon)
   const openQuick = (post: InstaPost) => {
     const slug = post.link.replace(/^\/products\//, "");
     setQuickProduct({
       title: post.title,
       priceCents: post.priceCents,
       slug,
-      images : [post.image],
+      images: [post.image],
       options: post.options,
     });
     setQuickOpen(true);
   };
 
-  // Append more items when the sentinel becomes visible
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
@@ -138,7 +136,7 @@ const InstagramGrid = () => {
       (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
-          setItems((prev) => [...prev, ...basePosts]); // append one page
+          setItems((prev) => [...prev, ...basePosts]);
         }
       },
       { root: containerRef.current, rootMargin: "800px", threshold: 0 }
@@ -150,15 +148,20 @@ const InstagramGrid = () => {
 
   return (
     <>
-      <section className="py-12 bg-[#fdf9f4] overflow-x-auto">
+      <section className="py-6 sm:py-12 bg-[#fdf9f4]">
         <div
           ref={containerRef}
-          className="flex gap-4 px-6 md:px-10 overflow-x-scroll scrollbar-hide"
+          className="flex gap-3 sm:gap-4 px-3 sm:px-6 md:px-10 overflow-x-scroll scrollbar-hide"
         >
           {items.map((post, idx) => (
             <div
               key={`${post.title}-${idx}`}
-              className="relative w-[250px] h-[400px] shrink-0 rounded-xl overflow-hidden group"
+              className="
+                relative shrink-0 rounded-lg overflow-hidden group
+                w-[160px] h-[260px]    /* 📱 Mobile size */
+                sm:w-[220px] sm:h-[340px]  /* 📱 Tablet size */
+                md:w-[250px] md:h-[400px]  /* 💻 Desktop size */
+              "
               onClick={() => handleVideoClick(post)}
             >
               <video
@@ -169,22 +172,28 @@ const InstagramGrid = () => {
                 playsInline
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-black/80 rounded-lg flex items-center px-2 py-2 gap-2 z-10">
-                <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center shrink-0 overflow-hidden">
+              {/* Overlay bar */}
+              <div
+                className="
+                  absolute bottom-3 left-2 right-2 bg-black/70 
+                  rounded-md flex items-center px-2 py-1 gap-2 z-10
+                  sm:bottom-4 sm:px-2.5 sm:py-2
+                "
+              >
+                <div className="w-7 h-7 sm:w-9 sm:h-9 bg-white rounded-md flex items-center justify-center overflow-hidden">
                   <Image
                     src={post.image}
                     alt={`${post.title} icon`}
-                    width={40}
-                    height={40}
+                    width={36}
+                    height={36}
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <span className="text-white text-sm font-medium truncate flex-1">
+                <span className="text-white text-[11px] sm:text-sm font-medium truncate flex-1">
                   {post.title}
                 </span>
-                {/* Cart → open Quick View; stop click bubbling so video modal doesn't open */}
                 <button
-                  className="w-8 h-8 bg-black rounded-full flex items-center justify-center shrink-0"
+                  className="w-6 h-6 sm:w-8 sm:h-8 bg-black rounded-full flex items-center justify-center"
                   onClick={(e) => {
                     e.stopPropagation();
                     openQuick(post);
@@ -194,26 +203,22 @@ const InstagramGrid = () => {
                   <Image
                     src="/images/Bold White Cart.png"
                     alt="Cart icon"
-                    width={20}
-                    height={20}
-                    className="object-contain"
+                    width={16}
+                    height={16}
+                    className="sm:w-[20px] sm:h-[20px] object-contain"
                   />
                 </button>
               </div>
             </div>
           ))}
-
-          {/* Sentinel to trigger more items */}
           <div ref={sentinelRef} className="w-px h-1" />
         </div>
       </section>
 
-      {/* Fullscreen video modal */}
       {isModalOpen && selectedVideo && (
         <VideoModal post={selectedVideo} onClose={handleCloseVideo} />
       )}
 
-      {/* Slide-in quick view with slideshow */}
       <QuickViewDrawer
         open={quickOpen}
         onClose={() => setQuickOpen(false)}

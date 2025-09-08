@@ -34,11 +34,17 @@ const summerCollection = [
 export default function SummerCollection() {
   return (
     <section className="w-full bg-[#fffaf2]">
-      {/* First Row: 2 big images side by side */}
+      {/* First Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
         {summerCollection.slice(0, 2).map((item, index) => (
           <Link href={item.link} key={index}>
-            <div className="relative w-full h-[400px] md:h-[400px] cursor-pointer">
+            <div
+              className="
+                relative w-full 
+                h-[300px] sm:h-[350px] md:h-[400px] 
+                cursor-pointer
+              "
+            >
               <Image
                 src={item.image}
                 alt={item.title}
@@ -46,7 +52,12 @@ export default function SummerCollection() {
                 className="object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+                <span
+                  className="
+                    text-white text-xs sm:text-sm md:text-base 
+                    border border-white px-4 sm:px-5 py-1.5 sm:py-2
+                  "
+                >
                   {item.title}
                 </span>
               </div>
@@ -56,12 +67,18 @@ export default function SummerCollection() {
       </div>
 
       {/* Second Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-4 md:mt-1">
-        {/* Left column: 2 small images side-by-side */}
-        <div className="grid grid-cols-2 gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-3 md:mt-1">
+        {/* Left: 2 images */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-1">
           {summerCollection.slice(2, 4).map((item, index) => (
             <Link href={item.link} key={index}>
-              <div className="relative w-full h-[250px] md:h-[400px] cursor-pointer">
+              <div
+                className="
+                  relative w-full 
+                  h-[280px] sm:h-[320px] md:h-[400px] 
+                  cursor-pointer
+                "
+              >
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -69,7 +86,12 @@ export default function SummerCollection() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+                  <span
+                    className="
+                      text-white text-xs sm:text-sm md:text-base 
+                      border border-white px-4 sm:px-5 py-1.5 sm:py-2
+                    "
+                  >
                     {item.title}
                   </span>
                 </div>
@@ -78,9 +100,15 @@ export default function SummerCollection() {
           ))}
         </div>
 
-        {/* Right column: 1 tall image */}
+        {/* Right: Tall image */}
         <Link href={summerCollection[4].link}>
-          <div className="relative w-full h-[400px] cursor-pointer">
+          <div
+            className="
+              relative w-full 
+              h-[300px] sm:h-[350px] md:h-[400px] 
+              cursor-pointer
+            "
+          >
             <Image
               src={summerCollection[4].image}
               alt={summerCollection[4].title}
@@ -88,7 +116,12 @@ export default function SummerCollection() {
               className="object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+              <span
+                className="
+                  text-white text-xs sm:text-sm md:text-base 
+                  border border-white px-4 sm:px-5 py-1.5 sm:py-2
+                "
+              >
                 {summerCollection[4].title}
               </span>
             </div>
