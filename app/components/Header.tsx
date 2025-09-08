@@ -47,7 +47,7 @@ const Header = () => {
 
         {/* === Main Header === */}
         <header className="bg-[#fdf9f4] relative">
-          <div className="max-w-[1440px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
+          <div className="w-full mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
             {/* === Left Section (Mobile: menu + search) === */}
             <div className="flex items-center gap-4 lg:hidden">
               <button onClick={toggleMenu} aria-label="Menu">
