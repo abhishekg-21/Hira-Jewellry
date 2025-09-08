@@ -46,9 +46,8 @@ const Header = () => {
         </div>
 
         {/* === Main Header === */}
-        <header className="bg-[#fdf9f4]">
-          <div className="w-full mx-auto grid grid-cols-3 items-center px-22 min-h-[65px] lg:min-h-[75px]">
-            
+        <header className="bg-[#fdf9f4] relative">
+          <div className="max-w-[1440px] mx-auto grid grid-cols-[auto_1fr_auto] items-center px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
             {/* === Left Section (Mobile: menu + search) === */}
             <div className="flex items-center gap-4 lg:hidden">
               <button onClick={toggleMenu} aria-label="Menu">
@@ -64,8 +63,8 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* === Desktop Nav (no scrollbar) === */}
-            <div className="hidden lg:flex justify-start text-[13px] font-normal tracking-wide">
+            {/* === Desktop Nav === */}
+            <div className="hidden lg:flex justify-start">
               <nav className="flex items-center gap-6 text-[14px] font-normal tracking-wide">
                 {menuData.map((item) => (
                   <div key={item.label} className="group relative">
@@ -88,23 +87,24 @@ const Header = () => {
               </nav>
             </div>
 
-            {/* === Center: Logo === */}
-            <div className="flex justify-center">
+            {/* === Logo (Always Centered) === */}
+            <div className="absolute left-1/2 -translate-x-1/2 flex justify-center">
               <Link href="/" className="relative w-[110px] sm:w-[140px] h-[32px] sm:h-[37px]">
                 <Image
                   src="/images/HIRA.png"
                   alt="Hira Logo"
                   fill
                   className="object-contain"
+                  priority
                 />
               </Link>
             </div>
 
             {/* === Right Section === */}
-            <div className="flex justify-end items-center">
+            <div className="flex justify-end items-center gap-3">
               {/* Desktop icons */}
-              <div className="hidden lg:flex items-center gap-3">
-                <Link href="/account" className="relative w-7 h-7">
+              <div className="hidden lg:flex items-center gap-4">
+                <Link href="/account" className="relative w-6 h-6 lg:w-7 lg:h-7">
                   <Image
                     src="/images/User icon.png"
                     alt="User"
@@ -112,7 +112,7 @@ const Header = () => {
                     className="object-contain"
                   />
                 </Link>
-                <Link href="/search" className="relative w-7 h-7">
+                <Link href="/search" className="relative w-6 h-6 lg:w-7 lg:h-7">
                   <Image
                     src="/images/Search icon.png"
                     alt="Search"
@@ -137,17 +137,17 @@ const Header = () => {
           </div>
         </header>
 
-        {/* === Dropdown (desktop only) === */}
+        {/* === Desktop Dropdown === */}
         {activeDropdown && (
-          <div className="hidden lg:flex w-full py-8 px-30 z-40 min-h-[550px] gap-10 bg-[#fefcf8]">
+          <div className="hidden lg:flex w-full py-8 px-8 z-40 min-h-[550px] gap-10 bg-[#fefcf8]">
             {menuData.map((item) => {
               if (item.label === activeDropdown && item.columns) {
                 return (
                   <div key={item.label} className="flex gap-10 w-full min-h-[450px]">
                     {/* Column Links */}
-                    <div className="flex gap-6 flex-grow">
+                    <div className="flex gap-6 flex-grow flex-wrap">
                       {item.columns.map((col, index) => (
-                        <div key={index} className="w-[320px]">
+                        <div key={index} className="min-w-[200px]">
                           <h4 className="text-[14px] mb-4 tracking-wide uppercase">
                             {col.heading}
                           </h4>
@@ -168,11 +168,11 @@ const Header = () => {
                     </div>
 
                     {/* Promo Images */}
-                    <div className="flex gap-6">
+                    <div className="flex gap-6 flex-wrap">
                       {item.promos?.map((promo, i) => (
-                        <div key={promo.label || i} className="w-[285px] text-left">
+                        <div key={promo.label || i} className="w-[220px] lg:w-[285px] text-left">
                           <Link href={promo.link}>
-                            <div className="relative h-[440px] w-[285px]">
+                            <div className="relative h-[220px] lg:h-[440px] w-full">
                               <Image
                                 src={promo.image}
                                 alt={promo.label}
@@ -209,7 +209,6 @@ const Header = () => {
           <X size={24} />
         </button>
 
-        {/* Mobile Nav Links */}
         {menuData.map((item) => (
           <div key={item.label} className="py-2">
             {item.columns ? (
