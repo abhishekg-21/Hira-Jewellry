@@ -49,7 +49,7 @@ const Header = () => {
 
         {/* === Main Header === */}
         <header className="bg-[#fdf9f4] relative">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-3 items-center px-4 sm:px-6 lg:px-8 h-[60px] lg:h-[75px] relative">
+          <div className="w-full mx-auto grid grid-cols-3 items-center px-4 sm:px-6 lg:px-8 h-[60px] lg:h-[75px] relative">
             {/* === Left Section (Mobile: menu + search) === */}
             <div className="flex items-center gap-4 lg:hidden">
               {/* Menu */}
