@@ -47,7 +47,7 @@ const Header = () => {
 
         {/* === Main Header === */}
         <header className="bg-[#fdf9f4] relative">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-[auto_1fr_auto] items-center px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
+          <div className="max-w-[1440px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
             {/* === Left Section (Mobile: menu + search) === */}
             <div className="flex items-center gap-4 lg:hidden">
               <button onClick={toggleMenu} aria-label="Menu">
@@ -101,7 +101,7 @@ const Header = () => {
             </div>
 
             {/* === Right Section === */}
-            <div className="flex justify-end items-center gap-3">
+            <div className="flex items-center">
               {/* Desktop icons */}
               <div className="hidden lg:flex items-center gap-4">
                 <Link href="/account" className="relative w-6 h-6 lg:w-7 lg:h-7">
