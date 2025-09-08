@@ -12,9 +12,9 @@ interface InstaPost {
   link: string;              // e.g. "/products/monogram"
   topText: string;
   image: string;             // small avatar on the card
-  poster?: string;           // slideshow images for quick view
-  priceCents: number;        // paise for quick view
-  options?: { name: string; values: string[] }[]; // optional product options
+  poster?: string;       // ⬅️ slideshow images for quick view
+  priceCents: number;        // ⬅️ paise for quick view
+  options?: { name: string; values: string[] }[]; // ⬅️ optional product options
 }
 
 const basePosts: InstaPost[] = [
@@ -123,7 +123,7 @@ const InstagramGrid = () => {
       title: post.title,
       priceCents: post.priceCents,
       slug,
-      images: [post.image],
+      images : [post.image],
       options: post.options,
     });
     setQuickOpen(true);
@@ -150,15 +150,15 @@ const InstagramGrid = () => {
 
   return (
     <>
-      <section className="py-8 sm:py-12 bg-[#fdf9f4]">
+      <section className="py-12 bg-[#fdf9f4] overflow-x-auto">
         <div
           ref={containerRef}
-          className="flex gap-3 sm:gap-4 px-4 sm:px-6 md:px-10 overflow-x-scroll scrollbar-hide"
+          className="flex gap-4 px-6 md:px-10 overflow-x-scroll scrollbar-hide"
         >
           {items.map((post, idx) => (
             <div
               key={`${post.title}-${idx}`}
-              className="relative w-[180px] sm:w-[220px] md:w-[250px] h-[300px] sm:h-[360px] md:h-[400px] shrink-0 rounded-lg sm:rounded-xl overflow-hidden group"
+              className="relative w-[250px] h-[400px] shrink-0 rounded-xl overflow-hidden group"
               onClick={() => handleVideoClick(post)}
             >
               <video
@@ -169,8 +169,8 @@ const InstagramGrid = () => {
                 playsInline
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 bg-black/80 rounded-md sm:rounded-lg flex items-center px-2 py-1.5 sm:py-2 gap-2 z-10">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-md flex items-center justify-center shrink-0 overflow-hidden">
+              <div className="absolute bottom-4 left-4 right-4 bg-black/80 rounded-lg flex items-center px-2 py-2 gap-2 z-10">
+                <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center shrink-0 overflow-hidden">
                   <Image
                     src={post.image}
                     alt={`${post.title} icon`}
@@ -179,12 +179,12 @@ const InstagramGrid = () => {
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <span className="text-white text-xs sm:text-sm font-medium truncate flex-1">
+                <span className="text-white text-sm font-medium truncate flex-1">
                   {post.title}
                 </span>
                 {/* Cart → open Quick View; stop click bubbling so video modal doesn't open */}
                 <button
-                  className="w-7 h-7 sm:w-8 sm:h-8 bg-black rounded-full flex items-center justify-center shrink-0"
+                  className="w-8 h-8 bg-black rounded-full flex items-center justify-center shrink-0"
                   onClick={(e) => {
                     e.stopPropagation();
                     openQuick(post);
@@ -194,8 +194,8 @@ const InstagramGrid = () => {
                   <Image
                     src="/images/Bold White Cart.png"
                     alt="Cart icon"
-                    width={18}
-                    height={18}
+                    width={20}
+                    height={20}
                     className="object-contain"
                   />
                 </button>

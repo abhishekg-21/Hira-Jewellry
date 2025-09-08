@@ -30,7 +30,7 @@ export default function AboutStickyImages({
   background = "#fff9f3",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0); // 0..1
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -59,6 +59,7 @@ export default function AboutStickyImages({
     };
   }, []);
 
+  // animation timing for the overlay image
   const eased = clamp01((progress - 0.15) / 0.7);
   const opacity = eased;
   const translateY = (1 - eased) * 18;
@@ -67,27 +68,29 @@ export default function AboutStickyImages({
     <section style={{ background }} className="w-full">
       <div
         ref={wrapRef}
-        className="mx-auto max-w-[1320px] px-4 sm:px-6 md:px-8 lg:px-10 py-10 sm:py-12 lg:py-24"
+        className="mx-auto max-w-[1320px] px-6 md:px-8 lg:px-10 py-12 lg:py-24"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16">
-          {/* LEFT: copy block */}
-          <div className="relative text-center lg:text-left">
-            <div className="sticky top-14 sm:top-16 md:top-20 lg:top-24">
-              <div className="h-[60vh] sm:h-[68vh] md:h-[76vh] lg:h-[78vh] grid content-center">
-                <div className="-mt-2">
-                  <p className="text-[12px] sm:text-[13px] tracking-[0.2em] uppercase text-neutral-600 mb-2 sm:mb-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* LEFT: sticky + vertically centered (exact placement) */}
+          <div className="relative text-center">
+            {/* stick the whole copy block */}
+            <div className="sticky top-16 md:top-20 lg:top-24">
+              {/* match the visual stage height and center content */}
+              <div className="h-[70vh] md:h-[76vh] lg:h-[78vh] grid content-center">
+                <div className="-mt-2"> {/* tweak up a hair to match screenshot */}
+                  <p className="text-[13px] tracking-[0.2em] uppercase text-neutral-600 mb-3 ">
                     {eyebrow}
                   </p>
-                  <h2 className="text-[28px] sm:text-[34px] md:text-[42px] lg:text-[45px] leading-[1.2] md:leading-[1.1] font-bold mb-4 sm:mb-6">
+                  <h2 className="text-[42px] leading-[1.1] md:text-[45px] md:leading-[1.08] font-bold mb-6 ">
                     {title}
                   </h2>
-                  <p className="text-[15px] sm:text-[16px] md:text-[17px] leading-relaxed sm:leading-[1.7] md:leading-[1.75] text-neutral-800 mb-6 sm:mb-8">
+                  <p className="text-[17px] leading-[1.75] text-neutral-800 mb-8 ">
                     {body}
                   </p>
                   {ctaLabel ? (
                     <a
                       href={ctaHref}
-                      className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 border border-neutral-900 text-neutral-900 text-sm sm:text-base hover:bg-neutral-900 hover:text-white transition-colors"
+                      className="inline-flex items-center justify-center h-12 px-8 border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-colors "
                     >
                       {ctaLabel}
                     </a>
@@ -97,10 +100,10 @@ export default function AboutStickyImages({
             </div>
           </div>
 
-          {/* RIGHT: sticky image stage */}
+          {/* RIGHT: sticky image stage (unchanged) */}
           <div className="relative">
-            <div className="h-[160vh] sm:h-[180vh] md:h-[210vh] relative">
-              <div className="sticky top-14 sm:top-16 md:top-20 lg:top-24 h-[60vh] sm:h-[68vh] md:h-[76vh] lg:h-[78vh] overflow-hidden rounded-none">
+            <div className="h-[210vh] relative">
+              <div className="sticky top-16 md:top-20 lg:top-24 h-[70vh] md:h-[76vh] lg:h-[78vh] overflow-hidden rounded-none">
                 <div className="absolute inset-0">
                   <Image
                     src={img1}

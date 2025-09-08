@@ -1,18 +1,11 @@
 /* 🔥 Custom slim horizontal scrollbar style */
 .scrollbar-custom {
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: thin;
   scrollbar-color: black #e5e5e5;
 }
 
-/* WebKit browsers */
 .scrollbar-custom::-webkit-scrollbar {
-  height: 3px; /* slightly slimmer for mobile */
-}
-
-@media (min-width: 640px) {
-  .scrollbar-custom::-webkit-scrollbar {
-    height: 4px; /* normal size on tablet/desktop */
-  }
+  height: 4px;
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
@@ -26,11 +19,10 @@
   border: none;
 }
 
-/* Hide scrollbar completely */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE/Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

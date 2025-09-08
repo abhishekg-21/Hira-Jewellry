@@ -15,26 +15,21 @@ export default function AddToCartOverlay({
   image: string;
   priceCents: number;
 }) {
-  const cart = useCart() as any;
+  const cart = useCart() as any; // supports add(), maybe open()
 
   return (
     <button
       type="button"
       aria-label="Add to cart"
-      className="absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 sm:w-10 sm:h-10 border border-black grid place-items-center bg-white/90 hover:bg-white transition rounded"
+      className="absolute top-100 right-3 w-10 h-10 border border-black  grid place-items-center hover:bg-white transition"
       onClick={(e) => {
-        e.preventDefault();
+        e.preventDefault(); // keep from navigating the Link
         cart.add?.({ productId, title, image, priceCents });
-        cart.open?.();
+        cart.open?.(); // if your context exposes open()
       }}
     >
-      <Image
-        src="/images/ChatGPT Image Aug 8, 2025, 11_35_04 AM.png"
-        alt="Cart"
-        width={16}
-        height={16}
-        className="sm:w-[18px] sm:h-[18px] object-contain"
-      />
+      {/* use your existing cart icon asset */}
+      <Image src="/images/ChatGPT Image Aug 8, 2025, 11_35_04 AM.png" alt="" width={18} height={18} />
     </button>
   );
 }

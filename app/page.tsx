@@ -1,4 +1,5 @@
 // app/page.tsx
+import Header from "./components/Header";
 import HeroBanner from "./components/HeroBanner";
 // import Rakhshabandhan2025 from "./components/Rakhshabandhan2025";
 import SummerBannerMarquee from "./components/SummerBannerMarquee";
@@ -12,10 +13,13 @@ import FeatureMarquee from "./components/FeatureMarquee";
 import AboutHiraSection from "./components/AboutHiraSection";
 import InstagramSection from "./components/InstagramSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import Footer from "./components/Footer";
+
 
 export default function Home() {
   return (
-    <div className="w-full max-w-[1920px] mx-auto flex flex-col overflow-x-hidden">
+    <>
+      
       <HeroBanner
         videoSrc="/video/VN20250429_123637.mp4"
         imageSrc="/images/IMG-20250505-WA0014.jpg"
@@ -27,38 +31,33 @@ export default function Home() {
         textAlignment="left"
         // padding="py-12"
       />
-
       {/* <Rakhshabandhan2025 /> */}
-      <div className="px-2 sm:px-4 md:px-6">
-        <InstagramGrid />
-        <SummerCollection />
-      </div>
-
+      <InstagramGrid />
+      <SummerCollection />
       <SummerBannerMarquee />
+      <VideoBanner />
+      <BlogSection />
+      <CustomizeCta />
+      <RecentBlogPosts />
+      <FeatureMarquee />
+      <AboutHiraSection
+        title={"Kolkata Karigars\n with a Bombay pulse"}
+        body={
+          "We are manufacturers of fine Gold and Silver Jewelry. With 35+ years of experience " +
+          "we offer great work, quality and prices. Quality should never be a compromise. " +
+          "We design pieces to be unique, durable and to be passed on. When you get order from us, " +
+          "you become part of our family."
+        }
+        img1="/images/Earring1.jpg"  // first image (pinned base)
+        img2="/images/Bracelet.jpg"    // second image (slides over)
+        alt1="Polishing the piece"
+        alt2="Finished ring"
+        background="#fff9f3"
+      />
+      <InstagramSection />
 
-      <div className="px-2 sm:px-4 md:px-6">
-        <VideoBanner />
-        <BlogSection />
-        <CustomizeCta />
-        <RecentBlogPosts />
-        <FeatureMarquee />
-        <AboutHiraSection
-          title={"Kolkata Karigars\n with a Bombay pulse"}
-          body={
-            "We are manufacturers of fine Gold and Silver Jewelry. With 35+ years of experience " +
-            "we offer great work, quality and prices. Quality should never be a compromise. " +
-            "We design pieces to be unique, durable and to be passed on. When you get order from us, " +
-            "you become part of our family."
-          }
-          img1="/images/Earring1.jpg" // first image (pinned base)
-          img2="/images/Bracelet.jpg" // second image (slides over)
-          alt1="Polishing the piece"
-          alt2="Finished ring"
-          background="#fff9f3"
-        />
-        <InstagramSection />
-        <TestimonialsSection />
-      </div>
-    </div>
+      <TestimonialsSection />
+      
+    </>
   );
 }

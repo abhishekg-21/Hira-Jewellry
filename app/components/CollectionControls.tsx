@@ -35,7 +35,7 @@ export default function CollectionControls({
     else qp.delete("min");
     if (max !== "" && Number(max) >= 0) qp.set("max", String(max));
     else qp.delete("max");
-    qp.set("page", "1");
+    qp.set("page", "1"); // reset to first page when filtering
     router.push(`?${qp.toString()}`);
     setOpen(false);
   };
@@ -59,23 +59,23 @@ export default function CollectionControls({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-      {/* Left: FILTER button */}
+    <div className="flex items-center justify-between ">
+      {/* Left: FILTER + (opens a lightweight panel) */}
       <div className="relative">
         <button
-          className="text-xs sm:text-sm tracking-wide hover:underline underline-offset-4"
+          className="text-sm tracking-wide hover:underline underline-offset-4"
           onClick={() => setOpen((v) => !v)}
         >
           FILTER +
         </button>
 
         {open && (
-          <div className="absolute z-10 mt-2 w-[240px] sm:w-[280px] rounded-md border bg-white p-3 sm:p-4 shadow">
+          <div className="absolute z-10 mt-2 w-[280px] rounded-md border bg-white p-4 shadow">
             <div className="text-xs font-medium mb-2">Price (₹ paise)</div>
             <div className="flex items-center gap-2">
               <input
                 placeholder="Min"
-                className="w-full border px-2 py-1 text-xs sm:text-sm"
+                className="w-full border px-2 py-1 text-sm"
                 value={min as any}
                 onChange={(e) => setMin(e.target.value as any)}
                 inputMode="numeric"
@@ -83,18 +83,18 @@ export default function CollectionControls({
               <span className="text-sm text-black">–</span>
               <input
                 placeholder="Max"
-                className="w-full border px-2 py-1 text-xs sm:text-sm"
+                className="w-full border px-2 py-1 text-sm"
                 value={max as any}
                 onChange={(e) => setMax(e.target.value as any)}
                 inputMode="numeric"
               />
             </div>
             <div className="mt-3 flex justify-end gap-2">
-              <button className="text-xs sm:text-sm underline" onClick={clearFilter}>
+              <button className="text-sm underline" onClick={clearFilter}>
                 Clear
               </button>
               <button
-                className="text-xs sm:text-sm border px-2 sm:px-3 py-1 hover:bg-black hover:text-white"
+                className="text-sm border px-3 py-1 hover:bg-black hover:text-white"
                 onClick={applyFilter}
               >
                 Apply
@@ -104,13 +104,13 @@ export default function CollectionControls({
         )}
       </div>
 
-      {/* Middle: showing results */}
+      {/* Middle: showing N results */}
       <div className="text-xs sm:text-sm tracking-wide">
         SHOWING {total} RESULTS
       </div>
 
-      {/* Right: Sort select */}
-      <div className="text-left sm:text-right">
+      {/* Right: sort select like “BEST SELLING ˅” */}
+      <div className="text-right">
         <label className="sr-only">Sort</label>
         <select
           value={currentSort}

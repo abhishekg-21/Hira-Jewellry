@@ -1,10 +1,10 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
+import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 import { menuData } from "./menuData";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import CartToggle from "@/app/components/CartToggle";
 
 const Header = () => {
@@ -12,10 +12,17 @@ const Header = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const navLinks = ["SHOP ALL", "NECKLACE", "ANKLET", "EARRING", "RING", "BRACELET"];
+  const navLinks = [
+    "SHOP ALL",
+    "NECKLACE",
+    "ANKLET",
+    "EARRING",
+    "RING",
+    "BRACELET",
+  ];
 
   const toggleDropdown = (label: string) => {
-    setActiveDropdown((prev) => (prev === label ? null : label));
+    setActiveDropdown(prev => (prev === label ? null : label));
   };
 
   // --- Fixed wrapper + auto spacer ---
@@ -29,6 +36,7 @@ const Header = () => {
     const setH = () => setHeaderH(el.offsetHeight);
     setH(); // initial
 
+    // keep spacer in sync on resize and on any layout changes
     const ro = new ResizeObserver(() => setH());
     ro.observe(el);
     window.addEventListener("resize", setH);
@@ -41,12 +49,12 @@ const Header = () => {
 
   return (
     <>
-      {/* ===== FIXED WRAPPER ===== */}
+      {/* ===== FIXED WRAPPER (pins whole header at current position) ===== */}
       <div ref={fixedRef} className="fixed inset-x-0 top-0 z-50 bg-[#fefcf8]">
         {/* Top Strip */}
-        <div className="w-full bg-black text-white text-[11px] sm:text-xs md:text-sm py-1 sm:py-1.5 px-3 sm:px-6 md:px-10 lg:px-32 flex justify-between items-center">
-          <span className="truncate">5% Off on Prepaid Orders</span>
-          <select className="bg-black text-white border-none focus:outline-none text-[11px] sm:text-xs md:text-sm">
+        <div className="w-full bg-black text-white text-xs text-[15px] py-1.5 px-32 flex justify-between items-center ">
+          <span>5% Off on Prepaid Orders</span>
+          <select className="bg-black text-white border-none focus:outline-none text-xs text-[14px]">
             <option>ENGLISH</option>
             <option>HINDI</option>
           </select>
@@ -54,9 +62,9 @@ const Header = () => {
 
         {/* Main Header */}
         <header className="bg-[#fdf9f4]">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-[auto_auto] lg:grid-cols-[1fr_auto_1fr] items-center px-3 sm:px-6 lg:px-8 py-2 min-h-[55px] sm:min-h-[65px] lg:min-h-[75px]">
-            {/* Left Nav (Desktop) */}
-            <div className="hidden lg:flex justify-start text-[13px] font-normal tracking-wide overflow-x-auto">
+          <div className={`max-w-[1440px] mx-auto grid grid-cols-[1fr_auto_1fr] items-center px-22 py-2 min-h-[75px] ${menuOpen ? 'hidden' : ''}`}>
+            {/* Left Nav (Desktop) — text menus with a single trailing chevron */}
+            <div className="hidden lg:flex justify-start text-[13px] font-normal tracking-wide whitespace-nowrap overflow-x-auto">
               <nav className="flex items-center gap-4 text-[14px] font-normal tracking-wide">
                 {menuData.map((item) => (
                   <div key={item.label} className="group relative">
@@ -81,26 +89,41 @@ const Header = () => {
 
             {/* Logo Image */}
             <div className="flex justify-center">
-              <Link
-                href="/"
-                className="relative w-[100px] sm:w-[120px] md:w-[140px] h-[28px] sm:h-[32px] md:h-[37px]"
-              >
-                <Image src="/images/HIRA.png" alt="Hira Logo" fill className="object-contain" />
+              <Link href="/" className="relative w-[140px] h-[37px]">
+                <Image
+                  src="/images/HIRA.png"
+                  alt="Hira Logo"
+                  fill
+                  className="object-contain"
+                />
               </Link>
             </div>
 
             {/* Right Icons (Desktop) */}
-            <div className="hidden lg:flex justify-end gap-2 items-center text-black">
-              <Link href="/account" className="relative w-6 h-6 md:w-7 md:h-7">
-                <Image src="/images/User icon.png" alt="User" fill className="object-contain" />
+            <div className={`flex justify-end gap-1 items-center text-black ${menuOpen ? 'hidden' : 'lg:flex'}`}>
+              {/* User Icon */}
+              <Link href="/account" className="relative w-8 h-8">
+                <Image
+                  src="/images/User icon.png"
+                  alt="User"
+                  fill
+                  className="object-contain"
+                />
               </Link>
 
-              <Link href="/search" className="relative w-6 h-6 md:w-7 md:h-7">
-                <Image src="/images/Search icon.png" alt="Search" fill className="object-contain" />
+              {/* Search Icon */}
+              <Link href="/search" className="relative w-8 h-8">
+                <Image
+                  src="/images/Search icon.png"
+                  alt="Search"
+                  fill
+                  className="object-contain"
+                />
               </Link>
 
+              {/* Cart Icon (image that opens the drawer) */}
               <CartToggle>
-                <span className="relative block w-8 h-8 md:w-9 md:h-9 cursor-pointer">
+                <span className="relative block w-10 h-10 cursor-pointer">
                   <Image
                     src="/images/ChatGPT Image Aug 8, 2025, 11_35_04 AM.png"
                     alt="Cart"
@@ -113,36 +136,30 @@ const Header = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="lg:hidden justify-self-end" onClick={toggleMenu}>
-              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            <button className="lg:hidden" onClick={toggleMenu}>
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </header>
 
-        {/* Dropdown */}
+        {/* Dropdown outside header but inside fixed wrapper (so it stays attached) */}
         {activeDropdown && (
-          <div className="w-full py-4 sm:py-6 px-3 sm:px-6 lg:px-30 z-40 flex flex-col lg:flex-row min-h-[240px] sm:min-h-[300px] lg:min-h-[550px] gap-4 sm:gap-6 lg:gap-10 bg-[#fefcf8] overflow-x-auto">
+          <div className="w-full py-8 px-30 z-40 flex min-h-[550px] gap-10 bg-[#fefcf8] ">
             {menuData.map((item) => {
               if (item.label === activeDropdown && item.columns) {
                 return (
-                  <div
-                    key={item.label}
-                    className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-10 w-full"
-                  >
+                  <div key={item.label} className="flex gap-10 w-full min-h-[450px]">
                     {/* Column Links */}
-                    <div className="flex flex-wrap gap-3 sm:gap-4 flex-grow">
+                    <div className="flex gap-1 flex-grow">
                       {item.columns.map((col, index) => (
-                        <div key={index} className="min-w-[120px] sm:min-w-[150px] lg:w-[320px]">
-                          <h4 className="text-[12px] sm:text-[13px] md:text-[14px] mb-2 sm:mb-3 md:mb-4 tracking-wide uppercase">
+                        <div key={index} className="w-[320px]">
+                          <h4 className=" text-[14px] mb-4 tracking-wide uppercase">
                             {col.heading}
                           </h4>
                           <ul className="space-y-1">
                             {col.links.map((link, idx) => (
                               <li key={`${link.label}-${idx}`}>
-                                <Link
-                                  href={link.link}
-                                  className="text-[12px] sm:text-[13px] md:text-[14px] mb-1 sm:mb-2 hover:underline"
-                                >
+                                <Link href={link.link} className="text-[14px] mb-3 hover:underline">
                                   {link.label}
                                 </Link>
                               </li>
@@ -153,22 +170,19 @@ const Header = () => {
                     </div>
 
                     {/* Promo Images */}
-                    <div className="flex gap-3 sm:gap-4 flex-wrap lg:flex-nowrap">
+                    <div className="flex px=[60px] gap-4">
                       {item.promos?.map((promo, i) => (
-                        <div
-                          key={promo.label || i}
-                          className="w-[120px] sm:w-[160px] md:w-[200px] lg:w-[285px]"
-                        >
+                        <div key={promo.label || i} className="w-[285px] text-left">
                           <Link href={promo.link}>
-                            <div className="relative h-[160px] sm:h-[200px] md:h-[280px] lg:h-[440px] w-full">
+                            <div className="relative h-[440px] w-[285px]">
                               <Image
                                 src={promo.image}
                                 alt={promo.label}
                                 fill
-                                className="object-cover rounded-md"
+                                className="object-cover"
                               />
                             </div>
-                            <span className="block text-[12px] sm:text-[13px] md:text-[14px] underline font-normal leading-tight mt-1 sm:mt-2">
+                            <span className="block text-[14px] underline font-normal leading-tight mt-2">
                               {promo.label}
                             </span>
                           </Link>
@@ -184,29 +198,34 @@ const Header = () => {
         )}
       </div>
 
-      {/* Spacer */}
+      {/* Auto spacer so page content starts below the fixed header (and expands when dropdown opens) */}
       <div aria-hidden style={{ height: headerH }} />
 
-      {/* Mobile Slide Drawer */}
+      {/* Mobile Slide Drawer (unchanged) */}
       <div
-        className={`lg:hidden fixed top-0 right-0 h-full w-60 sm:w-64 md:w-72 bg-white shadow-lg transition-transform z-40 p-4 sm:p-6 space-y-4 sm:space-y-6 transform ${
+        className={`lg:hidden fixed top-0 right-0 h-full w-64 bg-white shadow-lg transition-transform z-40 p-6 space-y-6 transform ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <button className="absolute top-3 right-3 sm:top-4 sm:right-4" onClick={toggleMenu}>
-          <X size={22} />
+        <button className="absolute top-4 right-4" onClick={toggleMenu}>
+          <X size={24} />
         </button>
 
         {/* Mobile Nav Links */}
         {navLinks.map((item) => (
-          <button
-            key={item}
-            className="w-full text-left font-medium text-[13px] sm:text-sm py-1.5 sm:py-2"
-          >
+          <button key={item} className="w-full text-left font-medium text-sm">
             {item}
           </button>
         ))}
       </div>
+      
+      {/* Overlay to close mobile menu */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={toggleMenu}
+        />
+      )}
     </>
   );
 };

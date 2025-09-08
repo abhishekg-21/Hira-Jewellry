@@ -26,18 +26,18 @@ export default function FeatureMarquee() {
         <div className="marquee flex items-center whitespace-nowrap">
           {track.map((item, i) => {
             const Content = (
-              <span className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-5 md:px-10 py-2 sm:py-2.5 md:py-3.5">
-                <span className="relative inline-block w-[22px] h-[22px] sm:w-[26px] sm:h-[26px] md:w-[30px] md:h-[30px]">
+              <span className="inline-flex items-center gap-3 md:gap-4 px-6 md:px-10 py-3 md:py-3.5">
+                <span className="relative inline-block w-[30px] h-[30px] md:w-[26px] md:h-[26px]">
                   <Image
                     src={item.icon}
                     alt=""
                     fill
-                    sizes="30px"
+                    sizes="45px"
                     className="object-contain"
                     priority={i < 6}
                   />
                 </span>
-                <span className="text-[10px] sm:text-[11px] md:text-[13px] uppercase tracking-wide text-gray-550">
+                <span className="text-[11px] md:text-[13px] uppercase tracking-wide text-gray-550">
                   {item.label}
                 </span>
               </span>
