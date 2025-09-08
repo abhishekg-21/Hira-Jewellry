@@ -38,7 +38,7 @@ export default function SummerCollection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
         {summerCollection.slice(0, 2).map((item, index) => (
           <Link href={item.link} key={index}>
-            <div className="relative w-full h-[400px] md:h-[400px] cursor-pointer">
+            <div className="relative w-full h-[220px] sm:h-[300px] md:h-[400px] cursor-pointer">
               <Image
                 src={item.image}
                 alt={item.title}
@@ -46,7 +46,7 @@ export default function SummerCollection() {
                 className="object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+                <span className="text-white text-xs sm:text-sm md:text-base border border-white px-3 sm:px-5 py-1.5 sm:py-2">
                   {item.title}
                 </span>
               </div>
@@ -56,12 +56,12 @@ export default function SummerCollection() {
       </div>
 
       {/* Second Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-4 md:mt-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-3 md:mt-1">
         {/* Left column: 2 small images side-by-side */}
         <div className="grid grid-cols-2 gap-1">
           {summerCollection.slice(2, 4).map((item, index) => (
             <Link href={item.link} key={index}>
-              <div className="relative w-full h-[250px] md:h-[400px] cursor-pointer">
+              <div className="relative w-full h-[180px] sm:h-[250px] md:h-[400px] cursor-pointer">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -69,7 +69,7 @@ export default function SummerCollection() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+                  <span className="text-white text-xs sm:text-sm md:text-base border border-white px-3 sm:px-5 py-1.5 sm:py-2">
                     {item.title}
                   </span>
                 </div>
@@ -80,7 +80,7 @@ export default function SummerCollection() {
 
         {/* Right column: 1 tall image */}
         <Link href={summerCollection[4].link}>
-          <div className="relative w-full h-[400px] cursor-pointer">
+          <div className="relative w-full h-[220px] sm:h-[300px] md:h-[400px] cursor-pointer">
             <Image
               src={summerCollection[4].image}
               alt={summerCollection[4].title}
@@ -88,7 +88,7 @@ export default function SummerCollection() {
               className="object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-white text-sm md:text-base border border-white px-5 py-2 ">
+              <span className="text-white text-xs sm:text-sm md:text-base border border-white px-3 sm:px-5 py-1.5 sm:py-2">
                 {summerCollection[4].title}
               </span>
             </div>

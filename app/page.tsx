@@ -29,7 +29,7 @@ export default function Home() {
         ctaText="SHOP NOW"
         ctaUrl="/collections/raksha-bandhan-2025"
         textAlignment="left"
-        padding="py-12"
+        // padding="py-12"
       />
       {/* <Rakhshabandhan2025 /> */}
       <InstagramGrid />

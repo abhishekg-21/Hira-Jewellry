@@ -85,7 +85,7 @@ function Stars({ n }: { n: number }) {
         <svg
           key={i}
           viewBox="0 0 24 24"
-          className={`h-4 w-4 ${i < n ? "fill-current" : "fill-transparent"} stroke-current`}
+          className={`h-3 w-3 sm:h-4 sm:w-4 ${i < n ? "fill-current" : "fill-transparent"} stroke-current`}
         >
           <path
             strokeWidth="1.2"
@@ -121,30 +121,32 @@ export default function TestimonialsSection() {
   }, []);
 
   return (
-    <section className="w-full bg-[#fff5ea] py-12 md:py-16">
-      <div className="mx-auto">
+    <section className="w-full bg-[#fff5ea] py-8 sm:py-12 md:py-16">
+      <div className="mx-auto px-4 sm:px-6">
         {/* Heading */}
-        <h2 className="text-center text-[36px] md:text-[54px] leading-[1.1] font-semibold tracking-[-0.02em]">
+        <h2 className="text-center text-[24px] sm:text-[32px] md:text-[54px] leading-[1.2] font-semibold tracking-[-0.02em]">
           What our customers says?
         </h2>
 
-        {/* Horizontal scroll container — same behavior as RakhiScrollSection */}
+        {/* Horizontal scroll container */}
         <div
           ref={containerRef}
-          className="mt-8 flex gap-28 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
+          className="mt-6 sm:mt-8 flex gap-6 sm:gap-12 md:gap-28 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           <style jsx>{`
-            /* Hide scrollbar (WebKit) */
             div::-webkit-scrollbar {
               display: none;
             }
           `}</style>
 
           {REVIEWS.map((r) => (
-            <article key={r.id} className="group min-w-[260px] max-w-[260px] gap-4">
+            <article
+              key={r.id}
+              className="group min-w-[220px] sm:min-w-[260px] max-w-[220px] sm:max-w-[260px]"
+            >
               {/* Image */}
-              <div className="relative h-[350px] w-[350px] overflow-hidden ">
+              <div className="relative h-[250px] sm:h-[300px] md:h-[350px] w-full overflow-hidden rounded-md">
                 <Image
                   src={r.image}
                   alt={r.title}
@@ -155,22 +157,24 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Content */}
-              <div className="pt-5">
+              <div className="pt-4 sm:pt-5">
                 <Stars n={r.rating} />
-                <h3 className="mt-4 text-[20px] md:text-[22px] font-semibold leading-snug">
+                <h3 className="mt-3 sm:mt-4 text-[16px] sm:text-[18px] md:text-[22px] font-semibold leading-snug">
                   {r.title}
                 </h3>
-                <p className="mt-3 text-[15px] md:text-[16px] leading-[1.8] text-black/80">
+                <p className="mt-2 sm:mt-3 text-[13px] sm:text-[15px] md:text-[16px] leading-relaxed text-black/80">
                   {r.text}
                 </p>
-                <p className="mt-3 text-[14px] font-semibold">- {r.author}</p>
+                <p className="mt-2 sm:mt-3 text-[12px] sm:text-[14px] font-semibold">
+                  - {r.author}
+                </p>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Progress bar — identical logic to your Rakhi section */}
-        <div className="relative h-[2px] w-[120px] mx-auto bg-gray-300 mt-6 rounded">
+        {/* Progress bar */}
+        <div className="relative h-[2px] w-[80px] sm:w-[120px] mx-auto bg-gray-300 mt-5 sm:mt-6 rounded">
           <div
             className="absolute h-full bg-black rounded transition-[width] duration-150"
             style={{ width: `${scrollProgress}%` }}

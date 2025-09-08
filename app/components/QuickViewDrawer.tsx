@@ -1,7 +1,7 @@
 // app/components/QuickViewDrawer.tsx
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,10 +9,10 @@ import { useCart } from "@/app/context/CartContext";
 
 type QuickViewProduct = {
   title: string;
-  priceCents: number;      // paise
-  slug: string;            // "/products/[slug]" without the /products/ prefix
-  images: string[];        // gallery images
-  options?: { name: string; values: string[] }[]; // (optional) e.g. Color
+  priceCents: number;
+  slug: string;
+  images: string[];
+  options?: { name: string; values: string[] }[];
 };
 
 export default function QuickViewDrawer({
@@ -78,7 +78,6 @@ export default function QuickViewDrawer({
             .join(" / ")
         : null;
 
-    // We’ll use slug for both productId & slug if you don’t have a numeric id here.
     add({
       productId: product.slug,
       slug: product.slug,
@@ -104,7 +103,7 @@ export default function QuickViewDrawer({
           />
           {/* Drawer */}
           <motion.aside
-            className="fixed right-0 top-0 h-dvh w-full max-w-[420px] bg-white z-[99999] shadow-2xl flex flex-col"
+            className="fixed right-0 top-0 h-dvh w-full max-w-full sm:max-w-[420px] bg-white z-[99999] shadow-2xl flex flex-col"
             role="dialog"
             aria-modal="true"
             initial={{ x: "100%" }}
@@ -113,18 +112,22 @@ export default function QuickViewDrawer({
             transition={{ type: "tween", duration: 0.28 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-4 border-b">
-              <div className="text-sm font-medium">Quick view</div>
-              <button onClick={onClose} aria-label="Close" className="text-xl leading-none">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-3 sm:py-4 border-b">
+              <div className="text-xs sm:text-sm font-medium">Quick view</div>
+              <button
+                onClick={onClose}
+                aria-label="Close"
+                className="text-lg sm:text-xl leading-none"
+              >
                 ×
               </button>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
               {/* Gallery */}
               <div>
-                <div className="relative w-[230px] h-[320px] bg-[#f5f5f5] rounded-md overflow-hidden mx-auto">
+                <div className="relative w-[200px] sm:w-[230px] h-[280px] sm:h-[320px] bg-[#f5f5f5] rounded-md overflow-hidden mx-auto">
                   <Image
                     src={product.images[idx]}
                     alt={product.title}
@@ -139,14 +142,14 @@ export default function QuickViewDrawer({
                       <button
                         onClick={prev}
                         aria-label="Previous"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 grid place-items-center"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 grid place-items-center text-lg sm:text-xl"
                       >
                         ‹
                       </button>
                       <button
                         onClick={next}
                         aria-label="Next"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 grid place-items-center"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 grid place-items-center text-lg sm:text-xl"
                       >
                         ›
                       </button>
@@ -156,7 +159,7 @@ export default function QuickViewDrawer({
 
                 {/* Thumbnails */}
                 {product.images.length > 1 && (
-                  <div className="mt-3 grid grid-cols-5 gap-2">
+                  <div className="mt-3 grid grid-cols-5 gap-1.5 sm:gap-2">
                     {product.images.map((src, i) => (
                       <button
                         key={src + i}
@@ -166,7 +169,13 @@ export default function QuickViewDrawer({
                         } overflow-hidden`}
                         aria-label={`Image ${i + 1}`}
                       >
-                        <Image src={src} alt="" fill sizes="80px" className="object-cover" />
+                        <Image
+                          src={src}
+                          alt=""
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
                       </button>
                     ))}
                   </div>
@@ -175,11 +184,11 @@ export default function QuickViewDrawer({
 
               {/* Title + price */}
               <div>
-                <div className="text-base font-semibold">{product.title}</div>
-                <div className="text-sm text-neutral-700 mt-1">{priceText}</div>
+                <div className="text-sm sm:text-base font-semibold">{product.title}</div>
+                <div className="text-xs sm:text-sm text-neutral-700 mt-1">{priceText}</div>
               </div>
 
-              {/* Options (e.g., Color) */}
+              {/* Options */}
               {product.options?.map((o) => (
                 <div key={o.name}>
                   <div className="text-xs mb-1 text-neutral-600">{o.name}</div>
@@ -195,7 +204,7 @@ export default function QuickViewDrawer({
                               [o.name]: v,
                             }))
                           }
-                          className={`px-3 py-1 text-sm border ${
+                          className={`px-2 sm:px-3 py-1 text-xs sm:text-sm border ${
                             active ? "border-black" : "border-neutral-300"
                           }`}
                         >
@@ -210,8 +219,11 @@ export default function QuickViewDrawer({
               {/* Quantity */}
               <div>
                 <div className="text-xs mb-1 text-neutral-600">Quantity</div>
-                <div className="inline-flex items-center gap-4 border px-3 py-2">
-                  <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease">
+                <div className="inline-flex items-center gap-3 sm:gap-4 border px-2 sm:px-3 py-1.5 sm:py-2 text-sm">
+                  <button
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                    aria-label="Decrease"
+                  >
                     –
                   </button>
                   <span className="select-none">{qty}</span>
@@ -223,10 +235,10 @@ export default function QuickViewDrawer({
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t">
+            <div className="p-3 sm:p-4 border-t">
               <button
                 onClick={handleAdd}
-                className="w-full h-11 border border-black text-sm tracking-wide hover:bg-black hover:text-white transition"
+                className="w-full h-10 sm:h-11 border border-black text-xs sm:text-sm tracking-wide hover:bg-black hover:text-white transition"
               >
                 Add to cart
               </button>

@@ -49,10 +49,9 @@ export default function CartDrawer() {
     first?.focus();
   }, [isOpen]);
 
-  // --- Razorpay Checkout (same flow as your Cart page) ---
+  // --- Razorpay Checkout ---
   const handleCheckout = async () => {
     if (subtotalCents < 1) return;
-
     try {
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
@@ -101,7 +100,6 @@ export default function CartDrawer() {
           const v = await verifyRes.json();
           if (v.ok) {
             alert("Payment successful!");
-            // optionally: close(); // and/or redirect to a success page
           } else {
             alert(v.error || "Verification failed");
           }
@@ -116,16 +114,14 @@ export default function CartDrawer() {
       alert("Something went wrong while starting checkout.");
     }
   };
-  // --- end checkout ---
 
   return (
     <AnimatePresence>
       {isOpen && (
         <Portal>
-          {/* Razorpay SDK (must be inside a client component) */}
           <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
 
-          {/* Backdrop (blur + dim) */}
+          {/* Backdrop */}
           <motion.div
             aria-hidden
             className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[99998]"
@@ -135,52 +131,52 @@ export default function CartDrawer() {
             onClick={close}
           />
 
-          {/* Drawer Panel (no height/width changes) */}
+          {/* Drawer Panel */}
           <motion.aside
             role="dialog"
             aria-labelledby="cart-title"
             aria-modal="true"
             ref={panelRef}
-            className="fixed right-0 top-0 h-dvh w-full max-w-[460px] bg-[#fbf5ea] z-[99999] flex flex-col shadow-2xl"
+            className="fixed right-0 top-0 h-dvh w-full max-w-[420px] sm:max-w-[460px] bg-[#fbf5ea] z-[99999] flex flex-col shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.28 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-8 py-6">
-              <h2 id="cart-title" className="text-[28px] font-semibold tracking-tight">
+            <div className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-6">
+              <h2 id="cart-title" className="text-xl sm:text-[28px] font-semibold tracking-tight">
                 Cart
               </h2>
-
-              {/* “X  CLOSE” like screenshot */}
               <button
                 onClick={close}
-                className="flex items-center gap-2 text-sm tracking-wide text-black hover:opacity-70 cursor-pointer"
+                className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm tracking-wide text-black hover:opacity-70 cursor-pointer"
                 data-autofocus
                 aria-label="Close cart"
               >
                 <span className="text-lg leading-none">✕</span>
-                <span className="uppercase">Close</span>
+                <span className="uppercase hidden sm:inline">Close</span>
               </button>
             </div>
 
-            {/* Divider under header */}
             <div className="h-px bg-neutral-200" />
 
             {/* Items */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8">
               {lines.length === 0 ? (
-                <div className="text-center text-sm text-neutral-500 py-20">
+                <div className="text-center text-sm text-neutral-500 py-12 sm:py-20">
                   Your cart is empty.
                 </div>
               ) : (
                 lines.map((l) => {
                   const href = `/products/${encodeURIComponent(l.slug)}`;
                   return (
-                    <div key={l.id} className="grid grid-cols-[92px_1fr_auto] gap-4 items-start">
-                      {/* Thumbnail → product details */}
-                      <div className="relative w-[92px] h-[92px] rounded-md overflow-hidden bg-[#fbf5ea]">
+                    <div
+                      key={l.id}
+                      className="grid grid-cols-[80px_1fr_auto] sm:grid-cols-[92px_1fr_auto] gap-3 sm:gap-4 items-start"
+                    >
+                      {/* Thumbnail */}
+                      <div className="relative w-[80px] h-[80px] sm:w-[92px] sm:h-[92px] rounded-md overflow-hidden bg-[#fbf5ea]">
                         <Link href="" onClick={close} aria-label={`View ${l.title}`}>
                           <Image
                             src={l.image}
@@ -192,38 +188,35 @@ export default function CartDrawer() {
                         </Link>
                       </div>
 
-                      {/* Title, price, qty/remove */}
+                      {/* Title + price + qty */}
                       <div className="min-w-0">
                         <Link
                           href={href}
                           onClick={close}
                           className="text-sm font-medium leading-snug line-clamp-2 underline-offset-4 hover:underline"
-                          aria-label={`View ${l.title}`}
                         >
                           {l.title}
                         </Link>
-                        <p className="mt-1 text-sm text-neutral-700">{formatINR(l.priceCents)}</p>
+                        <p className="mt-1 text-xs sm:text-sm text-neutral-700">
+                          {formatINR(l.priceCents)}
+                        </p>
 
-                        {/* qty controls + REMOVE (inline) */}
-                        <div className="mt-2 inline-flex items-center gap-3">
+                        <div className="mt-2 inline-flex items-center gap-2 sm:gap-3">
                           <button
-                            className="w-7 h-7 grid place-items-center text-sm cursor-pointer"
+                            className="w-6 h-6 sm:w-7 sm:h-7 grid place-items-center text-sm cursor-pointer"
                             onClick={() => updateQty(l.id, Math.max(1, l.quantity - 1))}
-                            aria-label="Decrease quantity"
                           >
                             –
                           </button>
-                          <span className="text-sm">{l.quantity}</span>
+                          <span className="text-xs sm:text-sm">{l.quantity}</span>
                           <button
-                            className="w-9 h-9 grid place-items-center text-sm cursor-pointer"
+                            className="w-7 h-7 sm:w-9 sm:h-9 grid place-items-center text-sm cursor-pointer"
                             onClick={() => updateQty(l.id, l.quantity + 1)}
-                            aria-label="Increase quantity"
                           >
                             +
                           </button>
-
                           <button
-                            className="text-xs underline text-neutral-700 ml-2 hover:text-black cursor-pointer"
+                            className="text-[11px] sm:text-xs underline text-neutral-700 ml-1 sm:ml-2 hover:text-black cursor-pointer"
                             onClick={() => remove(l.id)}
                           >
                             REMOVE
@@ -231,8 +224,8 @@ export default function CartDrawer() {
                         </div>
                       </div>
 
-                      {/* Line total at far right */}
-                      <div className="text-sm font-medium whitespace-nowrap mt-1">
+                      {/* Line total */}
+                      <div className="text-xs sm:text-sm font-medium whitespace-nowrap mt-1">
                         {formatINR(l.priceCents * l.quantity)}
                       </div>
                     </div>
@@ -242,19 +235,17 @@ export default function CartDrawer() {
             </div>
 
             {/* Footer */}
-            <div className="border-t border-neutral-200 p-6 space-y-3">
-              <div className="flex items-center justify-between text-sm">
+            <div className="border-t border-neutral-200 p-4 sm:p-6 space-y-2 sm:space-y-3">
+              <div className="flex items-center justify-between text-xs sm:text-sm">
                 <span className="text-neutral-700">ESTIMATED TOTAL</span>
                 <span className="font-semibold">{formatINR(subtotalCents)}</span>
               </div>
-
-              <p className="text-xs text-neutral-500">
+              <p className="text-[11px] sm:text-xs text-neutral-500">
                 Taxes and <span className="underline">shipping</span> calculated at checkout
               </p>
 
-              {/* Thin-outline button like screenshot */}
               <button
-                className="mt-1 w-full h-11 border border-black text-sm tracking-wide hover:bg-black hover:text-white transition rounded-none cursor-pointer"
+                className="mt-1 w-full h-10 sm:h-11 border border-black text-xs sm:text-sm tracking-wide hover:bg-black hover:text-white transition rounded-none cursor-pointer"
                 onClick={handleCheckout}
               >
                 CHECKOUT
@@ -263,7 +254,7 @@ export default function CartDrawer() {
               <Link
                 href="/cart"
                 onClick={close}
-                className="block text-center text-xs underline text-neutral-700 hover:text-black"
+                className="block text-center text-[11px] sm:text-xs underline text-neutral-700 hover:text-black"
               >
                 VIEW CART
               </Link>

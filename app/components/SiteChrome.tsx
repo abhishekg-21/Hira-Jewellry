@@ -13,10 +13,12 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
 
   // Everywhere else, keep your normal shell.
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 w-full px-3 sm:px-4 md:px-6 lg:px-8">
+        {children}
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
