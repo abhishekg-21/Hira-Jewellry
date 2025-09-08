@@ -1,6 +1,8 @@
+// /app/components/menuData.ts
 export const menuData = [
   {
     label: "SHOP ALL",
+    link: "/collections/all",
     columns: [
       {
         heading: "OUR PRODUCTS",
