@@ -9,9 +9,16 @@ import CartToggle from "@/app/components/CartToggle";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // desktop
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);   // mobile submenu
+  const [activeHeading, setActiveHeading] = useState<string | null>(null);   // mobile heading
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    setActiveSubmenu(null);
+    setActiveHeading(null);
+  };
+
   const toggleDropdown = (label: string) => {
     setActiveDropdown((prev) => (prev === label ? null : label));
   };
@@ -33,6 +40,13 @@ const Header = () => {
     };
   }, [activeDropdown, menuOpen]);
 
+  // Decide back label dynamically
+  const getBackLabel = () => {
+    if (activeHeading) return activeHeading;
+    if (activeSubmenu) return activeSubmenu;
+    return "BACK";
+  };
+
   return (
     <>
       <div
@@ -46,9 +60,7 @@ const Header = () => {
 
         {/* === Main Header === */}
         <header className="bg-[#fdf9f4] relative">
-          {/* Full width on mobile, constrained on desktop */}
           <div className="w-screen lg:mx-auto flex items-center justify-between px-3 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
-            
             {/* === Left Section (Mobile only) === */}
             <div className="flex items-center lg:hidden pl-3">
               <button onClick={toggleMenu} aria-label="Menu">
@@ -80,7 +92,7 @@ const Header = () => {
               </nav>
             </div>
 
-            {/* === Center Logo (Always Centered) === */}
+            {/* === Center Logo === */}
             <div className="absolute left-1/2 -translate-x-1/2 flex justify-center">
               <Link
                 href="/"
@@ -128,7 +140,7 @@ const Header = () => {
                 </Link>
               </div>
 
-              {/* Cart (Both views) */}
+              {/* Cart */}
               <CartToggle>
                 <span className="relative block w-8 h-8 sm:w-9 sm:h-9 cursor-pointer">
                   <Image
@@ -143,7 +155,7 @@ const Header = () => {
           </div>
         </header>
 
-        {/* === Dropdown (Desktop Only) === */}
+        {/* === Desktop Dropdown === */}
         {activeDropdown && (
           <div className="hidden lg:flex w-full py-8 px-8 z-40 min-h-[550px] gap-10 bg-[#fefcf8] flex-wrap">
             {menuData.map((item) => {
@@ -208,6 +220,177 @@ const Header = () => {
               return null;
             })}
           </div>
+        )}
+
+        {/* === Mobile Menu === */}
+        {menuOpen && (
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 z-30 bg-black/40"
+              onClick={() => setMenuOpen(false)}
+            />
+
+            {/* Panel */}
+            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-190">
+              {/* Header with Back + Close */}
+              <div className="flex justify-between items-center p-4 border-b">
+                <div>
+                  {activeSubmenu || activeHeading ? (
+                    <button
+                      onClick={() =>
+                        activeHeading
+                          ? setActiveHeading(null)
+                          : setActiveSubmenu(null)
+                      }
+                      className="flex items-center gap-2 text-sm font-medium"
+                    >
+                      ‹ {getBackLabel()}
+                    </button>
+                  ) : null}
+                </div>
+                <button
+                  onClick={toggleMenu}
+                  className="flex items-center gap-2 text-sm font-medium"
+                >
+                  <X size={20} /> CLOSE
+                </button>
+              </div>
+
+              {/* Scrollable content */}
+              <div className="flex-1 overflow-y-auto">
+                {/* Level 1: top menu */}
+                {!activeSubmenu && !activeHeading && (
+                  <>
+                    <nav className="flex flex-col divide-y">
+                      {menuData.map((item) => (
+                        <button
+                          key={item.label}
+                          onClick={() =>
+                            item.columns || item.promos
+                              ? setActiveSubmenu(item.label)
+                              : (window.location.href = item.link || "#")
+                          }
+                          className="flex justify-between items-center px-5 py-4 text-[15px] font-medium text-left"
+                        >
+                          {item.label}
+                          <span className="text-lg">›</span>
+                        </button>
+                      ))}
+                    </nav>
+
+                    {/* Promo Images at top-level */}
+                    <div className="grid grid-cols-2 gap-2 p-5">
+                      <div className="relative w-full h-40">
+                        <Image
+                          src="/images/mobile-promo1.jpg"
+                          alt="Promo 1"
+                          fill
+                          className="object-cover rounded"
+                        />
+                      </div>
+                      <div className="relative w-full h-40">
+                        <Image
+                          src="/images/mobile-promo2.jpg"
+                          alt="Promo 2"
+                          fill
+                          className="object-cover rounded"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Bottom Section */}
+                    <div className="px-5 py-6 space-y-4 text-[14px]">
+                      <Link
+                        href="/pages/track-order"
+                        className="flex items-center gap-2"
+                      >
+                        🚚 TRACK YOUR ORDER
+                      </Link>
+                      <Link href="/account/login">LOG IN</Link>
+
+                      <div className="flex justify-between gap-3 pt-4">
+                        <select className="flex-1 border border-gray-300 p-2 text-sm">
+                          <option>IN / INR</option>
+                          <option>US / USD</option>
+                        </select>
+                        <select className="flex-1 border border-gray-300 p-2 text-sm">
+                          <option>English</option>
+                          <option>हिंदी</option>
+                        </select>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* Level 2: submenu headings */}
+                {activeSubmenu && !activeHeading && (
+                  <div className="p-5 space-y-6">
+                    {menuData
+                      .filter((m) => m.label === activeSubmenu)
+                      .map((menu) => (
+                        <div key={menu.label}>
+                          {menu.columns?.map((col, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setActiveHeading(col.heading)}
+                              className="flex justify-between w-full py-4 border-b text-left text-[15px] font-medium"
+                            >
+                              {col.heading}
+                              <span className="text-lg">›</span>
+                            </button>
+                          ))}
+
+                          {/* Promo Images */}
+                          {menu.promos && menu.promos.length > 0 && (
+                            <div className="grid grid-cols-2 gap-2 mt-6">
+                              {menu.promos.map((promo, idx) => (
+                                <div
+                                  key={idx}
+                                  className="relative w-full h-40"
+                                >
+                                  <Image
+                                    src={promo.image}
+                                    alt={promo.label}
+                                    fill
+                                    className="object-cover rounded"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                )}
+
+                {/* Level 3: heading links */}
+                {activeHeading && (
+                  <div className="p-5 space-y-4">
+                    {menuData
+                      .filter((m) => m.label === activeSubmenu)
+                      .flatMap((m) => m.columns || [])
+                      .filter((c) => c.heading === activeHeading)
+                      .map((col, i) => (
+                        <ul key={i} className="space-y-2">
+                          {col.links.map((link, idx) => (
+                            <li key={idx}>
+                              <Link
+                                href={link.link}
+                                className="block text-[14px]"
+                                onClick={() => setMenuOpen(false)}
+                              >
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
         )}
       </div>
 
