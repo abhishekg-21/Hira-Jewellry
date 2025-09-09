@@ -58,24 +58,6 @@ const REVIEWS: Review[] = [
     author: "RITIKA",
     rating: 5,
   },
-  {
-    id: "r6",
-    image: "/images/Review6.jpeg",
-    title: "Minimal Bracelet",
-    text:
-      "Very elegant and comfortable. Loved the finish and the fit. Packaging was lovely too.",
-    author: "RITIKA",
-    rating: 5,
-  },
-  {
-    id: "r7",
-    image: "/images/Review7.jpeg",
-    title: "Minimal Bracelet",
-    text:
-      "Very elegant and comfortable. Loved the finish and the fit. Packaging was lovely too.",
-    author: "RITIKA",
-    rating: 5,
-  },
 ];
 
 function Stars({ n }: { n: number }) {
@@ -115,8 +97,7 @@ export default function TestimonialsSection() {
     const el = containerRef.current;
     if (!el) return;
     el.addEventListener("scroll", handleScroll, { passive: true });
-    // initialize once
-    handleScroll();
+    handleScroll(); // init
     return () => el.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -124,52 +105,50 @@ export default function TestimonialsSection() {
     <section className="w-full bg-[#fff5ea] py-12 md:py-16">
       <div className="mx-auto">
         {/* Heading */}
-        <h2 className="text-center text-[36px] md:text-[54px] leading-[1.1] font-semibold tracking-[-0.02em]">
+        <h2 className="text-center text-[28px] md:text-[54px] leading-[1.1] font-semibold tracking-[-0.02em]">
           What our customers says?
         </h2>
 
-        {/* Horizontal scroll container — same behavior as RakhiScrollSection */}
+        {/* Scrollable container */}
         <div
           ref={containerRef}
-          className="mt-8 flex gap-28 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
+          className="mt-8 flex gap-6 md:gap-28 overflow-x-auto md:overflow-x-visible pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          <style jsx>{`
-            /* Hide scrollbar (WebKit) */
-            div::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
+          <style jsx>{`div::-webkit-scrollbar {display: none;}`}</style>
 
           {REVIEWS.map((r) => (
-            <article key={r.id} className="group min-w-[260px] max-w-[260px] gap-4">
+            <article
+              key={r.id}
+              className="flex-shrink-0 w-[85%] sm:w-[70%] md:min-w-[260px] md:max-w-[260px] bg-white md:bg-transparentrounded-md md:rounded-none shadow-md md:shadow-none overflow-hidden"
+            >
               {/* Image */}
-              <div className="relative h-[350px] w-[350px] overflow-hidden ">
+              <div className="relative w-full h-[260px] sm:h-[320px] md:h-[350px] md:w-[350px]">
                 <Image
                   src={r.image}
                   alt={r.title}
                   fill
-                  className="object-cover transition-transform duration-500"
-                  sizes="(min-width: 1280px) 300px, 33vw"
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 300px, 100vw"
                 />
               </div>
 
               {/* Content */}
-              <div className="pt-5">
+              <div className="pt-5 px-4 text-center md:text-left">
                 <Stars n={r.rating} />
-                <h3 className="mt-4 text-[20px] md:text-[22px] font-semibold leading-snug">
+                <h3 className="mt-3 text-[18px] md:text-[22px] font-semibold leading-snug">
                   {r.title}
                 </h3>
-                <p className="mt-3 text-[15px] md:text-[16px] leading-[1.8] text-black/80">
+                <p className="mt-2 text-[15px] md:text-[16px] leading-[1.7] text-black/80">
                   {r.text}
                 </p>
-                <p className="mt-3 text-[14px] font-semibold">- {r.author}</p>
+                <p className="mt-2 text-[14px] font-semibold">- {r.author}</p>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Progress bar — identical logic to your Rakhi section */}
+        {/* Progress bar */}
         <div className="relative h-[2px] w-[120px] mx-auto bg-gray-300 mt-6 rounded">
           <div
             className="absolute h-full bg-black rounded transition-[width] duration-150"

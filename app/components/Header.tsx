@@ -47,7 +47,7 @@ const Header = () => {
         {/* === Main Header === */}
         <header className="bg-[#fdf9f4] relative">
           {/* Full width on mobile, constrained on desktop */}
-          <div className="w-screen lg:max-w-[1440px] lg:mx-auto flex items-center justify-between px-3 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
+          <div className="w-screen lg:mx-auto flex items-center justify-between px-3 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
             
             {/* === Left Section (Mobile only) === */}
             <div className="flex items-center lg:hidden pl-3">

@@ -68,8 +68,8 @@ export default function SummerCollection() {
 
       {/* Second Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-3 md:mt-1">
-        {/* Left: 2 images */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-1">
+        {/* Left: 2 images (always side by side) */}
+        <div className="grid grid-cols-2 gap-1">
           {summerCollection.slice(2, 4).map((item, index) => (
             <Link href={item.link} key={index}>
               <div
@@ -120,8 +120,7 @@ export default function SummerCollection() {
                 className="
                   text-white text-xs sm:text-sm md:text-base 
                   border border-white px-4 sm:px-5 py-1.5 sm:py-2
-                "
-              >
+                ">
                 {summerCollection[4].title}
               </span>
             </div>

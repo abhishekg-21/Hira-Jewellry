@@ -1,4 +1,3 @@
-// components/BeforeAfterSlider.tsx
 "use client";
 
 import { useRef, useState } from "react";
@@ -9,9 +8,8 @@ export default function BeforeAfterSlider() {
   const [dividerX, setDividerX] = useState(50);
   const [dragging, setDragging] = useState(false);
 
-  // Your images
   const BEFORE_SRC = "/images/our customization/Silver_Earing.jpg";
-  const AFTER_SRC  = "/images/our customization/Gold_Earring.png";
+  const AFTER_SRC = "/images/our customization/Gold_Earring.png";
 
   const updateFromClientX = (clientX: number) => {
     const el = containerRef.current;
@@ -23,23 +21,35 @@ export default function BeforeAfterSlider() {
   };
 
   return (
-    <section className="w-full bg-[#fbf7f0] py-12 md:py-16">
-      <h2 className="text-[42px] md:text-[54px] leading-none font-medium text-center mb-10">
+    <section className="w-full bg-[#fbf7f0] py-10 sm:py-12 md:py-16">
+      <h2 className="text-[28px] sm:text-[42px] md:text-[54px] leading-none font-medium text-center mb-6 sm:mb-10">
         Our Customization
       </h2>
 
       <div
         ref={containerRef}
-        className="relative w-full max-w-[1280px] mx-auto h-[680px] md:h-[820px] overflow-hidden select-none rounded-[2px]"
-        onMouseDown={(e) => { setDragging(true); updateFromClientX(e.clientX); }}
-        onMouseMove={(e) => { if (dragging) updateFromClientX(e.clientX); }}
+        className="relative w-full max-w-[1280px] mx-auto 
+                   h-[260px] sm:h-[380px] md:h-[600px] lg:h-[750px] 
+                   overflow-hidden select-none rounded-[2px]"
+        onMouseDown={(e) => {
+          setDragging(true);
+          updateFromClientX(e.clientX);
+        }}
+        onMouseMove={(e) => {
+          if (dragging) updateFromClientX(e.clientX);
+        }}
         onMouseUp={() => setDragging(false)}
         onMouseLeave={() => setDragging(false)}
-        onTouchStart={(e) => { setDragging(true); updateFromClientX(e.touches[0].clientX); }}
-        onTouchMove={(e) => { if (dragging) updateFromClientX(e.touches[0].clientX); }}
+        onTouchStart={(e) => {
+          setDragging(true);
+          updateFromClientX(e.touches[0].clientX);
+        }}
+        onTouchMove={(e) => {
+          if (dragging) updateFromClientX(e.touches[0].clientX);
+        }}
         onTouchEnd={() => setDragging(false)}
       >
-        {/* RIGHT side (AFTER) – full canvas with warm beige bg */}
+        {/* AFTER side (background) */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[#fff8ee]" />
           <Image
@@ -47,14 +57,13 @@ export default function BeforeAfterSlider() {
             alt="After"
             fill
             priority
-            // object-contain + same object-position for both → identical framing
             className="object-contain object-center"
             draggable={false}
             onDragStart={(e) => e.preventDefault()}
           />
         </div>
 
-        {/* LEFT side (BEFORE) – full canvas, clipped to divider with cool light grey bg */}
+        {/* BEFORE side (clipped) */}
         <div
           className="absolute inset-0"
           style={{ clipPath: `inset(0 ${100 - dividerX}% 0 0)` }}
@@ -77,7 +86,7 @@ export default function BeforeAfterSlider() {
           style={{ left: `${dividerX}%`, transform: "translateX(-0.5px)" }}
         />
 
-        {/* Handle (center square with |||) */}
+        {/* Handle */}
         <button
           aria-label="Drag slider"
           className="absolute z-20 w-9 h-9 bg-white border border-black/50 rounded-sm shadow-sm flex items-center justify-center cursor-col-resize"
@@ -86,17 +95,25 @@ export default function BeforeAfterSlider() {
             top: "50%",
             transform: "translate(-50%, -50%)",
           }}
-          onMouseDown={(e) => { e.preventDefault(); setDragging(true); }}
-          onTouchStart={(e) => { e.preventDefault(); setDragging(true); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setDragging(true);
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            setDragging(true);
+          }}
         >
-          <span className="text-black tracking-widest text-[14px] leading-none">|||</span>
+          <span className="text-black tracking-widest text-[14px] leading-none">
+            |||
+          </span>
         </button>
 
-        {/* Corner labels (as in first screenshot) */}
-        <span className="absolute top-4 left-4 text-[11px] font-semibold text-black/70 z-30">
+        {/* Labels */}
+        <span className="absolute top-3 left-3 text-[11px] font-semibold text-black/70 z-30">
           BEFORE
         </span>
-        <span className="absolute top-4 right-4 text-[11px] font-semibold text-black/70 z-30">
+        <span className="absolute top-3 right-3 text-[11px] font-semibold text-black/70 z-30">
           AFTER
         </span>
       </div>
