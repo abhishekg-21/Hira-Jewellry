@@ -40,9 +40,11 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
   }, []);
 
   return (
-    <section className={customClass}>
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-stretch gap-0">
-        {/* Video Side (Mobile: full width top, Desktop: left side) */}
+    <section
+      className={`w-screen overflow-hidden ${customClass} ${padding}`}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-0">
+        {/* Video Side (Mobile full width top, Desktop left side) */}
         <div className="relative w-full h-[380px] sm:h-[450px] lg:h-[650px] overflow-hidden">
           <video
             ref={videoRef}
@@ -73,10 +75,10 @@ const HeroBanner: React.FC<HeroBannerProps> = ({
           </div>
         </div>
 
-        {/* Image Side (Mobile: full width below video, Desktop: right side) */}
+        {/* Image Side (Mobile full width below video, Desktop right side) */}
         <div className="relative w-full h-[380px] sm:h-[450px] lg:h-[650px]">
           <Image src={imageSrc} alt={altText} fill className="object-cover" />
-          {/* CTA button – mobile: centered bottom, desktop: right side */}
+          {/* CTA button */}
           <div className="absolute bottom-4 sm:bottom-6 left-1/2 lg:left-3/4 transform -translate-x-1/2 lg:translate-x-0 z-10">
             <Link
               href={ctaUrl}

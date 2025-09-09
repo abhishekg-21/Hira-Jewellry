@@ -40,25 +40,51 @@ const Header = () => {
         className="fixed inset-x-0 top-0 z-50 bg-[#fefcf8] overflow-x-hidden"
       >
         {/* === Top Strip === */}
-        <div className="w-full bg-black text-white text-xs sm:text-sm py-1 flex justify-center items-center">
+        <div className="w-screen bg-black text-white text-xs sm:text-sm py-1 flex justify-center items-center">
           <span>5% Off on Prepaid Orders</span>
         </div>
 
         {/* === Main Header === */}
-        <header className="bg-[#fdf9f4]">
-          <div className="max-w-[1440px] mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 min-h-[65px] lg:min-h-[75px]">
-            {/* === Left Section (Mobile) === */}
-            <div className="flex items-center gap-4 lg:hidden">
+        <header className="bg-[#fdf9f4] relative">
+          {/* Full width on mobile, constrained on desktop */}
+          <div className="w-screen lg:max-w-[1440px] lg:mx-auto flex items-center justify-between px-3 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
+            
+            {/* === Left Section (Mobile only) === */}
+            <div className="flex items-center lg:hidden pl-3">
               <button onClick={toggleMenu} aria-label="Menu">
                 {menuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
 
-            {/* === Center Logo (Mobile + Desktop) === */}
-            <div className="flex justify-center flex-1">
+            {/* === Desktop Nav (lg only) === */}
+            <div className="hidden lg:flex justify-start flex-1">
+              <nav className="flex flex-wrap items-center gap-6 text-[14px] font-normal tracking-wide">
+                {menuData.map((item) => (
+                  <div key={item.label} className="group relative">
+                    <button
+                      onClick={() => toggleDropdown(item.label)}
+                      className="hover:underline underline-offset-4 transition flex items-center gap-1 py-3"
+                    >
+                      {item.label}
+                      <Image
+                        src="/images/arrow_no_bg.png"
+                        alt=""
+                        width={8}
+                        height={8}
+                        className="ml-[4px] object-contain"
+                        aria-hidden
+                      />
+                    </button>
+                  </div>
+                ))}
+              </nav>
+            </div>
+
+            {/* === Center Logo (Always Centered) === */}
+            <div className="absolute left-1/2 -translate-x-1/2 flex justify-center">
               <Link
                 href="/"
-                className="relative max-w-[120px] sm:max-w-[140px] w-full h-[32px] sm:h-[37px]"
+                className="relative w-[120px] sm:w-[140px] h-[32px] sm:h-[37px]"
               >
                 <Image
                   src="/images/HIRA.png"
@@ -70,8 +96,8 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* === Right Section (Mobile + Desktop) === */}
-            <div className="flex items-center gap-3">
+            {/* === Right Section === */}
+            <div className="flex items-center gap-3 ml-auto pr-3 lg:pr-0">
               {/* Mobile Search Icon */}
               <Link href="/search" className="relative w-6 h-6 lg:hidden">
                 <Image
