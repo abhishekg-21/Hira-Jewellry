@@ -26,7 +26,6 @@ export default function Home() {
         altText="Raksha Bandhan Banner"
         title="Sale Is Live"
         subtitle="Raksha Bandhan"
-        ctaText="SHOP NOW"
         ctaUrl="/collections/raksha-bandhan-2025"
         textAlignment="left"
         // padding="py-12"
