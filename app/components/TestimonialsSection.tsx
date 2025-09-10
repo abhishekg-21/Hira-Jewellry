@@ -15,7 +15,7 @@ type Review = {
 const REVIEWS: Review[] = [
   {
     id: "r1",
-    image: "/images/Review1.jpeg",
+    image: "/images/Review3.jpeg",
     title: "Dreamy flower Blossom initial Necklace",
     text:
       "Just received the parcel. It is sooo beautiful and dreamy. Exactly like it looked in the photo. The quality looks amazing. Thank you",
@@ -27,13 +27,13 @@ const REVIEWS: Review[] = [
     image: "/images/Review2.jpeg",
     title: "Dainty Dragonfly Necklace",
     text:
-      "I have received the necklaces. Both are so pretty and very neatly made. The dragonfly one looks as good as real gold. Thank you so much.",
+      "I have received the necklaces. Both are so pretty and very neatly made. The dragonfly one looks as good as real gold. Thank you so much. Thank you So much mam means a lot for us 🙏",
     author: "ANUKRITI SETHI",
     rating: 5,
   },
   {
     id: "r3",
-    image: "/images/Review3.jpeg",
+    image: "/images/Review1.jpeg",
     title: "Custom Ring",
     text:
       "I received the product, It is really very nice, your packaging and product quality is very premium. Both the ring is perfectly made. Thank you so much.",
@@ -52,22 +52,41 @@ const REVIEWS: Review[] = [
   {
     id: "r5",
     image: "/images/Review5.jpeg",
-    title: "Minimal Bracelet",
+    title: "Dolphin Pearl Necklace",
     text:
-      "Very elegant and comfortable. Loved the finish and the fit. Packaging was lovely too.",
-    author: "RITIKA",
+      "I'm delighted with the chain I purchased. Though it took some time, it was truly worth the wait. Thank you for the exceptional quality and craftsmanship.!!!",
+    author: "Shreya acharya",
     rating: 5,
+  },
+  {
+    id: "r6",
+    image: "/images/Review6.jpeg",
+    title: "Custom Necklace",
+    text:
+      "You guys are super fast... Received the parcel just now. It's really an awesome product. Loved it. Thank you team Hira... much love 🫶🏻❤️",
+    author: "Tina Kumar",
+    rating: 5,
+  },
+  {
+    id: "r7",
+    image: "/images/Review7.jpeg",
+    title: "Sleek Tiny Heart Bracelet",
+    text:
+      "I got my order thank you so much itsss very pretty and cute 🥰 i will buy again",
+    author: "Deepika",
+    rating: 4,
   },
 ];
 
 function Stars({ n }: { n: number }) {
+  const safe = Math.max(0, Math.min(5, n)); // ✅ clamp between 0 and 5
   return (
     <div className="flex items-center gap-1 text-[#f1c40f]">
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
           viewBox="0 0 24 24"
-          className={`h-4 w-4 ${i < n ? "fill-current" : "fill-transparent"} stroke-current`}
+          className={`h-4 w-4 ${i < safe ? "fill-current" : "fill-transparent"} stroke-current`}
         >
           <path
             strokeWidth="1.2"
@@ -97,58 +116,61 @@ export default function TestimonialsSection() {
     const el = containerRef.current;
     if (!el) return;
     el.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // init
+    // initialize once
+    handleScroll();
     return () => el.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <section className="w-full bg-[#fff5ea] py-12 md:py-16">
-      <div className="mx-auto">
+    <section className="w-screen bg-[#fff5ea] py-12 md:px-6 md:py-16">
+      <div className="">
         {/* Heading */}
-        <h2 className="text-center text-[28px] md:text-[54px] leading-[1.1] font-semibold tracking-[-0.02em]">
+        <h2 className="text-center text-[36px] md:text-[54px] leading-[1.1] font-semibold tracking-[-0.02em]">
           What our customers says?
         </h2>
 
-        {/* Scrollable container */}
+        {/* Horizontal scroll container — same behavior as RakhiScrollSection */}
         <div
           ref={containerRef}
-          className="mt-8 flex gap-6 md:gap-28 overflow-x-auto md:overflow-x-visible pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
+          className="mt-8 flex gap-28 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none]"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          <style jsx>{`div::-webkit-scrollbar {display: none;}`}</style>
+          <style jsx>{`
+            /* Hide scrollbar (WebKit) */
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
 
           {REVIEWS.map((r) => (
-            <article
-              key={r.id}
-              className="flex-shrink-0 w-[85%] sm:w-[70%] md:min-w-[260px] md:max-w-[260px] bg-white md:bg-transparentrounded-md md:rounded-none shadow-md md:shadow-none overflow-hidden"
-            >
+            <article key={r.id} className="group min-w-[260px] max-w-[260px] gap-4">
               {/* Image */}
-              <div className="relative w-full h-[260px] sm:h-[320px] md:h-[350px] md:w-[350px]">
+              <div className="relative h-[350px] w-[350px] overflow-hidden ">
                 <Image
                   src={r.image}
                   alt={r.title}
                   fill
-                  className="object-cover"
-                  sizes="(min-width: 1280px) 300px, 100vw"
+                  className="object-cover transition-transform duration-500"
+                  sizes="(min-width: 1280px) 300px, 33vw"
                 />
               </div>
 
               {/* Content */}
-              <div className="pt-5 px-4 text-center md:text-left">
+              <div className="pt-5">
                 <Stars n={r.rating} />
-                <h3 className="mt-3 text-[18px] md:text-[22px] font-semibold leading-snug">
+                <h3 className="mt-4 text-[20px] md:text-[22px] font-semibold leading-snug">
                   {r.title}
                 </h3>
-                <p className="mt-2 text-[15px] md:text-[16px] leading-[1.7] text-black/80">
+                <p className="mt-3 text-[15px] md:text-[16px] leading-[1.8] text-black/80">
                   {r.text}
                 </p>
-                <p className="mt-2 text-[14px] font-semibold">- {r.author}</p>
+                <p className="mt-3 text-[14px] font-semibold">- {r.author}</p>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Progress bar */}
+        {/* Progress bar — identical logic to your Rakhi section */}
         <div className="relative h-[2px] w-[120px] mx-auto bg-gray-300 mt-6 rounded">
           <div
             className="absolute h-full bg-black rounded transition-[width] duration-150"

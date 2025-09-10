@@ -25,12 +25,12 @@ export const menuData = [
     ],
     promos: [
       {
-        image: "/images/bye.png", // ✅ correct format
+        image: "/images/brands/hira_vermile/dropdown/riyaa.02_1749977731_3655400610936832390_62329184037.webp", // ✅ correct format
         link: "/collections/all",
         label: "VIEW PRODUCTS",
       },
       {
-        image: "/images/bye.png", // ✅ correct format
+        image: "/images/brands/hira_vermile/dropdown/IMG_20250503_181725_f7d8d992-3cbb-496a-81de-6cdfe75be1f0.webp", // ✅ correct format
         link: "/collections/best-sellers",
         label: "BEST SELLER COLLECTION",
       },
@@ -58,12 +58,12 @@ export const menuData = [
     ],
     promos: [
       {
-        image: "/images/bye.png",
+        image: "/images/brands/hira_vermile/dropdown/Panda_Necklace_-_1750_865efef5-3466-4e9a-b81f-42e46b51cd8a.webp",
         label: "PANDA NECKLACE",
         link: "/products/panda-necklace",
       },
       {
-        image: "/images/solitaire-antler-necklace.jpg",
+        image: "/images/brands/hira_vermile/dropdown/Solitaire_Antler_Necklace_-_1350_d7075997-2990-49ae-953c-e693392976a0.webp",
         label: "SOLITAIRE ANTHER NECKLACE",
         link: "/products/solitaire-antler-necklace",
       },
@@ -92,12 +92,12 @@ export const menuData = [
     promos: [
       {
         label: "DAINTY ANKLET",
-        image: "/images/anklet1.jpg", // ✅ replace with actual image path in /public or CDN
+        image: "/images/brands/hira_vermile/dropdown/Dainty_Anklet___1850.webp", // ✅ replace with actual image path in /public or CDN
         link: "/products/dainty-anklet",
       },
       {
         label: "PEARL SHELL ANKLET",
-        image: "/images/anklet2.jpg", // ✅ replace with actual image path
+        image: "/images/brands/hira_vermile/dropdown/VERA007-PearlShellAnklet-1550-each_0ad7d595-9f13-4576-a953-3e5de5b39ab2.webp", // ✅ replace with actual image path
         link: "/products/pearl-shell-anklet",
       },
     ],
@@ -125,12 +125,12 @@ export const menuData = [
   promos: [
     {
       label: "ROYAL GEMSTONE STUDS",
-      image: "/images/earring1.jpg", // ✅ Place this in /public/images
+      image: "/images/brands/hira_vermile/dropdown/Royal_Gems_Stone_Studs_-_Blue.webp", // ✅ Place this in /public/images
       link: "/products/royal-gemstone-studs",
     },
     {
       label: "CURVED BAR WITH STONES EARRINGS",
-      image: "/images/earring2.jpg",
+      image: "/images/brands/hira_vermile/dropdown/Curved_Bar_With_Green_Stones_-_1350_2_3e94d1fa-e52a-4d0a-a9ac-d2b4ec606f84.webp",
       link: "/products/curved-bar-stone-earrings",
     },
   ],
@@ -158,12 +158,12 @@ export const menuData = [
   promos: [
     {
       label: "MINI HEART LEAFY BAND RING",
-      image: "/images/ring1.jpg",  // ✅ save this image in /public/images
+      image: "/images/brands/hira_vermile/dropdown/Mini_Heart_Leafy_Band_Ring_-_1650_2_d712f094-35be-45b5-8fff-373bc936173b.webp",  // ✅ save this image in /public/images
       link: "/products/mini-heart-leafy-band-ring",
     },
     {
       label: "SOLITAIRE RING",
-      image: "/images/ring2.jpg",
+      image: "/images/brands/hira_vermile/dropdown/Solitaire_ring_7d0a7886-6c1a-40a9-a324-f593f84a0573.webp",
       link: "/products/solitaire-ring",
     },
   ],
@@ -191,12 +191,12 @@ export const menuData = [
   promos: [
     {
       label: "AQUAMARINE BRACELET",
-      image: "/images/bracelet1.jpg",  // Save image here
+      image: "/images/brands/hira_vermile/dropdown/Aquamarine_Bracelet-_1_750.webp",  // Save image here
       link: "/products/aquamarine-bracelet",
     },
     {
       label: "ZODIAC BRACELET",
-      image: "/images/bracelet2.jpg",
+      image: "/images/brands/hira_vermile/dropdown/Zodiac_Bracelet___2150.webp",
       link: "/products/zodiac-bracelet",
     },
   ],

@@ -13,20 +13,20 @@ type BlogCard = {
 
 const posts: BlogCard[] = [
   {
-    href: "/blogs/news/why-925-silver-with-18kt-gold-coating-makes-the-perfect-gift",
-    image: "/images/Necklace.jpeg",
+    href: "/components/blogs/news",
+    image: "/images/brands/hira_vermile/recentblogpost/403a843679c4cc67622d831a10cfa3a2.webp",
     title: "Why 925 Silver with 18kt Gold Coating Makes the Perfect Gift",
     tags: ["NEW", "SILVER", "STORIES"],
   },
   {
-    href: "/blogs/news/how-to-care-for-925-silver-jewellery-with-18kt-gold-coating",
-    image: "/images/Earring1.jpg",
+    href: "/components/blogs/how-to-care-silver",
+    image: "/images/brands/hira_vermile/recentblogpost/639cdc8cc15dd31cf7c5e7518725c0a6_d6172333-2ffb-4aad-9777-2e02c41ba18f.webp",
     title: "How to Care for 925 Silver Jewellery with 18kt Gold Coating",
     tags: ["NEW", "SILVER", "STORIES"],
   },
   {
-    href: "/blogs/news/what-is-925-silver-everything-you-need-to-know",
-    image: "/images/Bracelet.jpg",
+    href: "/components/blogs/what-is-925-silver",
+    image: "/images/brands/hira_vermile/recentblogpost/1747824236_c3e777b1-3e97-453b-9406-c6a8d682957f.jpg",
     title: "What Is 925 Silver? Everything You Need to Know About Sterling Silver",
     tags: ["NEW", "SILVER", "STORIES"],
   },
@@ -63,7 +63,7 @@ export default function RecentBlogPosts() {
             >
               <Link
                 href={post.href}
-                className="group block relative w-full aspect-[3/4] overflow-hidden"
+                className="group block relative w-full aspect-[3/5] overflow-hidden"
               >
                 <Image
                   src={post.image}

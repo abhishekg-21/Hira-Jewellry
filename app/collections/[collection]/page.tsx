@@ -54,6 +54,29 @@ function orderByFor(sort: SortKey) {
 
 /* ---------- collection-specific intros ---------- */
 const introCopy: Record<string, JSX.Element> = {
+  "shop-all": (
+    <>
+      <p>
+        Explore our complete range—necklaces, earrings, rings, bracelets and
+        anklets—thoughtfully crafted for everyday elegance and special moments.
+      </p>
+    </>
+  ),
+  necklace: (
+    <>
+      <p>
+        Discover the perfect blend of elegance and craftsmanship in our
+        meticulously curated necklace collection. From timeless 14K gold
+        pendants to contemporary sterling silver chokers, each piece is
+        designed to complement your unique style. Our collection features a
+        variety of designs, including gemstone-adorned necklaces, personalized
+        nameplates, and layered chains, ensuring there&apos;s something for
+        every occasion. Whether you&apos;re seeking a statement piece for a
+        special event or a subtle accessory for daily wear, our necklaces
+        promise unmatched quality and sophistication.
+      </p>
+    </>
+  ),
   earring: (
     <>
       <p>
@@ -72,6 +95,44 @@ const introCopy: Record<string, JSX.Element> = {
     </>
   ),
   // ... keep other collections same
+  anklet: (
+    <>
+      <p>
+        Graceful, elegant, and endlessly charming — our Anklet Collection is
+        designed to add a delicate sparkle to every step you take. From timeless
+        classics to modern designs, each anklet is handcrafted with precision
+        using premium materials like sterling silver, gold plating, and
+        shimmering stones.
+      </p>
+    </>
+  ),
+  ring: (
+    <>
+      <p>
+        Discover our exquisite ring collection, where timeless elegance meets
+        modern design. Each piece is meticulously crafted to showcase
+        exceptional artistry and quality materials, offering a diverse range of
+        styles to suit every occasion. From classic solitaires to contemporary
+        statement rings, our collection embodies sophistication and
+        individuality. Explore our selection to find the perfect ring that
+        resonates with your unique style and celebrates life&apos;s special
+        moments.
+      </p>
+    </>
+  ),
+  bracelet: (
+    <>
+      <p>
+        Our Bracelet Collection offers a curated selection of wristwear designed
+        to complement diverse styles and occasions. From timeless tennis
+        bracelets adorned with shimmering diamonds to personalized charm
+        bracelets that tell your unique story, each piece is crafted with
+        precision and care. Explore our range of materials, including lustrous
+        14K gold, elegant sterling silver, and vibrant gemstones, ensuring both
+        quality and aesthetic appeal.
+      </p>
+    </>
+  ),
 };
 
 function introKey(slug: string) {

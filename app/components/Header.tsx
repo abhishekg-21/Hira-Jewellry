@@ -9,9 +9,12 @@ import CartToggle from "@/app/components/CartToggle";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // desktop
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // desktop hover dropdown
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);   // mobile submenu
   const [activeHeading, setActiveHeading] = useState<string | null>(null);   // mobile heading
+
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const [headerH, setHeaderH] = useState(0);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -19,13 +22,7 @@ const Header = () => {
     setActiveHeading(null);
   };
 
-  const toggleDropdown = (label: string) => {
-    setActiveDropdown((prev) => (prev === label ? null : label));
-  };
-
-  const fixedRef = useRef<HTMLDivElement>(null);
-  const [headerH, setHeaderH] = useState(0);
-
+  // Update header height dynamically
   useEffect(() => {
     const el = fixedRef.current;
     if (!el) return;
@@ -38,9 +35,9 @@ const Header = () => {
       ro.disconnect();
       window.removeEventListener("resize", setH);
     };
-  }, [activeDropdown, menuOpen]);
+  }, [menuOpen]);
 
-  // Decide back label dynamically
+  // Decide back label dynamically (mobile only)
   const getBackLabel = () => {
     if (activeHeading) return activeHeading;
     if (activeSubmenu) return activeSubmenu;
@@ -54,13 +51,13 @@ const Header = () => {
         className="fixed inset-x-0 top-0 z-50 bg-[#fefcf8] overflow-x-hidden"
       >
         {/* === Top Strip === */}
-        <div className="w-screen bg-black text-white text-xs sm:text-sm py-1 flex justify-center items-center">
+        <div className="w-screen bg-black text-white text-[18px] sm:text-sm py-1 flex justify-center items-center">
           <span>5% Off on Prepaid Orders</span>
         </div>
 
         {/* === Main Header === */}
-        <header className="bg-[#fdf9f4] relative">
-          <div className="w-screen lg:mx-auto flex items-center justify-between px-3 lg:px-8 min-h-[65px] lg:min-h-[75px] relative">
+        <header className="bg-[#fefcf8] relative">
+          <div className="w-screen lg:mx-auto flex items-center justify-between px-3 lg:px-20 min-h-[65px] lg:min-h-[75px] relative">
             {/* === Left Section (Mobile only) === */}
             <div className="flex items-center lg:hidden pl-3">
               <button onClick={toggleMenu} aria-label="Menu">
@@ -68,15 +65,17 @@ const Header = () => {
               </button>
             </div>
 
-            {/* === Desktop Nav (lg only) === */}
+            {/* === Desktop Nav (hover open) === */}
             <div className="hidden lg:flex justify-start flex-1">
               <nav className="flex flex-wrap items-center gap-6 text-[14px] font-normal tracking-wide">
                 {menuData.map((item) => (
-                  <div key={item.label} className="group relative">
-                    <button
-                      onClick={() => toggleDropdown(item.label)}
-                      className="hover:underline underline-offset-4 transition flex items-center gap-1 py-3"
-                    >
+                  <div
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => setActiveDropdown(item.label)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <button className="hover:underline underline-offset-4 transition flex items-center gap-1 py-3">
                       {item.label}
                       <Image
                         src="/images/arrow_no_bg.png"
@@ -87,6 +86,66 @@ const Header = () => {
                         aria-hidden
                       />
                     </button>
+
+                    {/* Dropdown */}
+                    {activeDropdown === item.label && item.columns && (
+                      <div className="absolute left-0 top-full w-screen bg-[#fefcf8] shadow-md z-40">
+                        <div className="grid grid-cols-3 gap-10 px-16 py-12 max-w-[1400px] mx-auto">
+                          {/* Left Columns (Links) */}
+                          <div className="col-span-2 grid grid-cols-2 gap-12">
+                            {item.columns.map((col, index) => (
+                              <div key={index}>
+                                <h4 className="text-[14px] mb-4 tracking-wide uppercase">
+                                  {col.heading}
+                                </h4>
+                                <ul className="space-y-2">
+                                  {col.links.map((link, idx) => (
+                                    <li key={`${link.label}-${idx}`}>
+                                      <Link href={link.link} legacyBehavior>
+                                        <a
+                                          className="text-[14px] hover:underline"
+                                          onClick={() => setActiveDropdown(null)}
+                                        >
+                                          {link.label}
+                                        </a>
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Promo Images */}
+                          <div className="col-span-1 flex gap-6">
+                            {item.promos?.map((promo, i) => (
+                              <div
+                                key={promo.label || i}
+                                className="flex-1 text-left"
+                              >
+                                <Link href={promo.link} legacyBehavior>
+                                  <a
+                                    onClick={() => setActiveDropdown(null)}
+                                  >
+                                    <div className="relative h-[420px] w-[290px]">
+                                      <Image
+                                        src={promo.image}
+                                        alt={promo.label}
+                                        fill
+                                        className="object-cover"
+                                      />
+                                    </div>
+                                    <span className="block text-[14px] underline mt-2">
+                                      {promo.label}
+                                    </span>
+                                  </a>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </nav>
@@ -155,84 +214,14 @@ const Header = () => {
           </div>
         </header>
 
-        {/* === Desktop Dropdown === */}
-        {activeDropdown && (
-          <div className="hidden lg:flex w-full py-8 px-8 z-40 min-h-[550px] gap-10 bg-[#fefcf8] flex-wrap">
-            {menuData.map((item) => {
-              if (item.label === activeDropdown && item.columns) {
-                return (
-                  <div
-                    key={item.label}
-                    className="flex gap-10 w-full flex-wrap min-h-[450px]"
-                  >
-                    {/* Column Links */}
-                    <div className="flex gap-6 flex-grow flex-wrap">
-                      {item.columns.map((col, index) => (
-                        <div
-                          key={index}
-                          className="min-w-[200px] max-w-full flex-1"
-                        >
-                          <h4 className="text-[14px] mb-4 tracking-wide uppercase">
-                            {col.heading}
-                          </h4>
-                          <ul className="space-y-1">
-                            {col.links.map((link, idx) => (
-                              <li key={`${link.label}-${idx}`}>
-                                <Link
-                                  href={link.link}
-                                  className="text-[14px] mb-3 hover:underline"
-                                >
-                                  {link.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Promo Images */}
-                    <div className="flex gap-6 flex-wrap">
-                      {item.promos?.map((promo, i) => (
-                        <div
-                          key={promo.label || i}
-                          className="min-w-[200px] max-w-[280px] w-full text-left"
-                        >
-                          <Link href={promo.link}>
-                            <div className="relative h-[220px] lg:h-[440px] w-full">
-                              <Image
-                                src={promo.image}
-                                alt={promo.label}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
-                            <span className="block text-[14px] underline font-normal leading-tight mt-2">
-                              {promo.label}
-                            </span>
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        )}
-
-        {/* === Mobile Menu === */}
+        {/* === Mobile Menu (unchanged toggle style) === */}
         {menuOpen && (
           <>
-            {/* Backdrop */}
             <div
               className="fixed inset-0 z-30 bg-black/40"
               onClick={() => setMenuOpen(false)}
             />
-
-            {/* Panel */}
-            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-190">
+            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-180">
               {/* Header with Back + Close */}
               <div className="flex justify-between items-center p-4 border-b">
                 <div>
@@ -257,7 +246,7 @@ const Header = () => {
                 </button>
               </div>
 
-              {/* Scrollable content */}
+              {/* Mobile Nav Content */}
               <div className="flex-1 overflow-y-auto">
                 {/* Level 1: top menu */}
                 {!activeSubmenu && !activeHeading && (
@@ -271,122 +260,14 @@ const Header = () => {
                               ? setActiveSubmenu(item.label)
                               : (window.location.href = item.link || "#")
                           }
-                          className="flex justify-between items-center px-5 py-4 text-[15px] font-medium text-left"
+                          className="flex justify-between items-center px-5 py-2 text-[15px] font-medium text-left"
                         >
                           {item.label}
                           <span className="text-lg">›</span>
                         </button>
                       ))}
                     </nav>
-
-                    {/* Promo Images at top-level */}
-                    <div className="grid grid-cols-2 gap-2 p-5">
-                      <div className="relative w-full h-40">
-                        <Image
-                          src="/images/mobile-promo1.jpg"
-                          alt="Promo 1"
-                          fill
-                          className="object-cover rounded"
-                        />
-                      </div>
-                      <div className="relative w-full h-40">
-                        <Image
-                          src="/images/mobile-promo2.jpg"
-                          alt="Promo 2"
-                          fill
-                          className="object-cover rounded"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Bottom Section */}
-                    <div className="px-5 py-6 space-y-4 text-[14px]">
-                      <Link
-                        href="/pages/track-order"
-                        className="flex items-center gap-2"
-                      >
-                        🚚 TRACK YOUR ORDER
-                      </Link>
-                      <Link href="/account/login">LOG IN</Link>
-
-                      <div className="flex justify-between gap-3 pt-4">
-                        <select className="flex-1 border border-gray-300 p-2 text-sm">
-                          <option>IN / INR</option>
-                          <option>US / USD</option>
-                        </select>
-                        <select className="flex-1 border border-gray-300 p-2 text-sm">
-                          <option>English</option>
-                          <option>हिंदी</option>
-                        </select>
-                      </div>
-                    </div>
                   </>
-                )}
-
-                {/* Level 2: submenu headings */}
-                {activeSubmenu && !activeHeading && (
-                  <div className="p-5 space-y-6">
-                    {menuData
-                      .filter((m) => m.label === activeSubmenu)
-                      .map((menu) => (
-                        <div key={menu.label}>
-                          {menu.columns?.map((col, i) => (
-                            <button
-                              key={i}
-                              onClick={() => setActiveHeading(col.heading)}
-                              className="flex justify-between w-full py-4 border-b text-left text-[15px] font-medium"
-                            >
-                              {col.heading}
-                              <span className="text-lg">›</span>
-                            </button>
-                          ))}
-
-                          {/* Promo Images */}
-                          {menu.promos && menu.promos.length > 0 && (
-                            <div className="grid grid-cols-2 gap-2 mt-6">
-                              {menu.promos.map((promo, idx) => (
-                                <div
-                                  key={idx}
-                                  className="relative w-full h-40"
-                                >
-                                  <Image
-                                    src={promo.image}
-                                    alt={promo.label}
-                                    fill
-                                    className="object-cover rounded"
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                  </div>
-                )}
-
-                {/* Level 3: heading links */}
-                {activeHeading && (
-                  <div className="p-5 space-y-4">
-                    {menuData
-                      .filter((m) => m.label === activeSubmenu)
-                      .flatMap((m) => m.columns || [])
-                      .filter((c) => c.heading === activeHeading)
-                      .map((col, i) => (
-                        <ul key={i} className="space-y-2">
-                          {col.links.map((link, idx) => (
-                            <li key={idx}>
-                              <Link
-                                href={link.link}
-                                className="block text-[14px]"
-                                onClick={() => setMenuOpen(false)}
-                              >
-                                {link.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      ))}
-                  </div>
                 )}
               </div>
             </div>

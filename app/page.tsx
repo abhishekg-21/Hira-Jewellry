@@ -48,10 +48,10 @@ export default function Home() {
           "We design pieces to be unique, durable and to be passed on. When you get order from us, " +
           "you become part of our family."
         }
-        img1="/images/brands/hira_vermile/abouthirasection/WhatsApp_Image_2025-05-15_at_12.00.04_PM (1).jpg"  // first image (pinned base)
-        img2="/images/brands/hira_vermile/abouthirasection/WhatsApp_Image_2025-05-15_at_12.00.05_PM_4f4e0040-43d1-45ce-9500-459546885266.webp"    // second image (slides over)
-        alt1="Polishing the piece"
-        alt2="Finished ring"
+        img="/images/brands/hira_vermile/abouthirasection/WhatsApp_Image_2025-05-15_at_12.00.04_PM (1).jpg"  // first image (pinned base)
+        // img2="/images/brands/hira_vermile/abouthirasection/WhatsApp_Image_2025-05-15_at_12.00.05_PM_4f4e0040-43d1-45ce-9500-459546885266.webp"    // second image (slides over)
+        alt="Polishing the piece"
+        // alt2="Finished ring"
         background="#fff9f3"
       />
       <InstagramSection />

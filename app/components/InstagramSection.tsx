@@ -22,7 +22,7 @@ export default function InstagramSection() {
         </div>
 
         {/* Column 2: Center Text */}
-        <div className="flex-shrink-0 text-center space-y-2 flex flex-col justify-center items-center h-[400px] sm:h-[480px] md:h-[500px] px-6 md:px-10">
+        <div className="flex-shrink-0 text-center space-y-2 flex flex-col justify-center items-center h-[400px] sm:h-[480px] md:h-[500px] px-6 md:px-35">
           <p className="text-xs tracking-widest text-gray-500 uppercase">
             TAG YOUR
           </p>
@@ -38,7 +38,7 @@ export default function InstagramSection() {
         {/* Column 3: Right Video 1 */}
         <div className="flex-shrink-0 flex justify-center">
           <video
-            className="w-[250px] sm:w-[320px] md:w-[370px] h-[400px] sm:h-[480px] md:h-[550px] object-cover"
+            className="w-[250px] sm:w-[320px] md:w-[370px] h-[400px] sm:h-[480px] md:h-[550px] md:px-4 object-cover"
             src="/video/hiravermeil_1728653514_3476519912718537822_49035025956.mp4"
             autoPlay
             muted
