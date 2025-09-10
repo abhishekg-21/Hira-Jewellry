@@ -169,75 +169,66 @@ const Header = () => {
           </div>
         </header>
 
-        {/* === Desktop Dropdown === */}
-        {activeDropdown && (
+                {/* === Desktop Dropdown === */}
+{activeDropdown && (
+  <div className="hidden lg:block w-full bg-[#fefcf8] z-40 shadow-md h-140">
+    {menuData.map((item) => {
+      if (item.label === activeDropdown && item.columns) {
+        return (
           <div
-            ref={dropdownRef}
-            className="hidden lg:block w-full bg-[#fefcf8] z-40 shadow-md h-140 absolute left-0"
+            key={item.label}
+            className="grid grid-cols-3 gap-10 px-26 py-12 max-w-[1400px] mr-60"
           >
-            {menuData.map((item) => {
-              if (item.label === activeDropdown && item.columns) {
-                return (
-                  <div
-                    key={item.label}
-                    className="grid grid-cols-3 gap-10 px-26 py-12 max-w-[1400px] mx-auto"
-                  >
-                    {/* Left Columns (Links) */}
-                    <div className="col-span-2 grid grid-cols-2 gap-12">
-                      {item.columns.map((col, index) => (
-                        <div key={index}>
-                          <h4 className="text-[14px] mb-4 tracking-wide uppercase">
-                            {col.heading}
-                          </h4>
-                          <ul className="space-y-2">
-                            {col.links.map((link, idx) => (
-                              <li key={`${link.label}-${idx}`}>
-                                <Link href={link.link} legacyBehavior>
-                                  <a
-                                    className="text-[14px] hover:underline"
-                                    onClick={() => setActiveDropdown(null)} // ✅ closes dropdown
-                                  >
-                                    {link.label}
-                                  </a>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
+            {/* Left Columns (Links) */}
+            <div className="col-span-2 grid grid-cols-2 gap-12">
+              {item.columns.map((col, index) => (
+                <div key={index}>
+                  <h4 className="text-[14px] mb-4 tracking-wide uppercase">
+                    {col.heading}
+                  </h4>
+                  <ul className="space-y-2">
+                    {col.links.map((link, idx) => (
+                      <li key={`${link.label}-${idx}`}>
+                        <Link
+                          href={link.link}
+                          className="text-[14px] hover:underline"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
 
-                    {/* Promo Images */}
-                    <div className="col-span-1 flex gap-6">
-                      {item.promos?.map((promo, i) => (
-                        <div key={promo.label || i} className="flex-1 text-left">
-                          <Link href={promo.link} legacyBehavior>
-                            <a
-                              onClick={() => setActiveDropdown(null)} // ✅ closes dropdown
-                            >
-                              <div className="relative h-[420px] w-[290px]">
-                                <Image
-                                  src={promo.image}
-                                  alt={promo.label}
-                                  fill
-                                  className="object-cover"
-                                />
-                              </div>
-                              <span className="block text-[14px] underline mt-2">
-                                {promo.label}
-                              </span>
-                            </a>
-                          </Link>
-                        </div>
-                      ))}
+            {/* Promo Images */}
+            <div className="col-span-1 flex gap-6">
+              {item.promos?.map((promo, i) => (
+                <div key={promo.label || i} className="flex-1 text-left">
+                  <Link href={promo.link}>
+                    <div className="relative h-[420px] w-[290px]">
+                      <Image
+                        src={promo.image}
+                        alt={promo.label}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
+                    <span className="block text-[14px] underline mt-2">
+                      {promo.label}
+                    </span>
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
-        )}
+        );
+      }
+      return null;
+    })}
+  </div>
+)}
 
         {/* === Mobile Menu === (unchanged) */}
         {menuOpen && (
