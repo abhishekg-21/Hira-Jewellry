@@ -20,7 +20,7 @@ export default function AboutSection({
   title,
   body,
   ctaLabel = "ABOUT US",
-  ctaHref = "/about",
+  ctaHref = "/components/about",
   img,
   alt = "About Hira",
   background = "#fefcf8",
