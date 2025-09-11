@@ -173,42 +173,44 @@ const InstagramGrid = () => {
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               {/* Overlay bar */}
-              <div
-                className="
-                  absolute bottom-3 left-2 right-2 bg-black/70 
-                  rounded-md flex items-center px-2 py-1 gap-2 z-10
-                  sm:bottom-4 sm:px-2.5 sm:py-2
-                "
-              >
-                <div className="w-7 h-7 sm:w-9 sm:h-9 bg-white rounded-md flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={`${post.title} icon`}
-                    width={36}
-                    height={36}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <span className="text-white text-[11px] sm:text-sm font-medium truncate flex-1">
-                  {post.title}
-                </span>
-                <button
-                  className="w-6 h-6 sm:w-8 sm:h-8 bg-black rounded-full flex items-center justify-center"
+              <button
+                  className="cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     openQuick(post);
                   }}
                   aria-label="Quick view"
                 >
-                  <Image
-                    src="/images/Bold White Cart.png"
-                    alt="Cart icon"
-                    width={16}
-                    height={16}
-                    className="sm:w-[20px] sm:h-[20px] object-contain"
-                  />
-                </button>
-              </div>
+              <div
+  className="
+    absolute bottom-3 left-8 bg-black 
+    rounded-md flex items-center gap-2 z-10
+    sm:bottom-4 lg:w-45
+  "
+>
+  {/* Thumbnail Image */}
+  <div className="w-7 h-7 sm:w-12 sm:h-11 bg-white flex items-center justify-center overflow-hidden rounded-tl-md rounded-bl-md">
+    <Image
+      src={post.image}
+      alt={`${post.title} icon`}
+      width={36}
+      height={36}
+      className="object-cover w-full h-full"
+    />
+  </div>
+
+  {/* Title + Price */}
+  <div className="flex flex-col min-w-0">
+    <span className="text-white text-[11px] sm:text-sm font-medium truncate">
+      {post.title}
+    </span>
+    <span className="text-white text-[10px] sm:text-xs font-normal text-left">
+      ₹{(post.priceCents / 100).toLocaleString("en-IN")}
+    </span>
+  </div>
+</div>
+
+              </button>
             </div>
           ))}
           <div ref={sentinelRef} className="w-px h-1" />

@@ -1,7 +1,7 @@
 // app/components/QuickViewDrawer.tsx
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,10 +9,11 @@ import { useCart } from "@/app/context/CartContext";
 
 type QuickViewProduct = {
   title: string;
-  priceCents: number;      // paise
-  slug: string;            // "/products/[slug]" without the /products/ prefix
-  images: string[];        // gallery images
-  options?: { name: string; values: string[] }[]; // (optional) e.g. Color
+  priceCents: number;
+  slug: string;
+  images: string[];
+  options?: { name: string; values: string[] }[];
+  description?: string;
 };
 
 export default function QuickViewDrawer({
@@ -30,7 +31,6 @@ export default function QuickViewDrawer({
   const [selected, setSelected] = useState<Record<string, string>>({});
   const { add } = useCart();
 
-  // Portal mount
   useEffect(() => {
     const el = document.createElement("div");
     el.id = "quickview-portal";
@@ -39,7 +39,6 @@ export default function QuickViewDrawer({
     return () => el.remove();
   }, []);
 
-  // Reset when product changes
   useEffect(() => {
     if (!product) return;
     setIdx(0);
@@ -55,19 +54,10 @@ export default function QuickViewDrawer({
 
   const priceText = useMemo(() => {
     const rupees = Math.round((product?.priceCents || 0) / 100);
-    return `₹${rupees.toLocaleString("en-IN")}.00`;
+    return `₹${rupees.toLocaleString("en-IN")}`;
   }, [product]);
 
   if (!node) return null;
-
-  const next = () => {
-    if (!product) return;
-    setIdx((p) => (p + 1) % product.images.length);
-  };
-  const prev = () => {
-    if (!product) return;
-    setIdx((p) => (p - 1 + product.images.length) % product.images.length);
-  };
 
   const handleAdd = () => {
     if (!product) return;
@@ -78,7 +68,6 @@ export default function QuickViewDrawer({
             .join(" / ")
         : null;
 
-    // We’ll use slug for both productId & slug if you don’t have a numeric id here.
     add({
       productId: product.slug,
       slug: product.slug,
@@ -102,6 +91,7 @@ export default function QuickViewDrawer({
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
+
           {/* Drawer */}
           <motion.aside
             className="fixed right-0 top-0 h-dvh w-full max-w-[420px] bg-white z-[99999] shadow-2xl flex flex-col"
@@ -115,118 +105,105 @@ export default function QuickViewDrawer({
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-4 border-b">
               <div className="text-sm font-medium">Quick view</div>
-              <button onClick={onClose} aria-label="Close" className="text-xl leading-none">
+              <button
+                onClick={onClose}
+                aria-label="Close"
+                className="text-xl leading-none"
+              >
                 ×
               </button>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {/* Gallery */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-6">
+              {/* Product Image */}
+              <div className="relative w-[260px] h-[320px] bg-[#f9f9f9] rounded-md overflow-hidden mx-auto">
+                <Image
+                  src={product.images[idx]}
+                  alt={product.title}
+                  fill
+                  sizes="420px"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              {/* Title + Price */}
               <div>
-                <div className="relative w-[230px] h-[320px] bg-[#f5f5f5] rounded-md overflow-hidden mx-auto">
-                  <Image
-                    src={product.images[idx]}
-                    alt={product.title}
-                    fill
-                    sizes="420px"
-                    className="object-cover"
-                    priority
-                  />
-                  {/* Arrows */}
-                  {product.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={prev}
-                        aria-label="Previous"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 grid place-items-center"
-                      >
-                        ‹
-                      </button>
-                      <button
-                        onClick={next}
-                        aria-label="Next"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 grid place-items-center"
-                      >
-                        ›
-                      </button>
-                    </>
-                  )}
+                <div className="text-lg font-semibold">{product.title}</div>
+                <div className="text-base text-black font-medium mt-1">
+                  {priceText}
                 </div>
-
-                {/* Thumbnails */}
-                {product.images.length > 1 && (
-                  <div className="mt-3 grid grid-cols-5 gap-2">
-                    {product.images.map((src, i) => (
-                      <button
-                        key={src + i}
-                        onClick={() => setIdx(i)}
-                        className={`relative aspect-square rounded border ${
-                          idx === i ? "border-black" : "border-transparent"
-                        } overflow-hidden`}
-                        aria-label={`Image ${i + 1}`}
-                      >
-                        <Image src={src} alt="" fill sizes="80px" className="object-cover" />
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
 
-              {/* Title + price */}
-              <div>
-                <div className="text-base font-semibold">{product.title}</div>
-                <div className="text-sm text-neutral-700 mt-1">{priceText}</div>
-              </div>
-
-              {/* Options (e.g., Color) */}
+              {/* Options Dropdown */}
               {product.options?.map((o) => (
                 <div key={o.name}>
-                  <div className="text-xs mb-1 text-neutral-600">{o.name}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {o.values.map((v) => {
-                      const active = selected[o.name] === v;
-                      return (
-                        <button
-                          key={v}
-                          onClick={() =>
-                            setSelected((s) => ({
-                              ...s,
-                              [o.name]: v,
-                            }))
-                          }
-                          className={`px-3 py-1 text-sm border ${
-                            active ? "border-black" : "border-neutral-300"
-                          }`}
-                        >
-                          {v}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <label className="text-sm text-neutral-700 block mb-1">
+                    {o.name}
+                  </label>
+                  <select
+                    value={selected[o.name]}
+                    onChange={(e) =>
+                      setSelected((s) => ({
+                        ...s,
+                        [o.name]: e.target.value,
+                      }))
+                    }
+                    className="w-full border border-neutral-300 rounded-md px-3 py-2 text-sm"
+                  >
+                    {o.values.map((v) => (
+                      <option key={v} value={v}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               ))}
 
               {/* Quantity */}
               <div>
-                <div className="text-xs mb-1 text-neutral-600">Quantity</div>
-                <div className="inline-flex items-center gap-4 border px-3 py-2">
-                  <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease">
+                <label className="text-sm text-neutral-700 block mb-1">
+                  Quantity
+                </label>
+                <div className="inline-flex items-center border border-neutral-300 rounded-md overflow-hidden">
+                  <button
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                    aria-label="Decrease"
+                    className="px-3 py-2 border-r"
+                  >
                     –
                   </button>
-                  <span className="select-none">{qty}</span>
-                  <button onClick={() => setQty((q) => q + 1)} aria-label="Increase">
+                  <span className="px-4 select-none">{qty}</span>
+                  <button
+                    onClick={() => setQty((q) => q + 1)}
+                    aria-label="Increase"
+                    className="px-3 py-2 border-l"
+                  >
                     +
                   </button>
                 </div>
               </div>
+
+              {/* Description */}
+              <div>
+                <div className="text-sm text-neutral-700 mb-1">Description</div>
+                <p className="text-sm leading-6 text-neutral-800">
+                  {product.description ||
+                    `This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. 
+
+Purity – 92.5 Pure Silver coated with 18kt gold.
+Diamond Quality – Swarovski zircon
+Pearl Quality – Good Quality Fresh water Pearls`}
+                </p>
+              </div>
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t">
+            <div className="p-4 border-t sticky bottom-0 bg-white">
               <button
                 onClick={handleAdd}
-                className="w-full h-11 border border-black text-sm tracking-wide hover:bg-black hover:text-white transition"
+                className="w-full h-11 bg-black text-white text-sm font-medium rounded-md hover:opacity-90 transition"
               >
                 Add to cart
               </button>

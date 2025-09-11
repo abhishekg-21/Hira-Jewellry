@@ -24,7 +24,7 @@ export default function CustomizeCta() {
 
         {/* Outlined button */}
         <Link
-          href="/pages/customize"
+          href="/components/customize"
           className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 border border-black text-black text-[13px] sm:text-[14px] tracking-wide hover:bg-black hover:text-white transition-colors"
         >
           BOOK NOW
