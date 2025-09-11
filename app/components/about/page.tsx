@@ -134,7 +134,7 @@ export default function AboutPage() {
             {STRIP_IMAGES.map((src, i) => (
               <div
                 key={i}
-                className="relative min-w-[50%] aspect-[4/3] overflow-hidden snap-start bg-[#f2ecdf]"
+                className="relative min-w-[50%] aspect-[4/3] overflow-hidden snap-start"
               >
                 <Image src={src} alt="" fill className="object-cover" />
               </div>
@@ -167,7 +167,7 @@ export default function AboutPage() {
             {STRIP_IMAGES.map((src, i) => (
               <div
                 key={i}
-                className="relative min-w-[20%] aspect-[4/3] overflow-hidden snap-start bg-[#f2ecdf]"
+                className="relative min-w-[20%] aspect-[4/3] overflow-hidden snap-start"
               >
                 <Image src={src} alt="" fill className="object-cover" />
               </div>
@@ -192,7 +192,7 @@ export default function AboutPage() {
       </section>
 
 {/* About section */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-16">
+      <section className="px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 overflow-hidden">
           <div className="relative min-h-[360px]">
             <Image
@@ -203,12 +203,12 @@ export default function AboutPage() {
               priority
             />
           </div>
-          <div className="bg-[#f3e5d6] px-6 sm:px-10 py-10">
+          <div className="bg-[#fdf1e3] px-6 sm:px-10 py-10">
             <h2 className="text-4xl md:text-5xl font-medium text-center">Our Backbone</h2>
-            <p className="mt-6 text-[17px] leading-8 text-black text-center">
+            <p className="mt-3 text-[17px] text-black/70 text-center">
               As we all know that best jewellery karigars are mostly from Calcutta. History has it that Bengali karigars from the region are amongst the most preferred labors in manufacturing of gold and diamond jewelry. follow the same ancient tradition for more than 35+ years of making gold and diamond jewelry from our skilled Bengali karigars who specialist in curating imagination into reality . we want our clients to feel the same pride when wearing the pieces from our store that we do in making your jewelry.
             </p>
-            <div className="mt-10 flex justify-center">
+            <div className="mt-8 flex justify-center">
               <div className="relative w-full max-w-4xl aspect-[16/9] overflow-hidden">
                 <Image
                   src="/images/brands/hira_vermile/abouthirasection/Hira_2.webp"
@@ -224,7 +224,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mobile carousel (2nd) */}
-      <div className="mt-10 block lg:hidden py-5">
+      <div className="mt-10 block lg:hidden py-12">
         <div
           // ref={scrollRef2}
           className="flex gap-2 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none]"
@@ -242,7 +242,7 @@ export default function AboutPage() {
             ) : (
               <div
                 key={i}
-                className="min-w-[50%] aspect-[4/6] flex flex-col items-center justify-center bg-[#fbf7f0] text-center px-4 snap-start"
+                className="min-w-[50%] aspect-[4/6] flex flex-col items-center justify-center text-center px-4 snap-start"
               >
                 <p className="text-xs tracking-[0.2em] uppercase">{item.subheading}</p>
                 <h3 className="text-xl font-semibold mt-2">{item.heading}</h3>
@@ -266,7 +266,7 @@ export default function AboutPage() {
           ) : (
             <div
               key={i}
-              className="flex flex-col items-center justify-center bg-[#fbf7f0] text-center px-4"
+              className="flex flex-col items-center justify-center text-center px-4"
             >
               <p className="text-xs tracking-[0.2em] uppercase">{item.subheading}</p>
               <h3 className="text-xl font-semibold mt-2">{item.heading}</h3>
