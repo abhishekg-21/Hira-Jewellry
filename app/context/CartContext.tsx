@@ -11,6 +11,8 @@ export type CartLine = {
   priceCents: number;   // store as paise/cents
   quantity: number;
   variant?: string | null;
+  description? : string;
+
 };
 
 type CartState = {

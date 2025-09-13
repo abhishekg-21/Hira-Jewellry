@@ -15,6 +15,7 @@ interface InstaPost {
   poster?: string;
   priceCents: number;
   options?: { name: string; values: string[] }[];
+  description? : string;
 }
 
 const basePosts: InstaPost[] = [
@@ -27,8 +28,8 @@ const basePosts: InstaPost[] = [
     poster: "/images/brands/hira_vermile/instagramgrid/monogram_poster.webp",
     priceCents: 185000,
     options: [{ name: "Color", values: ["White Gold", "Yellow Gold"] }],
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
-  // ... keep your other posts unchanged ...
     {
     video: "/video/Hira_Vermile/hiravermeil_1743431593_3600487344122160290_49035025956.mp4",
     title: "Cresent Moon Bracelet",
@@ -38,6 +39,7 @@ const basePosts: InstaPost[] = [
     poster: "/images/brands/hira_vermile/instagramgrid/marquise_poster.webp",
     priceCents: 115000,
     options: [{ name: "Color", values: ["White Gold"] }],
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use.Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
   {
     video: "/video/Hira_Vermile/hiravermeil_1745245060_3615699647844980000_49035025956 (1).mp4",
@@ -48,6 +50,7 @@ const basePosts: InstaPost[] = [
     poster: "/images/brands/hira_vermile/instagramgrid/bow_poster.webp",
     priceCents: 465000,
     options: [{ name: "Color", values: ["White Gold", "Rose Gold"] }],
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
   {
     video: "/video/Hira_Vermile/hiravermeil_1748578648_3643662144654853200_49035025956.mp4",
@@ -57,6 +60,7 @@ const basePosts: InstaPost[] = [
     image: "/images/brands/hira_vermile/instagramgrid/Monogram_Station_Bracelet__1750.webp",
     poster: "/images/brands/hira_vermile/instagramgrid/heartfall_poster.webp",
     priceCents: 175000,
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
   {
     video: "/video/Hira_Vermile/hiravermeil_1749221602_3649057595132235916_49035025956.mp4",
@@ -66,6 +70,7 @@ const basePosts: InstaPost[] = [
     image: "/images/brands/hira_vermile/instagramgrid/BowwithDanglingStones_2450.webp",
     poster: "/images/brands/hira_vermile/instagramgrid/moon_poster.webp",
     priceCents: 245000,
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
   {
     video: "/video/Hira_Vermile/hiravermeil_1750000951_3655594949292716663_49035025956 (1).mp4",
@@ -75,6 +80,8 @@ const basePosts: InstaPost[] = [
     image: "/images/brands/hira_vermile/instagramgrid/MysticOrbitBracelet_2450.webp",
     poster: "/images/brands/hira_vermile/instagramgrid/message_1_poster.webp",
     priceCents: 245000,
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
+
   },
   {
     video: "/video/Hira_Vermile/hiravermeil_1750173426_3657041787753578380_49035025956.mp4",
@@ -84,6 +91,7 @@ const basePosts: InstaPost[] = [
     image: "/images/brands/hira_vermile/instagramgrid/MarquisefishtailEarrings-VERE027.avif",
     poster: "/images/brands/hira_vermile/instagramgrid/message_2_poster.webp",
     priceCents: 215000,
+    description: "This Beautiful piece of jewelry is made up of 92.5 pure sterling silver and is coated with 18kt gold. Handcrafted by skilled workers and fairly priced for your everyday use. Purity- 92.5 Pure Silver coated with 18kt gold. Diamond Quality – Swarovski zircon. Pearl Quality- Good Quality Fresh water Pearls",
   },
 ];
 
@@ -157,10 +165,10 @@ const InstagramGrid = () => {
             <div
               key={`${post.title}-${idx}`}
               className="
-                relative shrink-0 rounded-lg overflow-hidden group
-                w-[160px] h-[260px]    /* 📱 Mobile size */
-                sm:w-[220px] sm:h-[340px]  /* 📱 Tablet size */
-                md:w-[250px] md:h-[400px]  /* 💻 Desktop size */
+                relative shrink-0 rounded-[20px] overflow-hidden group
+                w-[200px] h-[330px]        /* 📱 Mobile size → narrow & tall */
+                sm:w-[220px] sm:h-[340px]  /* 📱 Tablet */
+                md:w-[220px] md:h-[400px]  /* 💻 Desktop */
               "
               onClick={() => handleVideoClick(post)}
             >
@@ -170,46 +178,46 @@ const InstagramGrid = () => {
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
-              {/* Overlay bar */}
-              <button
-                  className="cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openQuick(post);
-                  }}
-                  aria-label="Quick view"
-                >
-              <div
-  className="
-    absolute bottom-3 left-8 bg-black 
-    rounded-md flex items-center gap-2 z-10
-    sm:bottom-4 lg:w-45
-  "
->
-  {/* Thumbnail Image */}
-  <div className="w-7 h-7 sm:w-12 sm:h-11 bg-white flex items-center justify-center overflow-hidden rounded-tl-md rounded-bl-md">
-    <Image
-      src={post.image}
-      alt={`${post.title} icon`}
-      width={36}
-      height={36}
-      className="object-cover w-full h-full"
-    />
-  </div>
 
-  {/* Title + Price */}
-  <div className="flex flex-col min-w-0">
-    <span className="text-white text-[11px] sm:text-sm font-medium truncate">
-      {post.title}
-    </span>
-    <span className="text-white text-[10px] sm:text-xs font-normal text-left">
-      ₹{(post.priceCents / 100).toLocaleString("en-IN")}
-    </span>
-  </div>
+              {/* Quick View Info Bar */}
+              <button
+                className="cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openQuick(post);
+                }}
+                aria-label="Quick view"
+              >
+                <div
+                  className="
+                    absolute bottom-3 left-1/2 -translate-x-1/2 bg-black 
+                    rounded-[5px] flex items-center gap-2 z-10
+                    sm:bottom-4 lg:w-45 w-40 h-15 lg:h-11
+                  "
+                >
+                  {/* Thumbnail Image */}
+                  <div className="w-17 h-15 sm:w-12 sm:h-11 bg-white flex items-center justify-center overflow-hidden rounded-tl-[5px] rounded-bl-[5px]">
+  <Image
+    src={post.image}
+    alt={`${post.title} icon`}
+    width={36}
+    height={36}
+    className="object-cover w-full h-full"
+  />
 </div>
 
+{/* Title + Price */}
+<div className="flex flex-col min-w-0 px-1">
+  <span className="text-white text-[13px] sm:text-sm font-medium truncate">
+    {post.title}
+  </span>
+  <span className="hidden sm:block text-white text-[10px] sm:text-xs font-normal text-left">
+    ₹{(post.priceCents / 100).toLocaleString("en-IN")}
+  </span>
+</div>
+                </div>
               </button>
             </div>
           ))}

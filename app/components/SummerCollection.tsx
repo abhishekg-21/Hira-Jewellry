@@ -67,7 +67,7 @@ export default function SummerCollection() {
       </div>
 
       {/* Second Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-3 md:mt-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-1">
         {/* Left: 2 images (always side by side) */}
         <div className="grid grid-cols-2 gap-1">
           {summerCollection.slice(2, 4).map((item, index) => (
