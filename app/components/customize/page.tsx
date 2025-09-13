@@ -48,7 +48,7 @@ export default function CustomizePage() {
   return (
     <main className="bg-[#fdfaf4] text-black">
       {/* Banner grid */}
-      <section className="w-full px-4">
+      <section className="w-full px-4 ">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-1">
           {bannerImages.map((img, i) => (
             <Image
@@ -114,7 +114,7 @@ export default function CustomizePage() {
             </select>
 
             {/* Phone Input Box */}
-            <div className="flex-1 bg-blue-50 border-l border-gray-300 px-3 py-2">
+            <div className="flex-1 bg-white border-l border-gray-300 px-3 py-2">
               <label className="block text-xs text-gray-600">Phone</label>
               <input
                 type="tel"
