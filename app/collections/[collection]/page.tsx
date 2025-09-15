@@ -54,14 +54,6 @@ function orderByFor(sort: SortKey) {
 
 /* ---------- collection-specific intros ---------- */
 const introCopy: Record<string, JSX.Element> = {
-  "shop-all": (
-    <>
-      <p>
-        Explore our complete range—necklaces, earrings, rings, bracelets and
-        anklets—thoughtfully crafted for everyday elegance and special moments.
-      </p>
-    </>
-  ),
   necklace: (
     <>
       <p>

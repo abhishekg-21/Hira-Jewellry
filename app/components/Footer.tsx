@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Logo */}
           <div className="flex justify-center md:justify-start">
             <Image
-              src="/images/footer images/Untitled design (4).png"
+              src="/images/brands/hira_vermile/footer/Untitled design (4).webp"
               alt="Hira Logo"
               width={180}
               height={120}

@@ -1,0 +1,51 @@
+Server [localhost]: ep-snowy-grass-ad76ibop-pooler.c-2.us-east-1.aws.neon.tech
+Database [postgres]: neondb
+Port [5432]: 5432
+Username [postgres]: neondb_owner
+Password for user neondb_owner:
+
+psql (17.6, server 17.5 (1b53132))
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off, ALPN: postgresql)
+Type "help" for help.
+
+neondb=>  \i 'C:/Users/hira jewellery/Downloads/import_products_template.sql';
+
+
+
+
+Server [localhost]: ep-snowy-grass-ad76ibop-pooler.c-2.us-east-1.aws.neon.tech
+Database [postgres]: neondb
+Port [5432]: 5432
+Username [postgres]: neondb_owner
+Password for user neondb_owner:
+
+psql (17.6, server 17.5 (1b53132))
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off, ALPN: postgresql)
+Type "help" for help.
+
+neondb=> \i 'C:/Users/hira jewelleryDownloads/import_products_template.sql';
+C:/Users/hira jewelleryDownloads/import_products_template.sql: No such file or directory
+neondb=>  \i 'C:/Users/hira jewellery/Downloads/import_products_template.sql';
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "has_videoselz_videos_product_metafields_custom_hasvideoselzvideos_" will be truncated to "has_videoselz_videos_product_metafields_custom_hasvideoselzvide"
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "google_custom_product_product_metafields_mm_google_shopping_custom_product_" will be truncated to "google_custom_product_product_metafields_mm_google_shopping_cus"
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "complementary_products_product_metafields_shopify_discovery_product_recommendation_complementary_products_" will be truncated to "complementary_products_product_metafields_shopify_discovery_pro"
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "related_products_product_metafields_shopify_discovery_product_recommendation_related_products_" will be truncated to "related_products_product_metafields_shopify_discovery_product_r"
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "related_products_settings_product_metafields_shopify_discovery_product_recommendation_related_products_display_" will be truncated to "related_products_settings_product_metafields_shopify_discovery_"
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:71: NOTICE:  identifier "search_product_boosts_product_metafields_shopify_discovery_product_search_boost_queries_" will be truncated to "search_product_boosts_product_metafields_shopify_discovery_prod"
+CREATE TABLE
+psql:C:/Users/hira jewellery/Downloads/import_products_template.sql:73: ERROR:  invalid input syntax for type bigint: "2250.00"
+CONTEXT:  COPY products_raw, line 3, column variant_price: "2250.00"
+neondb=> \copy products_raw FROM 'C:/Users/hira jewellery/Downloads/products_export_1 (2).csv' WITH (FORMAT csv, HEADER true);
+ERROR:  invalid input syntax for type bigint: "4350.00"
+CONTEXT:  COPY products_raw, line 133, column variant_compare_at_price: "4350.00"
+neondb=> \copy products_raw FROM 'C:/Users/hira jewellery/Downloads/products_export_1 (2).csv' WITH (FORMAT csv, HEADER true);
+ERROR:  invalid input syntax for type bigint: "1450.00"
+CONTEXT:  COPY products_raw, line 1171, column cost_per_item: "1450.00"
+neondb=> \copy products_raw FROM 'C:/Users/hira jewellery/Downloads/products_export_1 (2).csv' WITH (FORMAT csv, HEADER true);
+COPY 1327
