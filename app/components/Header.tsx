@@ -285,7 +285,7 @@ const Header = () => {
               className="fixed inset-0 z-30 bg-black/40"
               onClick={() => setMenuOpen(false)}
             />
-            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-full">
+            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-180">
               {/* Header with Close (top row) */}
 <div className="flex flex-col">
   {/* Row 1: Close always visible */}
@@ -327,7 +327,7 @@ const Header = () => {
           ? setActiveSubmenu(item.label)
           : (window.location.href = item.link || "#")
       }
-      className={`flex justify-between items-center py-3 text-[17px] font-medium text-left 
+      className={`flex justify-between items-center py-1.5 text-[16px] font-medium text-left 
         ${idx !== menuData.length - 1 ? "border-b border-gray-300" : ""}`}
     >
       {item.label}
