@@ -114,12 +114,12 @@ export default function DiamondsMega({
           </div>
 
           <ul className="mt-3 space-y-1">
-            <li>
+            {/* <li>
               <Link href="/brands/endless/diamonds/round" className="text-[14px] hover:underline underline-offset-4">
                 Astor By Blue Nile<span className="align-super text-[10px]">™</span>
               </Link>
-            </li>
-            <li><Link href="#" className="text-[14px] hover:underline underline-offset-4">Colored Diamonds</Link></li>
+            </li> */}
+            <li><Link href="#" className="text-[14px] hover:underline underline-offset-4">Lab Colored Diamonds</Link></li>
             <li><Link href="/brands/endless/diamonds/round" className="text-[14px] hover:underline underline-offset-4">Lab-Grown Diamonds</Link></li>
           </ul>
         </div>
@@ -149,7 +149,12 @@ export default function DiamondsMega({
 
           <div className="text-[17px] font-semibold">Learn About</div>
           <ul className="space-y-1">
-            {["How Shape Affects Price", "Learn About the 4Cs", "Ethically Sourced", "Diamond Sustainability"].map((l) => (
+            {[
+              // "How Shape Affects Price", 
+            "Learn About the 4Cs", 
+            // "Ethically Sourced", 
+            // "Diamond Sustainability"
+          ].map((l) => (
               <li key={l}>
                 <Link href="#" className="text-[14px] hover:underline underline-offset-4">
                   {l}
@@ -160,7 +165,7 @@ export default function DiamondsMega({
         </div>
 
         {/* Col 3 */}
-        <div>
+        {/* <div>
           <div className="text-[17px] font-semibold">Service &amp; Value</div>
           <ul className="space-y-1">
             {["Blue Nile Credit Card", "Diamond Price Match", "Diamond Upgrade Program"].map((l) => (
@@ -171,7 +176,7 @@ export default function DiamondsMega({
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* Right: image panel */}

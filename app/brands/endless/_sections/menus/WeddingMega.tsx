@@ -57,8 +57,8 @@ export default function WeddingMega({
           <div className="text-[17px] font-semibold">Men's Rings</div>
           <ul>
             <li><Row label="Platinum" /></li>
-            <li><Row label="Tungsten" /></li>
-            <li><Row label="Titanium" /></li>
+            {/* <li><Row label="Tungsten" /></li> */}
+            {/* <li><Row label="Titanium" /></li> */}
             <li><Row label="Rose Gold" /></li>
             <li><Row label="Yellow Gold" /></li>
             <li><Row label="White Gold" /></li>
@@ -67,7 +67,7 @@ export default function WeddingMega({
         </div>
 
         {/* Col 3 — Designers Rings */}
-        <div>
+        {/* <div>
           <div className="text-[17px] font-semibold">Designers Rings</div>
           <ul>
             <li><Row label="Zac Zac Posen" /></li>
@@ -75,7 +75,7 @@ export default function WeddingMega({
             <li><Row label="Blue Nile Studio" /></li>
             <li><Row label="The Gallery Collection™" /></li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Col 4 — Diamond Essentials */}
         <div>

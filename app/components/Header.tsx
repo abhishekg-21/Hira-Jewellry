@@ -185,7 +185,6 @@ const Header = () => {
     </div>
   </div>
 )}
-
                 </div>
               ))}
             </nav>
@@ -285,7 +284,7 @@ const Header = () => {
               className="fixed inset-0 z-30 bg-black/40"
               onClick={() => setMenuOpen(false)}
             />
-            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-180">
+            <div className="lg:hidden fixed inset-0 z-40 bg-[#fefcf8] flex flex-col h-screen">
               {/* Header with Close (top row) */}
 <div className="flex flex-col">
   {/* Row 1: Close always visible */}
@@ -300,12 +299,12 @@ const Header = () => {
 
   {/* Row 2: Back button (only when submenu/heading active) */}
   {activeSubmenu || activeHeading ? (
-    <div className="flex items-center px-4 pb-3 text-[16px]">
+    <div className="flex items-center px-4 pb-3 text-[15.5px]">
       <button
         onClick={() =>
           activeHeading ? setActiveHeading(null) : setActiveSubmenu(null)
         }
-        className="flex items-center gap-2 text-[17px] font-medium"
+        className="flex items-center gap-2 text-[15.5px] font-medium"
       >
         ‹ {getBackLabel()}
       </button>
@@ -327,7 +326,7 @@ const Header = () => {
           ? setActiveSubmenu(item.label)
           : (window.location.href = item.link || "#")
       }
-      className={`flex justify-between items-center py-1.5 text-[16px] font-medium text-left 
+      className={`flex justify-between items-center py-1.5 text-[15.5px] font-medium text-left 
         ${idx !== menuData.length - 1 ? "border-b border-gray-300" : ""}`}
     >
       {item.label}
@@ -335,7 +334,6 @@ const Header = () => {
     </button>
   ))}
 </nav>
-
 
                     {/* Promo Images */}
                     <div className="grid grid-cols-2 pt-4 py-2 pl-4">
@@ -400,14 +398,13 @@ const Header = () => {
   <button
     key={i}
     onClick={() => setActiveHeading(col.heading)}
-    className={`flex justify-between w-full py-2 text-left text-[17px] font-medium 
+    className={`flex justify-between w-full py-2 text-left text-[15.5px] font-medium 
       ${i !== menu.columns.length - 1 ? "border-b border-gray-300" : ""}`}
   >
     {col.heading}
     <ArrowRight />
   </button>
 ))}
-
 
                           {/* Promo Images */}
                           {menu.promos && menu.promos.length > 0 && (
@@ -445,7 +442,7 @@ const Header = () => {
                             <li key={idx}>
                               <Link
                                 href={link.link}
-                                className="block text-[14px]"
+                                className="block text-[15.5px]"
                                 onClick={() => setMenuOpen(false)}
                               >
                                 {link.label}

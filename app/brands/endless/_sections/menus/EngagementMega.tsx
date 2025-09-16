@@ -41,11 +41,6 @@ export const DEFAULT_ENGAGEMENT_LINKS: EngagementLinks = {
   Gemstone: "/engagement-rings/gemstone",
   "Men's Engagement": "/engagement-rings/mens",
 
-  // Designers
-  "Zac Zac Posen": "/designers/zac-zac-posen",
-  "Bella Vaughan": "/designers/bella-vaughan",
-  "Blue Nile Studio": "/designers/blue-nile-studio",
-  "The Gallery Collection™": "/designers/gallery-collection",
 
   // Utils
   "Find Your Ring Size": "/education/ring-size",
@@ -189,7 +184,7 @@ export default function EngagementMega({
         </div>
 
         {/* Col 3: designers + links */}
-        <div>
+        {/* <div>
           <div className="text-[17px] font-semibold">Designers Rings</div>
           <ul>
             <li><Row label="Zac Zac Posen" href={linkFor("Zac Zac Posen")} /></li>
@@ -202,7 +197,7 @@ export default function EngagementMega({
             <li><Row label="Find Your Ring Size" href={linkFor("Find Your Ring Size")} /></li>
             <li><Row label="Top Engagement Rings" href={linkFor("Top Engagement Rings")} /></li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* image panel */}

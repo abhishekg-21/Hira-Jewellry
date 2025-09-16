@@ -88,15 +88,15 @@ export const MENUS: MenuMap = {
         { label: "Men's Engagement", href: "#" },
       ],
     },
-    {
-      heading: "Designers Rings",
-      links: [
-        { label: "Zac Zac Posen", href: "#" },
-        { label: "Bella Vaughan", href: "#" },
-        { label: "Blue Nile Studio", href: "#" },
-        { label: "The Gallery Collection™", href: "#" },
-      ],
-    },
+    // {
+    //   heading: "Designers Rings",
+    //   links: [
+    //     { label: "Zac Zac Posen", href: "#" },
+    //     { label: "Bella Vaughan", href: "#" },
+    //     { label: "Blue Nile Studio", href: "#" },
+    //     { label: "The Gallery Collection™", href: "#" },
+    //   ],
+    // },
     {
       heading: "Learn & Tools",
       links: [

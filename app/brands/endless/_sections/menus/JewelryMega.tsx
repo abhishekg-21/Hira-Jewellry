@@ -39,13 +39,13 @@ export default function JewelryMega({
           <div className="text-[17px] font-semibold">Diamond Essentials <span className="text-[10px] align-super">NEW</span></div>
           <ul>
             {[
-              "Diamond Eternity Rings",
+              // "Diamond Eternity Rings",
               "Diamond Anniversary Rings",
               "Diamond Stud Earrings",
-              "Diamond Tennis Bracelets",
-              "Diamond Pendant Necklaces",
-              "Diamond Hoop Earrings",
-              "Diamond Tennis Necklaces",
+              // "Diamond Tennis Bracelets",
+              // "Diamond Pendant Necklaces",
+              // "Diamond Hoop Earrings",
+              // "Diamond Tennis Necklaces",
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
@@ -54,11 +54,11 @@ export default function JewelryMega({
           <div className="text-[17px] font-semibold mt-3">Earrings</div>
           <ul>
             {[
-              "Design Your Own Earrings",
+              // "Design Your Own Earrings",
               "Diamond Earrings",
               "Gemstone Earrings",
-              "Pearl Earrings",
-              "Gold Earrings",
+              // "Pearl Earrings",
+              // "Gold Earrings",
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
@@ -72,10 +72,10 @@ export default function JewelryMega({
             {[
               "Diamond Bracelets",
               "Gemstone Bracelets",
-              "Pearl Bracelets",
-              "Gold Bracelets",
-              "Silver Bracelets",
-              "Bangle Bracelets",
+              // "Pearl Bracelets",
+              // "Gold Bracelets",
+              // "Silver Bracelets",
+              // "Bangle Bracelets",
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
@@ -84,14 +84,14 @@ export default function JewelryMega({
           <div className="text-[17px] font-semibold mt-3">Necklaces</div>
           <ul>
             {[
-              "Design Your Own Pendant",
+              // "Design Your Own Pendant",
               "Diamond Necklaces",
               "Gemstone Necklaces",
-              "Pearl Necklaces",
-              "Gold Necklaces",
-              "Silver Necklaces",
-              "Cross Necklaces",
-              "Cuban Chains",
+              // "Pearl Necklaces",
+              // "Gold Necklaces",
+              // "Silver Necklaces",
+              // "Cross Necklaces",
+              // "Cuban Chains",
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
@@ -121,11 +121,11 @@ export default function JewelryMega({
               "Lab Grown Diamond Jewelry",
               "Men's Jewelry",
               "Birthstone Jewelry",
-              "Pearl Jewelry",
-              "Rose Gold Jewelry",
-              "New Arrivals",
-              "Clear The Vault",
-              "Under $100",
+              // "Pearl Jewelry",
+              // "Rose Gold Jewelry",
+              // "New Arrivals",
+              // "Clear The Vault",
+              // "Under $100",
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
@@ -134,7 +134,7 @@ export default function JewelryMega({
 
         {/* Col 4 */}
         <div>
-          <div className="text-[17px] font-semibold">Collections</div>
+          {/* <div className="text-[17px] font-semibold">Collections</div>
           <ul>
             {[
               "Eclipse Collection",
@@ -147,27 +147,27 @@ export default function JewelryMega({
             ].map((l) => (
               <li key={l}><Row label={l} /></li>
             ))}
-          </ul>
+          </ul> */}
         </div>
 
         {/* Col 5 */}
         <div>
-          <div className="text-[17px] font-semibold">Designer Jewelry</div>
-          <ul>
-            {[
-              "The Gallery Collection™",
-              "Blue Nile Studio",
-              "Bella Vaughan",
-              "Zac Zac Posen",
-              "Monica Rich Kosann",
-            ].map((l) => (
-              <li key={l}><Row label={l} /></li>
-            ))}
-          </ul>
+          {/* <div className="text-[17px] font-semibold">Designer Jewelry</div>
+            <ul>
+              {[
+                "The Gallery Collection™",
+                "Blue Nile Studio",
+                "Bella Vaughan",
+                "Zac Zac Posen",
+                "Monica Rich Kosann",
+              ].map((l) => (
+                <li key={l}><Row label={l} /></li>
+              ))}
+            </ul>
 
-          <ul className="mt-2">
-            <li><Row label="GIA Jewelry Report" /></li>
-          </ul>
+              <ul className="mt-2">
+                <li><Row label="GIA Jewelry Report" /></li>
+              </ul> */}
         </div>
       </div>
 

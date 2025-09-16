@@ -60,9 +60,9 @@ export default function GiftsMega({
 
   const byOccasion = [
     "Anniversary",
-    "Graduation",
+    // "Graduation",
     "Wedding Party Gifts",
-    "Bridal Jewelry",
+    // "Bridal Jewelry",
   ];
 
   return (

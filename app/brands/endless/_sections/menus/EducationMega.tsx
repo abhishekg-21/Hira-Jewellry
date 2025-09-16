@@ -48,11 +48,11 @@ export default function EducationMega({
             <Row label="Color" />
             <Row label="Clarity" />
             <Row label="Carat" />
-            <Row label="Astor By Blue Nile™" />
+            {/* <Row label="Astor By Blue Nile™" />
             <Row label="Diamond Sustainability" />
             <Row label="Conflict- Free Diamonds" />
             <Row label="Diamond Upgrade Program" />
-            <Row label="Shape Price Comparison" />
+            <Row label="Shape Price Comparison" /> */}
             <Row label="Lab Grown Diamonds" />
           </nav>
         </div>
@@ -66,7 +66,8 @@ export default function EducationMega({
             <Row label="Metal Education" />
             <Row label="Engagement Ring Guide" />
             <Row label="Wedding Ring Guide" />
-            <div className="py-5"><Row label="Gemstone Guide" />
+            <div className="py-5">
+            {/* <Row label="Gemstone Guide" /> */}
             <Row label="Birthstone Guide" /></div>
             <Row label="Find Your Ring Size" />
           </nav>
@@ -74,7 +75,7 @@ export default function EducationMega({
 
         {/* Col 3 */}
         <div>
-          <div className="text-[17px] font-semibold text-[#0b1a2b] mb-1">
+          {/* <div className="text-[17px] font-semibold text-[#0b1a2b] mb-1">
             Service &amp; Value
           </div>
           <nav aria-label="Service & Value">
@@ -85,7 +86,7 @@ export default function EducationMega({
 
           <div className="mt-2">
             <Row label="Blue Nile Blog" />
-          </div>
+          </div> */}
         </div>
       </div>
 
